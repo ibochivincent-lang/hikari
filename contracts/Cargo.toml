@@ -11,6 +11,7 @@ members = [
     "blend_adapter",
     "soroswap_adapter",
     "fee_controller",
+    "phoenix_adapter",
 ]
 
 [workspace.package]

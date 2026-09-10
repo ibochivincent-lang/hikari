@@ -33,6 +33,15 @@
       "capStroops": "500000000000",
       "explorer": "https://stellar.expert/explorer/testnet/contract/CDLG3GFOQ6WFVTFXQCW3ZSJMMMXIEQVEGZKMERS4ITBDZOHKXPRB5EAL"
     },
+    "phoenixAdapter": {
+      "id": "CAD345D2TCMIQEHSVVJMXOKMNGVVLW6YS7VBFSYXCRPALCOCDNA6O6L5",
+      "riskTier": 1,
+      "capStroops": "500000000000",
+      "tickLower": -1000,
+      "tickUpper": 1000,
+      "targetFeeBps": 30,
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CAD345D2TCMIQEHSVVJMXOKMNGVVLW6YS7VBFSYXCRPALCOCDNA6O6L5"
+    },
     "underlyingNativeXlmSac": {
       "id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
       "explorer": "https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
