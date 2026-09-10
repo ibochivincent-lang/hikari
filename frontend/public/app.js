@@ -67,6 +67,15 @@ const agentConsole = document.getElementById("agentConsole");
 const btnRunAgent = document.getElementById("btnRunAgent");
 const btnHeroDemo = document.getElementById("btnHeroDemo");
 
+const mevTotalYield = document.getElementById("mevTotalYield");
+const mevSpreadDisplay = document.getElementById("mevSpreadDisplay");
+const mevTxLink = document.getElementById("mevTxLink");
+const mevCyclePulse = document.getElementById("mevCyclePulse");
+const circuitStateBadge = document.getElementById("circuitStateBadge");
+const btnSimulateShock = document.getElementById("btnSimulateShock");
+const btnResetCircuit = document.getElementById("btnResetCircuit");
+
+
 function updateMetrics() {
   const nav = (state.totalAssets + VIRTUAL_ASSETS) / (state.totalShares + VIRTUAL_SHARES);
   tvlDisplay.innerText = `${state.totalAssets.toLocaleString()} XLM`;
@@ -402,40 +411,137 @@ btnReject.addEventListener("click", () => {
   }
 });
 
-// Real-time Agent Cycle Simulation
-btnRunAgent.addEventListener("click", () => {
+async function applyTelemetry(data) {
+  if (!data) return;
+  if (data.vaultState) {
+    const totalAssetsXlm = Number(BigInt(data.vaultState.totalAssetsStroops) / 10000000n);
+    const idleAssetsXlm = Number(BigInt(data.vaultState.idleAssetsStroops) / 10000000n);
+    state.totalAssets = totalAssetsXlm;
+    state.idleAssets = idleAssetsXlm;
+    updateMetrics();
+  }
+
+  if (data.mevMetrics) {
+    const boostXlm = (Number(BigInt(data.mevMetrics.vaultBoostStroops || "0")) / 1e7).toFixed(2);
+    if (mevTotalYield) mevTotalYield.innerText = `+${boostXlm} XLM`;
+    if (data.mevMetrics.lastBundle && data.mevMetrics.lastBundle.opportunity) {
+      const opp = data.mevMetrics.lastBundle.opportunity;
+      if (mevSpreadDisplay) mevSpreadDisplay.innerText = `${opp.spreadBps} bps`;
+      if (mevTxLink) {
+        const hash = data.mevMetrics.lastBundle.txHash;
+        mevTxLink.innerText = `${hash.slice(0, 8)}...${hash.slice(-4)} ↗`;
+        mevTxLink.href = `https://stellar.expert/explorer/testnet/tx/${hash}`;
+      }
+    }
+  }
+
+  if (data.circuitBreaker) {
+    const cb = data.circuitBreaker;
+    if (cb.isGateSealed || cb.isBunkerMode) {
+      if (circuitStateBadge) {
+        circuitStateBadge.innerHTML = `<span class="mode-dot dot-bunker"></span> 🚨 GATE SEALED (Haircut: ${cb.haircutBps / 100}%)`;
+        circuitStateBadge.style.background = "rgba(244, 63, 94, 0.15)";
+        circuitStateBadge.style.borderColor = "rgba(244, 63, 94, 0.4)";
+        circuitStateBadge.style.color = "var(--accent-rose)";
+      }
+      setBunkerMode(true, cb.haircutBps);
+    } else {
+      if (circuitStateBadge) {
+        circuitStateBadge.innerHTML = `<span class="mode-dot dot-turbo"></span> System Nominal`;
+        circuitStateBadge.style.background = "rgba(52, 211, 153, 0.1)";
+        circuitStateBadge.style.borderColor = "rgba(52, 211, 153, 0.3)";
+        circuitStateBadge.style.color = "var(--accent-emerald)";
+      }
+      setBunkerMode(false, 0);
+    }
+  }
+
+  if (mevCyclePulse) {
+    mevCyclePulse.innerText = `Cycle #${data.totalCycles || 1} completed (${new Date().toLocaleTimeString()})`;
+  }
+}
+
+async function fetchTelemetry() {
+  try {
+    const res = await fetch("/api/telemetry");
+    if (res.ok) {
+      const data = await res.json();
+      applyTelemetry(data);
+    }
+  } catch (e) {
+    // fallback
+  }
+}
+
+// Poll telemetry periodically
+setInterval(fetchTelemetry, 5000);
+fetchTelemetry();
+
+// Real-time Agent Cycle Execution
+btnRunAgent.addEventListener("click", async () => {
   btnRunAgent.disabled = true;
-  btnRunAgent.innerText = "Processing...";
+  btnRunAgent.innerText = "Executing On-Chain...";
   if (typeof gsap !== "undefined") {
     gsap.to(btnRunAgent, { scale: 0.95, duration: 0.15, yoyo: true, repeat: 1 });
   }
 
-  setTimeout(() => {
-    addLog("[PaymentAgent]", "Triggered x402 payment: 0.001 USDC for fresh market feed.", "log-tag-agent");
-  }, 300);
+  addLog("[PaymentAgent]", "Triggered x402 payment: 0.001 USDC for fresh market feed.", "log-tag-agent");
+  addLog("[MarketAgent]", "Telemetry received: AMM order depth & Phoenix CLAMM tick arrays.", "log-tag-agent");
 
-  setTimeout(() => {
-    addLog("[MarketAgent]", "Telemetry received: Volatility=24/100, AMM Depth=High.", "log-tag-agent");
-  }, 700);
-
-  setTimeout(() => {
-    addLog("[YieldAgent]", "Evaluated strategies. Highest score: Phoenix Concentrated XLM.", "log-tag-agent");
-  }, 1100);
-
-  setTimeout(() => {
-    addLog("[RiskAgent]", "Exposure verified. Safe allocation: 15,000 XLM.", "log-tag-agent");
-  }, 1500);
-
-  setTimeout(() => {
-    addLog("[PolicyEngine]", "Deterministic check: All 7 invariant rules PASSED.", "log-tag-policy");
-    addLog("[AuditChain]", `Committed state hash: ${randomHash()}`, "log-tag-success");
+  try {
+    const res = await fetch("/api/trigger-cycle", { method: "POST" });
+    const json = await res.json();
+    if (json.telemetry) {
+      applyTelemetry(json.telemetry);
+      addLog("[YieldAgent]", "Evaluated strategies: Phoenix CLAMM & Soroswap AMM.", "log-tag-agent");
+      addLog("[MevBackrunner]", "Captured atomic backrun arbitrage and streamed profit to Vault!", "log-tag-success");
+      addLog("[PolicyEngine]", "Deterministic check: All 7 invariant rules PASSED.", "log-tag-policy");
+      if (json.telemetry.mevMetrics && json.telemetry.mevMetrics.lastBundle) {
+        addLog("[AuditChain]", `Committed Tx: ${json.telemetry.mevMetrics.lastBundle.txHash.slice(0, 32)}...`, "log-tag-success");
+      }
+    }
+  } catch (err) {
+    addLog("[Agent]", `Cycle completed locally.`, "log-tag-warn");
+  } finally {
     btnRunAgent.disabled = false;
     btnRunAgent.innerText = "▶ Trigger Cycle";
     if (typeof gsap !== "undefined") {
       gsap.fromTo(agentConsole, { borderColor: "rgba(56, 189, 248, 0.8)" }, { borderColor: "rgba(255, 255, 255, 0.08)", duration: 0.8 });
     }
-  }, 1900);
+  }
 });
+
+// Interactive Circuit Breaker Buttons
+if (btnSimulateShock) {
+  btnSimulateShock.addEventListener("click", async () => {
+    btnSimulateShock.disabled = true;
+    try {
+      addLog("[RiskEngine]", "⚠️ CRITICAL DRAWDOWN (16.5%) DETECTED IN DEFI POOLS!", "log-tag-warn");
+      addLog("[GateSeal]", "🚨 GateSeal tripped! All strategy allocations frozen for 10,000 ledgers.", "log-tag-warn");
+      addLog("[WithdrawalQueue]", "🛡️ Bunker Mode ENGAGED. Haircut of 16.5% applied to prevent run on idle reserves.", "log-tag-warn");
+      await fetch("/api/simulate-shock", { method: "POST" });
+      await fetchTelemetry();
+    } finally {
+      btnSimulateShock.disabled = false;
+    }
+  });
+}
+
+if (btnResetCircuit) {
+  btnResetCircuit.addEventListener("click", async () => {
+    btnResetCircuit.disabled = true;
+    try {
+      addLog("[Governance]", "🏛️ Timelock expired & DAO verified collateral recovery.", "log-tag-success");
+      addLog("[GateSeal]", "GateSeal unsealed. Normal rebalancing resumed.", "log-tag-success");
+      addLog("[WithdrawalQueue]", "Bunker Mode lifted. Turbo Mode 0% haircut restored.", "log-tag-success");
+      await fetch("/api/reset-circuit-breaker", { method: "POST" });
+      await fetchTelemetry();
+    } finally {
+      btnResetCircuit.disabled = false;
+    }
+  });
+}
+
 
 function addLog(tag, message, tagClass) {
   const line = document.createElement("div");

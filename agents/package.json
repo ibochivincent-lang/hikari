@@ -7,8 +7,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "simulate": "node dist/orchestrator.js"
+    "simulate": "node dist/orchestrator.js",
+    "daemon": "node dist/daemon.js"
   },
+
   "dependencies": {
     "@stellar/stellar-sdk": "^13.1.0",
     "hikari-engine": "file:../engine"

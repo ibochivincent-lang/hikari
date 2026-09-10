@@ -204,8 +204,65 @@
               <span>Hash verified: 9075ca44fd83cab34abfd0250d193950228a78e75eb8b742debef33594f89cf4</span>
             </div>
           </div>
+
+          <!-- Jito-Style MEV Backrun Yield Stream -->
+          <div class="mev-highlight-box pulse-mev">
+            <div class="mev-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="mev-tag">⚡ Jito MEV Backrun Engine</span>
+                <span style="font-size: 0.75rem; color: var(--accent-emerald);">Active Backrunner</span>
+              </div>
+              <span id="mevCyclePulse" style="font-size: 0.75rem; color: var(--text-dim);">Listening to Soroban mempool...</span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; margin: 0.8rem 0; font-size: 0.82rem;">
+              <div>
+                <div style="color: var(--text-muted); font-size: 0.72rem;">Total MEV Boost to Vault:</div>
+                <div id="mevTotalYield" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-emerald);">+62.64 XLM</div>
+              </div>
+              <div>
+                <div style="color: var(--text-muted); font-size: 0.72rem;">Last Cross-DEX Spread:</div>
+                <div id="mevSpreadDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-amber);">87 bps</div>
+              </div>
+              <div>
+                <div style="color: var(--text-muted); font-size: 0.72rem;">Target DEX Venues:</div>
+                <div style="font-size: 0.85rem; color: #fff; font-weight: 600;">Phoenix ↔ Soroswap</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.75rem; color: var(--text-dim); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.5rem;">
+              <span>Latest Bundle Tx: <a id="mevTxLink" href="https://stellar.expert/explorer/testnet/tx/3151dac0bf054508ab766d35539e1a6e88561d973ada39af4a687109b23b78d4" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">3151dac0...78d4 ↗</a></span>
+              <span style="color: var(--accent-emerald);">80% Depositor Boost / 20% Relayer</span>
+            </div>
+          </div>
+
+          <!-- Lido-Grade Circuit Breaker & GateSeal Guard -->
+          <div class="card" style="margin-top: 1rem; border-color: rgba(244, 63, 94, 0.2);">
+            <div class="card-header" style="margin-bottom: 0.5rem;">
+              <h3 style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+                <span>🛡️ Circuit Breaker & GateSeal Guard</span>
+              </h3>
+              <span id="circuitStateBadge" class="mode-badge" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.3); color: var(--accent-emerald);">
+                <span class="mode-dot dot-turbo"></span> System Nominal
+              </span>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+              Continuous off-chain risk monitor evaluates portfolio drawdown, collateral health, and oracle latency. Drawdown exceeding 15% automatically seals allocations via GateSeal and engages Bunker Mode.
+            </div>
+
+            <div class="circuit-controls">
+              <button id="btnSimulateShock" class="btn-shock">
+                ⚠️ Simulate Drawdown Shock (16.5%)
+              </button>
+              <button id="btnResetCircuit" class="btn-reset">
+                🛡️ Restore Turbo Mode
+              </button>
+            </div>
+          </div>
         </div>
       </main>
+
 
       <!-- Right Column: User Vault Actions -->
       <aside>

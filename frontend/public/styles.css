@@ -669,6 +669,90 @@ header {
   border-radius: 50%;
 }
 
+/* Jito MEV Backrun & Circuit Breaker Styles */
+.mev-highlight-box {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.08), rgba(52, 211, 153, 0.08));
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: 12px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.mev-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.mev-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--accent-amber);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+}
+
+.circuit-controls {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+}
+
+.btn-shock {
+  background: rgba(244, 63, 94, 0.15);
+  border: 1px solid rgba(244, 63, 94, 0.4);
+  color: #f43f5e;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-shock:hover {
+  background: rgba(244, 63, 94, 0.25);
+  box-shadow: 0 0 12px rgba(244, 63, 94, 0.3);
+}
+
+.btn-reset {
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  color: #34d399;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+  background: rgba(52, 211, 153, 0.25);
+  box-shadow: 0 0 12px rgba(52, 211, 153, 0.3);
+}
+
+.pulse-mev {
+  animation: pulseMev 2s infinite ease-in-out;
+}
+
+@keyframes pulseMev {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(52, 211, 153, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(52, 211, 153, 0.45);
+  }
+}
+
 footer {
   margin-top: 3rem;
   padding-top: 1.5rem;
@@ -678,3 +762,4 @@ footer {
   font-size: 0.8rem;
   color: var(--text-dim);
 }
+

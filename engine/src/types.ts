@@ -43,3 +43,29 @@ export interface AuditLogEntry {
   evaluation: PolicyEvaluation;
   entryHash: string;
 }
+
+export interface RiskMetrics {
+  currentDrawdownBps: number;
+  portfolioVolatility: number; // 0 - 100
+  collateralHealthBps: number; // e.g. 13000 = 130%
+  oracleFreshnessSeconds: number;
+  isDepegDetected: boolean;
+}
+
+export interface CircuitBreakerStatus {
+  isSealed: boolean;
+  isBunkerMode: boolean;
+  haircutBps: number;
+  sealExpirationLedger?: number;
+  triggerReason?: string;
+}
+
+export interface RiskEvaluationResult {
+  healthy: boolean;
+  triggersGateSeal: boolean;
+  triggersBunkerMode: boolean;
+  suggestedHaircutBps: number;
+  warnings: string[];
+  recommendedAction: "NORMAL" | "REDUCE_RISK" | "TRIGGER_GATE_SEAL" | "ENGAGE_BUNKER_MODE";
+}
+
