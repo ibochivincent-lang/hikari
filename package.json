@@ -1,0 +1,19 @@
+{
+  "name": "hikari-protocol",
+  "version": "0.1.0",
+  "description": "Stellar-native Liquid-Yield & Agentic Finance Protocol",
+  "author": "ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ibochivincent-lang/hikari.git"
+  },
+  "scripts": {
+    "dashboard": "node frontend/server.js",
+    "test:contracts": "cargo test --manifest-path contracts/Cargo.toml --workspace",
+    "test:engine": "npm test --prefix engine",
+    "test:agents": "npm run simulate --prefix agents",
+    "test:testnet": "node scripts/test_live_cycle.js",
+    "build:wasm": "powershell -ExecutionPolicy Bypass -File scripts/build_wasm.ps1"
+  }
+}
