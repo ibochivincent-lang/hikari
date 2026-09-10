@@ -780,3 +780,195 @@ if (typeof HikariYieldChart !== "undefined" && document.getElementById("yieldCha
   });
 }
 
+// ==========================================
+// Lido Mega-Menu & Navigation Interactions
+// ==========================================
+function initLidoMenu() {
+  const mainHeader = document.getElementById("mainHeader");
+  const btnMobileMenuToggle = document.getElementById("btnMobileMenuToggle");
+  const lidoMobileDrawer = document.getElementById("lidoMobileDrawer");
+
+  // Sticky Header Scroll Effect
+  if (mainHeader) {
+    window.addEventListener("scroll", () => {
+      mainHeader.classList.toggle("scrolled", window.scrollY > 20);
+    });
+  }
+
+  // Mobile Hamburger Menu Toggle
+  if (btnMobileMenuToggle && lidoMobileDrawer) {
+    btnMobileMenuToggle.addEventListener("click", () => {
+      const isClosed = lidoMobileDrawer.style.display === "none" || !lidoMobileDrawer.style.display;
+      lidoMobileDrawer.style.display = isClosed ? "block" : "none";
+      btnMobileMenuToggle.classList.toggle("open", isClosed);
+      if (isClosed && typeof gsap !== "undefined") {
+        gsap.from(".lido-accordion-item", {
+          y: -10,
+          opacity: 0,
+          stagger: 0.05,
+          duration: 0.25,
+          ease: "power2.out"
+        });
+      }
+    });
+  }
+
+  // Mobile Accordion Items
+  document.querySelectorAll(".lido-accordion-trigger").forEach((trigger) => {
+    trigger.addEventListener("click", () => {
+      const body = trigger.nextElementSibling;
+      if (body) {
+        const isShown = body.style.display === "flex";
+        body.style.display = isShown ? "none" : "flex";
+        const chevron = trigger.querySelector(".chevron-icon");
+        if (chevron) {
+          chevron.style.transform = isShown ? "rotate(0deg)" : "rotate(180deg)";
+        }
+      }
+    });
+  });
+
+  // Action Dispatcher for Lido Menu Cards & Drawer Links
+  document.querySelectorAll(".lido-menu-card, .lido-drawer-link, .lido-feature-btn").forEach((elem) => {
+    elem.addEventListener("click", (e) => {
+      const action = elem.getAttribute("data-action");
+      const href = elem.getAttribute("href");
+
+      if (action) {
+        if (action === "tab-stake") switchTab("stake");
+        else if (action === "tab-request") switchTab("request");
+        else if (action === "tab-claim") switchTab("claim");
+        else if (action === "tab-basket") switchTab("basket");
+        else if (action === "tab-bridge") switchTab("bridge");
+        else if (action === "opt-passkey") {
+          const optPasskey = document.getElementById("optPasskey");
+          if (optPasskey) optPasskey.click();
+        }
+      }
+
+      // Smooth scroll if anchor
+      if (href && href.startsWith("#") && href.length > 1) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }
+
+      // Close mobile drawer if open
+      if (lidoMobileDrawer && lidoMobileDrawer.style.display === "block") {
+        lidoMobileDrawer.style.display = "none";
+        if (btnMobileMenuToggle) btnMobileMenuToggle.classList.remove("open");
+      }
+    });
+  });
+
+  // Modals: SDK Modal
+  const sdkModal = document.getElementById("sdkModal");
+  const btnCloseSdkModal = document.getElementById("btnCloseSdkModal");
+  const btnDoneSdk = document.getElementById("btnDoneSdk");
+  const openSdkButtons = [
+    document.getElementById("btnOpenSdkModal"),
+    document.getElementById("btnFeatureOpenSdk"),
+    document.getElementById("btnDrawerOpenSdk"),
+  ];
+
+  openSdkButtons.forEach((btn) => {
+    if (btn) {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (sdkModal) sdkModal.style.display = "flex";
+        if (lidoMobileDrawer) lidoMobileDrawer.style.display = "none";
+      });
+    }
+  });
+
+  if (btnCloseSdkModal && sdkModal) btnCloseSdkModal.addEventListener("click", () => sdkModal.style.display = "none");
+  if (btnDoneSdk && sdkModal) btnDoneSdk.addEventListener("click", () => sdkModal.style.display = "none");
+
+  // Copy Install Command
+  const btnCopyInstall = document.getElementById("btnCopyInstall");
+  const installCmdText = document.getElementById("installCmdText");
+  if (btnCopyInstall && installCmdText) {
+    btnCopyInstall.addEventListener("click", () => {
+      navigator.clipboard.writeText(installCmdText.innerText).then(() => {
+        const old = btnCopyInstall.innerText;
+        btnCopyInstall.innerText = "✓ Copied!";
+        btnCopyInstall.style.color = "var(--accent-emerald)";
+        setTimeout(() => {
+          btnCopyInstall.innerText = old;
+          btnCopyInstall.style.color = "";
+        }, 2000);
+      });
+    });
+  }
+
+  // Modals: Invariants Modal
+  const invariantsModal = document.getElementById("invariantsModal");
+  const btnCloseInvariantsModal = document.getElementById("btnCloseInvariantsModal");
+  const btnDoneInvariants = document.getElementById("btnDoneInvariants");
+  const openInvariantsButtons = [
+    document.getElementById("btnOpenInvariantsModal"),
+    document.getElementById("btnDrawerOpenInvariants"),
+  ];
+
+  openInvariantsButtons.forEach((btn) => {
+    if (btn) {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (invariantsModal) invariantsModal.style.display = "flex";
+        if (lidoMobileDrawer) lidoMobileDrawer.style.display = "none";
+      });
+    }
+  });
+
+  if (btnCloseInvariantsModal && invariantsModal) btnCloseInvariantsModal.addEventListener("click", () => invariantsModal.style.display = "none");
+  if (btnDoneInvariants && invariantsModal) btnDoneInvariants.addEventListener("click", () => invariantsModal.style.display = "none");
+
+  // Modals: FAQ Modal
+  const faqModal = document.getElementById("faqModal");
+  const btnCloseFaqModal = document.getElementById("btnCloseFaqModal");
+  const btnDoneFaq = document.getElementById("btnDoneFaq");
+  const openFaqButtons = [
+    document.getElementById("btnOpenFaqModal"),
+    document.getElementById("btnDrawerOpenFaq"),
+  ];
+
+  openFaqButtons.forEach((btn) => {
+    if (btn) {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (faqModal) faqModal.style.display = "flex";
+        if (lidoMobileDrawer) lidoMobileDrawer.style.display = "none";
+      });
+    }
+  });
+
+  if (btnCloseFaqModal && faqModal) btnCloseFaqModal.addEventListener("click", () => faqModal.style.display = "none");
+  if (btnDoneFaq && faqModal) btnDoneFaq.addEventListener("click", () => faqModal.style.display = "none");
+
+  // Global Backdrop Click & Escape Key to Dismiss
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      if (sdkModal) sdkModal.style.display = "none";
+      if (invariantsModal) invariantsModal.style.display = "none";
+      if (faqModal) faqModal.style.display = "none";
+      if (lidoMobileDrawer) {
+        lidoMobileDrawer.style.display = "none";
+        if (btnMobileMenuToggle) btnMobileMenuToggle.classList.remove("open");
+      }
+    }
+  });
+
+  [sdkModal, invariantsModal, faqModal].forEach((m) => {
+    if (m) {
+      m.addEventListener("click", (e) => {
+        if (e.target === m) m.style.display = "none";
+      });
+    }
+  });
+}
+
+initLidoMenu();
+
+

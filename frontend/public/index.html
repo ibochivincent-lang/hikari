@@ -12,19 +12,624 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <header>
-      <div class="brand">
+  <!-- Lido-Style Sticky Header & Mega Navigation -->
+  <header class="lido-header" id="mainHeader">
+    <div class="lido-header-inner">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-link" aria-label="Hikari Protocol Home">
         <div class="logo-icon">光</div>
-        <div>
-          <div style="display: flex; align-items: center; gap: 0.6rem;">
-            <h1 class="brand-title">Hikari Protocol</h1>
-            <span class="brand-badge">Protocol 27 • Soroban</span>
+        <div class="brand-text-wrap">
+          <div class="brand-title-row">
+            <span class="brand-title">Hikari</span>
+            <span class="brand-badge">P27 • Soroban</span>
           </div>
-          <p style="font-size: 0.8rem; color: var(--text-dim);">Stellar AI Liquid-Yield & Agentic Finance</p>
+          <span class="brand-subtitle">AI Liquid-Yield Engine</span>
         </div>
-      </div>
+      </a>
+
+      <!-- Center Lido Navigation Mega-Menu -->
+      <nav class="lido-nav" id="lidoNav" aria-label="Main Navigation">
+        <ul class="lido-nav-list" role="menubar">
+          
+          <!-- 1. Products -->
+          <li class="lido-nav-item" data-menu="products">
+            <button class="lido-nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <span>Products</span>
+              <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lido-dropdown" aria-label="Products submenu">
+              <div class="lido-dropdown-grid">
+                <!-- Col 1: Core Staking & Yield -->
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Liquid Yield & Staking</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="#vaultPortalSection" class="lido-menu-card" data-action="tab-stake">
+                        <div class="lido-menu-icon" style="background: rgba(56, 189, 248, 0.12); color: var(--accent-cyan);">光</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>hXLM Liquid Staking</span>
+                            <span class="lido-chip chip-cyan">Live</span>
+                          </div>
+                          <p class="lido-menu-desc">Stake XLM, earn continuous yield, retain full liquidity.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#vaultPortalSection" class="lido-menu-card" data-action="tab-basket">
+                        <div class="lido-menu-icon" style="background: rgba(251, 191, 36, 0.12); color: var(--accent-amber);">🏛️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>EarnXLM (Blend Lending)</span>
+                            <span class="lido-chip chip-amber">5.2% APY</span>
+                          </div>
+                          <p class="lido-menu-desc">Algorithmic money market supply on Stellar.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#vaultPortalSection" class="lido-menu-card" data-action="tab-basket">
+                        <div class="lido-menu-icon" style="background: rgba(129, 140, 248, 0.12); color: var(--accent-purple);">⚡</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>EarnUSDC (Phoenix CLAMM)</span>
+                            <span class="lido-chip chip-purple">7.8% APR</span>
+                          </div>
+                          <p class="lido-menu-desc">Concentrated liquidity swap fees on Soroban.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#vaultPortalSection" class="lido-menu-card" data-action="tab-bridge">
+                        <div class="lido-menu-icon" style="background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald);">🌉</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Cross-Chain Bridge</span>
+                            <span class="lido-chip chip-emerald">Domain 27</span>
+                          </div>
+                          <p class="lido-menu-desc">Circle CCTP V2 burn & mint with Solana & EVM.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Col 2: Ecosystem Integrations -->
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">hXLM in the Ecosystem</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="https://freighter.app" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🚀</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Freighter Wallet</div>
+                          <p class="lido-menu-desc">Official Stellar extension & passkey signing.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://soroswap.finance" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🦄</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Soroswap DEX</div>
+                          <p class="lido-menu-desc">Trade hXLM and provide concentrated liquidity.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://blend.capital" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">💧</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Blend Capital</div>
+                          <p class="lido-menu-desc">Borrow and lend against hXLM collateral.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.circle.com/en/cross-chain-transfer-protocol" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">⭕</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Circle CCTP</div>
+                          <p class="lido-menu-desc">Cross-chain USDC settlement infrastructure.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Col 3: Spotlight / Featured Lido-style card -->
+                <div class="lido-dropdown-feature">
+                  <div class="lido-feature-badge">Protocol Spotlight</div>
+                  <h3 class="lido-feature-title">Autonomous Yield Optimizer</h3>
+                  <p class="lido-feature-desc">AI agent evaluates risk scores and rebalances capital across lending & AMM pools with zero human lag.</p>
+                  <div class="lido-feature-stat">
+                    <span class="lido-stat-num">+4.28%</span>
+                    <span class="lido-stat-sub">Cumulative NAV growth</span>
+                  </div>
+                  <a href="#vaultPortalSection" class="lido-feature-btn" data-action="tab-stake">Launch Staking Portal →</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- 2. Institutional -->
+          <li class="lido-nav-item" data-menu="institutional">
+            <button class="lido-nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <span>Institutional</span>
+              <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lido-dropdown" aria-label="Institutional submenu">
+              <div class="lido-dropdown-grid">
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Enterprise Infrastructure</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="#vaultPortalSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(56, 189, 248, 0.12); color: var(--accent-cyan);">🏦</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Institutional Staking</span>
+                            <span class="lido-chip chip-cyan">High TVL</span>
+                          </div>
+                          <p class="lido-menu-desc">High-throughput Soroban execution slots & deep liquidity.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#contractsSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald);">📑</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Regulated Assets & Flags</span>
+                            <span class="lido-chip chip-emerald">SEP-41</span>
+                          </div>
+                          <p class="lido-menu-desc">Clawback authorization and KYC/AML compliance rails.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#vaultPortalSection" class="lido-menu-card" data-action="opt-passkey">
+                        <div class="lido-menu-icon" style="background: rgba(129, 140, 248, 0.12); color: var(--accent-purple);">🔑</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Passkey Smart Accounts</span>
+                            <span class="lido-chip chip-purple">WebAuthn</span>
+                          </div>
+                          <p class="lido-menu-desc">Hardware enclave multi-tenant segregation on Stellar.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Custody & Integrations</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="https://www.fireblocks.com" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🛡️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Fireblocks</div>
+                          <p class="lido-menu-desc">MPC custody integration for Stellar SAC tokens.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://copper.co" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🔗</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Copper.co</div>
+                          <p class="lido-menu-desc">ClearLoop off-exchange collateral settlement.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.bitgo.com" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">💼</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">BitGo Custody</div>
+                          <p class="lido-menu-desc">Qualified custody support for Soroban smart contracts.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-feature">
+                  <div class="lido-feature-badge">Enterprise Prime</div>
+                  <h3 class="lido-feature-title">Audit-Grade Security</h3>
+                  <p class="lido-feature-desc">Engineered for funds, market makers, and enterprise treasuries requiring deterministic safety.</p>
+                  <div class="lido-feature-stat">
+                    <span class="lido-stat-num">≥ 15%</span>
+                    <span class="lido-stat-sub">Strict liquidity reserve floor</span>
+                  </div>
+                  <a href="#contractsSection" class="lido-feature-btn">Inspect Contracts →</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- 3. Node Operators -->
+          <li class="lido-nav-item" data-menu="node-operators">
+            <button class="lido-nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <span>Node Operators</span>
+              <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lido-dropdown" aria-label="Node Operators submenu">
+              <div class="lido-dropdown-grid">
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Validator Modules</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="#strategiesSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald);">⚙️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Community Staking Module</span>
+                            <span class="lido-chip chip-emerald">Open</span>
+                          </div>
+                          <p class="lido-menu-desc">Permissionless Stellar Core validator federation.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#strategiesSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(56, 189, 248, 0.12); color: var(--accent-cyan);">📊</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Curated Strategy Registry</span>
+                            <span class="lido-chip chip-cyan">3 Adapters</span>
+                          </div>
+                          <p class="lido-menu-desc">Whitelisted strategies with strict allocation caps.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#mevSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(251, 191, 36, 0.12); color: var(--accent-amber);">⚡</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Jito MEV Backrunner</span>
+                            <span class="lido-chip chip-amber">MEV</span>
+                          </div>
+                          <p class="lido-menu-desc">Atomic searcher bundles on ledger close; 80% to vault.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Consensus & Telemetry</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="#securitySection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🛡️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Slashing Protection Matrix</div>
+                          <p class="lido-menu-desc">Invariant checks prevent capital loss during downtime.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#chartSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">📡</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Validator Telemetry</div>
+                          <p class="lido-menu-desc">Live consensus round duration & ledger closing stats.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#agentSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🤖</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Agent Cycle Monitor</div>
+                          <p class="lido-menu-desc">Autonomous rebalancer pulse and ledger heartbeats.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-feature">
+                  <div class="lido-feature-badge">MEV Yield Boost</div>
+                  <h3 class="lido-feature-title">Atomic Arbitrage</h3>
+                  <p class="lido-feature-desc">Searches cross-DEX spreads between Phoenix and Soroswap, executing atomic risk-free backruns.</p>
+                  <div class="lido-feature-stat">
+                    <span class="lido-stat-num">87 bps</span>
+                    <span class="lido-stat-sub">Recent spread captured</span>
+                  </div>
+                  <a href="#mevSection" class="lido-feature-btn">View MEV Engine →</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- 4. Governance / DAO -->
+          <li class="lido-nav-item" data-menu="governance">
+            <button class="lido-nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <span>Governance</span>
+              <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lido-dropdown" aria-label="Governance submenu">
+              <div class="lido-dropdown-grid">
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">DAO & Dual Governance</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="#securitySection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(244, 63, 94, 0.12); color: var(--accent-rose);">🔒</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>GateSeal Circuit Breaker</span>
+                            <span class="lido-chip chip-rose">Security</span>
+                          </div>
+                          <p class="lido-menu-desc">Instant 7-day pause without DAO delay during shocks.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#securitySection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(129, 140, 248, 0.12); color: var(--accent-purple);">⚖️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Dual Governance Model</span>
+                            <span class="lido-chip chip-purple">Active</span>
+                          </div>
+                          <p class="lido-menu-desc">hXLM stakers hold veto rights against malicious DAO proposals.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#approvalBanner" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(251, 191, 36, 0.12); color: var(--accent-amber);">📜</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Policy Account Multisig</span>
+                            <span class="lido-chip chip-amber">3-of-5</span>
+                          </div>
+                          <p class="lido-menu-desc">Deterministic rules verify every rebalance proposal.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Framework & Voting</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="#vaultPortalSection" class="lido-menu-card" data-action="tab-request">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">⏱️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Withdrawal Queue (FIFO)</div>
+                          <p class="lido-menu-desc">Turbo Mode vs. Bunker Mode with dynamic haircut.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://github.com/ibochivincent-lang/hikari/discussions" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">💬</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Research Forum</div>
+                          <p class="lido-menu-desc">Join proposals, parameter debates, and fee design.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#feesSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">💎</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Fee Controller (HWM)</div>
+                          <p class="lido-menu-desc">0.5% management & 10% performance fee with high-water mark.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-feature">
+                  <div class="lido-feature-badge">Dual Governance</div>
+                  <h3 class="lido-feature-title">Staker Veto Safety</h3>
+                  <p class="lido-feature-desc">Dual governance provides hXLM holders dynamic timelock veto power, blocking harmful governance takeovers.</p>
+                  <div class="lido-feature-stat">
+                    <span class="lido-stat-num">7 Days</span>
+                    <span class="lido-stat-sub">Timelock veto window</span>
+                  </div>
+                  <a href="#securitySection" class="lido-feature-btn">Test GateSeal Shock →</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- 5. Builders -->
+          <li class="lido-nav-item" data-menu="builders">
+            <button class="lido-nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <span>Builders</span>
+              <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lido-dropdown" aria-label="Builders submenu">
+              <div class="lido-dropdown-grid">
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Developer SDK & APIs</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="javascript:void(0)" id="btnOpenSdkModal" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(56, 189, 248, 0.12); color: var(--accent-cyan);">📦</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>TypeScript SDK</span>
+                            <span class="lido-chip chip-cyan">v1.0.0</span>
+                          </div>
+                          <p class="lido-menu-desc">Production-grade client with auto simulation & typings.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#x402Section" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald);">💳</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>x402 Micropayment API</span>
+                            <span class="lido-chip chip-emerald">HTTP 402</span>
+                          </div>
+                          <p class="lido-menu-desc">Agentic pay-per-query machine payments gateway.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" id="btnOpenInvariantsModal" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(129, 140, 248, 0.12); color: var(--accent-purple);">📐</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">
+                            <span>Formal Invariants Spec</span>
+                            <span class="lido-chip chip-purple">Math Proof</span>
+                          </div>
+                          <p class="lido-menu-desc">Proven conservation laws & exchange-rate theorems.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Contracts & Open Source</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="https://github.com/ibochivincent-lang/hikari" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🐙</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">GitHub Repository</div>
+                          <p class="lido-menu-desc">Soroban Rust contracts, simulation engines, & UI.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#contractsSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🛡️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Security & Audits</div>
+                          <p class="lido-menu-desc">Multi-scenario stress tests & invariant verification.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://discord.gg/stellar" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">👾</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Developer Discord</div>
+                          <p class="lido-menu-desc">Chat with core contributors & agent builders.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-feature">
+                  <div class="lido-feature-badge">Quickstart</div>
+                  <h3 class="lido-feature-title">@hikari/sdk</h3>
+                  <div class="lido-code-snippet">
+                    <code>npm i @hikari/sdk</code>
+                  </div>
+                  <p class="lido-feature-desc">One command to install the full SDK with Soroban testnet simulation and passkey auth.</p>
+                  <a href="javascript:void(0)" id="btnFeatureOpenSdk" class="lido-feature-btn">View SDK Examples →</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- 6. Community -->
+          <li class="lido-nav-item" data-menu="community">
+            <button class="lido-nav-trigger" aria-haspopup="true" aria-expanded="false">
+              <span>Community</span>
+              <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="lido-dropdown" aria-label="Community submenu">
+              <div class="lido-dropdown-grid">
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Ecosystem & Stats</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="https://github.com/ibochivincent-lang/hikari" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(56, 189, 248, 0.12); color: var(--accent-cyan);">🤝</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Contribute</div>
+                          <p class="lido-menu-desc">Join the open development of Soroban AI finance.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#chartSection" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(52, 211, 153, 0.12); color: var(--accent-emerald);">📈</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Analytics Hub</div>
+                          <p class="lido-menu-desc">Real-time NAV, compounding APY, and TVL metrics.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0)" id="btnOpenFaqModal" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(251, 191, 36, 0.12); color: var(--accent-amber);">❓</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Protocol FAQ</div>
+                          <p class="lido-menu-desc">Liquid staking, unbonding periods, and slashing FAQs.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-col">
+                  <h4 class="lido-col-title">Channels & Media</h4>
+                  <ul class="lido-col-links">
+                    <li>
+                      <a href="https://twitter.com/StellarOrg" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🐦</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">X (Twitter)</div>
+                          <p class="lido-menu-desc">Protocol releases and epoch announcements.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://t.me/stellar_protocol" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">✈️</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Telegram</div>
+                          <p class="lido-menu-desc">Global staker and validator discussions.</p>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://stellar.expert/explorer/testnet" target="_blank" rel="noopener" class="lido-menu-card">
+                        <div class="lido-menu-icon" style="background: rgba(255, 255, 255, 0.05);">🔍</div>
+                        <div class="lido-menu-content">
+                          <div class="lido-menu-title">Stellar.Expert Explorer</div>
+                          <p class="lido-menu-desc">Inspect ledger contracts, transactions, and events.</p>
+                        </div>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="lido-dropdown-feature">
+                  <div class="lido-feature-badge">Community First</div>
+                  <h3 class="lido-feature-title">Open Stellar Finance</h3>
+                  <p class="lido-feature-desc">Building the premier AI-orchestrated liquid-yield protocol for Stellar Protocol 27 and Soroban.</p>
+                  <div class="lido-feature-stat">
+                    <span class="lido-stat-num">100%</span>
+                    <span class="lido-stat-sub">Permissionless on-chain access</span>
+                  </div>
+                  <a href="https://github.com/ibochivincent-lang/hikari" target="_blank" rel="noopener" class="lido-feature-btn">Visit GitHub →</a>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Header Meta (Right Controls) -->
       <div class="header-meta">
         <div id="queueModeBadge" class="mode-badge">
           <span class="mode-dot dot-turbo"></span>
@@ -37,8 +642,92 @@
         <button id="btnConnectWallet" class="btn-primary" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; width: auto;">
           🔗 Connect Wallet
         </button>
+
+        <!-- Mobile Hamburger Button -->
+        <button id="btnMobileMenuToggle" class="lido-burger-btn" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
-    </header>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div id="lidoMobileDrawer" class="lido-mobile-drawer" style="display: none;">
+      <div class="lido-drawer-content">
+        <div class="lido-accordion-item">
+          <button class="lido-accordion-trigger">
+            <span>Products</span>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <div class="lido-accordion-body">
+            <a href="#vaultPortalSection" class="lido-drawer-link" data-action="tab-stake">hXLM Liquid Staking</a>
+            <a href="#vaultPortalSection" class="lido-drawer-link" data-action="tab-basket">EarnXLM (Blend Lending)</a>
+            <a href="#vaultPortalSection" class="lido-drawer-link" data-action="tab-basket">EarnUSDC (Phoenix CLAMM)</a>
+            <a href="#vaultPortalSection" class="lido-drawer-link" data-action="tab-bridge">Cross-Chain Bridge (CCTP)</a>
+          </div>
+        </div>
+        <div class="lido-accordion-item">
+          <button class="lido-accordion-trigger">
+            <span>Institutional</span>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <div class="lido-accordion-body">
+            <a href="#vaultPortalSection" class="lido-drawer-link">Institutional Staking</a>
+            <a href="#contractsSection" class="lido-drawer-link">Regulated Assets & Flags</a>
+            <a href="#vaultPortalSection" class="lido-drawer-link" data-action="opt-passkey">Passkey Smart Accounts</a>
+          </div>
+        </div>
+        <div class="lido-accordion-item">
+          <button class="lido-accordion-trigger">
+            <span>Node Operators</span>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <div class="lido-accordion-body">
+            <a href="#strategiesSection" class="lido-drawer-link">Community Staking Module</a>
+            <a href="#mevSection" class="lido-drawer-link">Jito MEV Backrunner</a>
+            <a href="#securitySection" class="lido-drawer-link">Slashing Protection Matrix</a>
+          </div>
+        </div>
+        <div class="lido-accordion-item">
+          <button class="lido-accordion-trigger">
+            <span>Governance</span>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <div class="lido-accordion-body">
+            <a href="#securitySection" class="lido-drawer-link">GateSeal Circuit Breaker</a>
+            <a href="#securitySection" class="lido-drawer-link">Dual Governance Model</a>
+            <a href="#approvalBanner" class="lido-drawer-link">Policy Account Multisig</a>
+          </div>
+        </div>
+        <div class="lido-accordion-item">
+          <button class="lido-accordion-trigger">
+            <span>Builders</span>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <div class="lido-accordion-body">
+            <a href="javascript:void(0)" class="lido-drawer-link" id="btnDrawerOpenSdk">TypeScript SDK (@hikari/sdk)</a>
+            <a href="#x402Section" class="lido-drawer-link">x402 Micropayment API</a>
+            <a href="javascript:void(0)" class="lido-drawer-link" id="btnDrawerOpenInvariants">Formal Invariants Spec</a>
+            <a href="https://github.com/ibochivincent-lang/hikari" target="_blank" rel="noopener" class="lido-drawer-link">GitHub Repository</a>
+          </div>
+        </div>
+        <div class="lido-accordion-item">
+          <button class="lido-accordion-trigger">
+            <span>Community</span>
+            <svg class="chevron-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </button>
+          <div class="lido-accordion-body">
+            <a href="https://github.com/ibochivincent-lang/hikari" target="_blank" rel="noopener" class="lido-drawer-link">Contribute on GitHub</a>
+            <a href="#chartSection" class="lido-drawer-link">Analytics Hub</a>
+            <a href="javascript:void(0)" class="lido-drawer-link" id="btnDrawerOpenFaq">Protocol FAQ</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
 
     <!-- Wallet Selection Modal (Passkey / WebAuthn & Freighter) -->
     <div id="walletModal" class="modal-backdrop" style="display: none;">
@@ -74,6 +763,148 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Developer SDK Modal -->
+    <div id="sdkModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-box" style="max-width: 640px;">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <span style="font-size: 1.3rem;">📦</span>
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Hikari Developer SDK (@hikari/sdk)</h3>
+          </div>
+          <button id="btnCloseSdkModal" class="modal-close-btn">&times;</button>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Production-grade TypeScript SDK for interacting with Soroban liquid staking contracts, auto simulation, and passkey signers.
+        </p>
+
+        <div class="sdk-terminal-box">
+          <div class="terminal-bar">
+            <span class="terminal-dot dot-red"></span>
+            <span class="terminal-dot dot-yellow"></span>
+            <span class="terminal-dot dot-green"></span>
+            <span style="font-size: 0.72rem; color: var(--text-dim); margin-left: 0.5rem;">Terminal (Install)</span>
+          </div>
+          <div class="terminal-content">
+            <code id="installCmdText">npm install @hikari/sdk @stellar/stellar-sdk</code>
+            <button id="btnCopyInstall" class="btn-copy">📋 Copy</button>
+          </div>
+        </div>
+
+        <div class="sdk-terminal-box" style="margin-top: 0.8rem;">
+          <div class="terminal-bar">
+            <span style="font-size: 0.72rem; color: var(--text-dim);">quickstart.ts</span>
+          </div>
+          <pre class="code-block" style="padding: 0.8rem; font-family: monospace; font-size: 0.78rem; line-height: 1.45; overflow-x: auto; color: #38bdf8;"><code>import { HikariSDK } from "@hikari/sdk";
+
+// Initialize on Stellar Testnet
+const hikari = new HikariSDK({ network: "testnet" });
+
+// 1. Fetch live vault state & APY
+const state = await hikari.getVaultState();
+console.log(`NAV: ${state.navPerShare} XLM | APY: ${state.apy}%`);
+
+// 2. Pre-flight simulation & deposit
+const sim = await hikari.simulateStake({ amountXlm: 250 });
+console.log(`Est. shares: ${sim.estShares} hXLM`);
+
+// 3. Submit Passkey-signed transaction
+const tx = await hikari.stake({ amountXlm: 250, signer: passkeySigner });
+console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
+        </div>
+
+        <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem;">
+          <a href="https://github.com/ibochivincent-lang/hikari/tree/main/sdk" target="_blank" rel="noopener" style="color: var(--accent-cyan); font-size: 0.82rem; text-decoration: none;">
+            📂 View GitHub SDK Source & Tests ↗
+          </a>
+          <button id="btnDoneSdk" class="btn-primary" style="width: auto; padding: 0.45rem 1.2rem; font-size: 0.85rem;">
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formal Invariants Modal -->
+    <div id="invariantsModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-box" style="max-width: 640px;">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <span style="font-size: 1.3rem;">📐</span>
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Formal Invariant Specifications</h3>
+          </div>
+          <button id="btnCloseInvariantsModal" class="modal-close-btn">&times;</button>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
+          Deterministic mathematical safety properties proven across 365-epoch Monte Carlo simulations and Soroban test suites.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 0.7rem; font-size: 0.82rem;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.75rem;">
+            <div style="font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.2rem;">INV-1: Share Pricing & Virtual Reserves</div>
+            <div style="color: var(--text-muted); line-height: 1.35;">Shares = (Assets * (TotalShares + 1000)) / (TotalAssets + 1). Inflation attacks mathematically impossible.</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.75rem;">
+            <div style="font-weight: 700; color: var(--accent-emerald); margin-bottom: 0.2rem;">INV-2: Monotonic NAV Growth (Non-Decreasing)</div>
+            <div style="color: var(--text-muted); line-height: 1.35;">In normal cycles, NAV per share never decreases: d(NAV)/dt >= 0. Yield and MEV profits compound into share value.</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.75rem;">
+            <div style="font-weight: 700; color: var(--accent-rose); margin-bottom: 0.2rem;">INV-3: Bunker Mode & Drawdown Haircut</div>
+            <div style="color: var(--text-muted); line-height: 1.35;">When drawdown > 15%, GateSeal locks allocations, switching to FIFO queue with pro-rata haircut preventing bank runs.</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.75rem;">
+            <div style="font-weight: 700; color: var(--accent-amber); margin-bottom: 0.2rem;">INV-4: Reserve Floor Conservation</div>
+            <div style="color: var(--text-muted); line-height: 1.35;">At least 15% of total protocol capital remains liquid in the vault reserve buffer at all times for instant unstakes.</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem;">
+          <a href="https://github.com/ibochivincent-lang/hikari/blob/main/docs/INVARIANT_SPECIFICATION.md" target="_blank" rel="noopener" style="color: var(--accent-purple); font-size: 0.82rem; text-decoration: none;">
+            📄 View Full INVARIANT_SPECIFICATION.md ↗
+          </a>
+          <button id="btnDoneInvariants" class="btn-primary" style="width: auto; padding: 0.45rem 1.2rem; font-size: 0.85rem;">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Protocol FAQ Modal -->
+    <div id="faqModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-box" style="max-width: 620px;">
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <span style="font-size: 1.3rem;">❓</span>
+            <h3 style="font-size: 1.15rem; font-weight: 700;">Hikari Protocol FAQ</h3>
+          </div>
+          <button id="btnCloseFaqModal" class="modal-close-btn">&times;</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.85rem;">
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
+            <h4 style="color: #fff; font-size: 0.92rem; margin-bottom: 0.3rem;">What is hXLM?</h4>
+            <p style="color: var(--text-muted); line-height: 1.4;">
+              hXLM is the SEP-41 compliant yield-bearing liquid staking token on Stellar. Holding hXLM continuously earns compounded yield from Blend lending, Phoenix CLAMM fees, and Jito MEV backruns.
+            </p>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
+            <h4 style="color: #fff; font-size: 0.92rem; margin-bottom: 0.3rem;">How does unbonding work?</h4>
+            <p style="color: var(--text-muted); line-height: 1.4;">
+              Under <strong>Turbo Mode</strong>, unstaking requests are settled immediately from the 15%+ liquid reserve buffer. If the queue is congested or market volatility spikes, requests are queued in FIFO order to protect the vault.
+            </p>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
+            <h4 style="color: #fff; font-size: 0.92rem; margin-bottom: 0.3rem;">What is GateSeal and Dual Governance?</h4>
+            <p style="color: var(--text-muted); line-height: 1.4;">
+              Adopted directly from Lido, GateSeal is a one-shot circuit breaker that pauses contract allocations for 7 days during critical anomalies. Dual Governance empowers stakers with veto rights against malicious DAO proposals.
+            </p>
+          </div>
+        </div>
+        <div style="margin-top: 1.2rem; text-align: right;">
+          <button id="btnDoneFaq" class="btn-primary" style="width: auto; padding: 0.45rem 1.2rem; font-size: 0.85rem;">
+            Close
+          </button>
         </div>
       </div>
     </div>
@@ -141,7 +972,7 @@
       <!-- Left Column: Strategy Registry & AI Console -->
       <main>
         <!-- Cumulative Yield & NAV Progression Chart -->
-        <div class="card">
+        <div id="chartSection" class="card">
           <div class="card-header">
             <div>
               <h2 class="card-title">
@@ -179,7 +1010,7 @@
         </div>
 
         <!-- Strategy Registry -->
-        <div class="card">
+        <div id="strategiesSection" class="card">
 
           <div class="card-header">
             <h2 class="card-title">
@@ -246,7 +1077,7 @@
         </div>
 
         <!-- Real-Time AI Agent Console -->
-        <div class="card">
+        <div id="agentSection" class="card">
           <div class="card-header">
             <h2 class="card-title">
               <span>🤖 Multi-Agent Orchestrator & Audit Stream</span>
@@ -284,7 +1115,7 @@
           </div>
 
           <!-- Jito-Style MEV Backrun Yield Stream -->
-          <div class="mev-highlight-box pulse-mev">
+          <div id="mevSection" class="mev-highlight-box pulse-mev">
             <div class="mev-header">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
                 <span class="mev-tag">⚡ Jito MEV Backrun Engine</span>
@@ -315,7 +1146,7 @@
           </div>
 
           <!-- Lido-Grade Circuit Breaker & GateSeal Guard -->
-          <div class="card" style="margin-top: 1rem; border-color: rgba(244, 63, 94, 0.2);">
+          <div id="securitySection" class="card" style="margin-top: 1rem; border-color: rgba(244, 63, 94, 0.2);">
             <div class="card-header" style="margin-bottom: 0.5rem;">
               <h3 style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
                 <span>🛡️ Circuit Breaker & GateSeal Guard</span>
@@ -377,7 +1208,7 @@
 
       <!-- Right Column: User Vault Actions -->
       <aside>
-        <div class="card">
+        <div id="vaultPortalSection" class="card">
           <div class="card-header">
             <h2 class="card-title">
               <span>💼 Liquid Staking Portal</span>
@@ -496,7 +1327,7 @@
 
 
         <!-- Protocol Security & Deployed Contracts Status -->
-        <div class="card">
+        <div id="contractsSection" class="card">
           <div class="card-header">
             <h2 class="card-title">
               <span>🛡️ Deployed Contracts (Testnet)</span>
@@ -549,7 +1380,7 @@
         </div>
 
         <!-- Protocol Fee & Economics -->
-        <div class="card">
+        <div id="feesSection" class="card">
           <div class="card-header">
             <h2 class="card-title">
               <span>💎 Fee Controller (HWM)</span>
