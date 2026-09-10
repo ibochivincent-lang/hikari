@@ -1147,6 +1147,12 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
                   <input id="amountInput" class="input-field" type="number" placeholder="0.0" min="0.1" step="any" required style="padding-right: 4rem;">
                   <button type="button" id="btnMaxAmount" class="btn-max">MAX</button>
                 </div>
+                <div class="quick-presets-row">
+                  <button type="button" class="btn-preset-amt" data-amt="100">100 XLM</button>
+                  <button type="button" class="btn-preset-amt" data-amt="500">500 XLM</button>
+                  <button type="button" class="btn-preset-amt" data-amt="1000">1,000 XLM</button>
+                  <button type="button" class="btn-preset-amt" data-amt="5000">5,000 XLM</button>
+                </div>
                 <div class="rate-indicator">
                   <span>Exchange Rate:</span>
                   <span id="rateDisplay" style="color: var(--text-main); font-weight: 600;">1 XLM ≈ 1.0428 hXLM</span>

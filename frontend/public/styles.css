@@ -1394,6 +1394,41 @@ footer {
   border: 1px solid rgba(192, 132, 252, 0.35);
 }
 
+/* 1-Click Quick Preset Amount Chips */
+.quick-presets-row {
+  display: flex;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0.45rem 0;
+}
+
+.btn-preset-amt {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 0.35rem 0.2rem;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--font-sans);
+  text-align: center;
+}
+
+.btn-preset-amt:hover {
+  background: rgba(139, 47, 230, 0.15);
+  border-color: rgba(192, 132, 252, 0.45);
+  color: #ffffff;
+}
+
+.btn-preset-amt.active {
+  background: linear-gradient(135deg, rgba(139, 47, 230, 0.35) 0%, rgba(192, 132, 252, 0.2) 100%);
+  border-color: var(--purple-soft);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(139, 47, 230, 0.25);
+}
+
 /* Decision Rationale Box */
 .rationale-box {
   background: rgba(14, 7, 30, 0.9);
@@ -3138,6 +3173,25 @@ footer {
   color: #6c1dc4;
   border-color: #c084fc;
   box-shadow: 0 2px 8px rgba(139, 47, 230, 0.15);
+}
+
+[data-theme="light"] .btn-preset-amt {
+  background: #f4f0fb;
+  border-color: #dcd3f2;
+  color: #4b5563;
+}
+
+[data-theme="light"] .btn-preset-amt:hover {
+  background: #ede8f8;
+  border-color: #8b2fe6;
+  color: #140d24;
+}
+
+[data-theme="light"] .btn-preset-amt.active {
+  background: #8b2fe6;
+  border-color: #8b2fe6;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(139, 47, 230, 0.25);
 }
 
 /* Light Mode: Cards & Components */

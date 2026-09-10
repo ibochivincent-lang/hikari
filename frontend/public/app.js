@@ -639,6 +639,11 @@ async function applyTelemetry(data) {
     }
   }
 
+  function setBunkerMode(active, haircutBps = 0) {
+    state.bunkerMode = !!active;
+    state.haircutBps = Number(haircutBps) || 0;
+  }
+
   if (data.circuitBreaker) {
     const cb = data.circuitBreaker;
     if (cb.isGateSealed || cb.isBunkerMode) {
@@ -817,64 +822,62 @@ function randomHash() {
 
 // Master GSAP Animations & Choreography
 function initGsapAnimations() {
-  if (typeof gsap === "undefined") return;
+  // Ensure dashboard cards, grid, and mode switch are always visible
+  const cards = document.querySelectorAll("main .card, aside .card, .metric-card, .strategy-item, .mode-switch-bar, .main-grid");
+  cards.forEach((c) => {
+    c.style.opacity = "1";
+    c.style.visibility = "visible";
+  });
 
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get("skipLoader") === "true" || urlParams.get("showBots") === "true") {
-    gsap.set("main .card, aside .card, .metric-card, .strategy-item, header", { autoAlpha: 1, x: 0, y: 0 });
-    return;
-  }
+  if (typeof gsap === "undefined") return;
 
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-    // 1. Header & Brand Elements
-    tl.from("header", { y: -25, autoAlpha: 0, duration: 0.65 })
-      .from(".logo-icon", { scale: 0.4, rotation: -30, duration: 0.5, ease: "back.out(1.8)" }, "<0.15")
-      .from(".brand-badge", { scale: 0.8, autoAlpha: 0, duration: 0.35 }, "<0.2")
-      .from(".header-meta > *", { y: -12, autoAlpha: 0, stagger: 0.1, duration: 0.4 }, "<0.2");
-
-    // 2. Landing Hero Section
-    tl.from(".hero-badge", { y: 15, autoAlpha: 0, duration: 0.4 }, "-=0.2")
-      .from(".hero-title", { y: 25, autoAlpha: 0, duration: 0.6 }, "-=0.25")
-      .from(".hero-description", { y: 20, autoAlpha: 0, duration: 0.5 }, "-=0.3")
-      .from(".hero-actions .btn-primary, .hero-actions .btn-secondary", { y: 15, autoAlpha: 0, stagger: 0.1, duration: 0.4 }, "-=0.2");
-
-    // 3. Approval Banner (if present)
-    if (approvalBanner && approvalBanner.style.display !== "none") {
-      tl.from(approvalBanner, { y: -15, autoAlpha: 0, duration: 0.4, ease: "back.out(1.5)" }, "-=0.2");
-    }
-
-    // 4. Metric Cards & Animated Counters
-    tl.from(".metric-card", {
-      y: 35,
-      autoAlpha: 0,
-      stagger: 0.08,
-      duration: 0.55,
-      ease: "back.out(1.2)"
-    }, "-=0.2");
-
     // Dynamic Counter rollup
     const counter = { tvl: 0, nav: 1.0, reserve: 0 };
-    tl.to(counter, {
+    gsap.to(counter, {
       tvl: state.totalAssets,
       nav: (state.totalAssets + VIRTUAL_ASSETS) / (state.totalShares + VIRTUAL_SHARES),
       reserve: state.idleAssets,
       duration: 1.2,
       ease: "power2.out",
       onUpdate: () => {
-        tvlDisplay.innerText = `${Math.round(counter.tvl).toLocaleString()} XLM`;
-        navDisplay.innerText = `${counter.nav.toFixed(4)} XLM`;
-        reserveDisplay.innerText = `${Math.round(counter.reserve).toLocaleString()} XLM`;
+        if (tvlDisplay) tvlDisplay.innerText = `${Math.round(counter.tvl).toLocaleString()} XLM`;
+        if (navDisplay) navDisplay.innerText = `${counter.nav.toFixed(4)} XLM`;
+        if (reserveDisplay) reserveDisplay.innerText = `${Math.round(counter.reserve).toLocaleString()} XLM`;
       }
-    }, "<0.1");
+    });
 
-    // 5. Main Content Grid Cards
-    tl.from("main .card", { y: 30, autoAlpha: 0, stagger: 0.15, duration: 0.6, ease: "power2.out" }, "-=0.6")
-      .from(".strategy-item", { x: -20, autoAlpha: 0, stagger: 0.08, duration: 0.4, ease: "power2.out" }, "-=0.35")
-      .from("aside .card", { x: 30, autoAlpha: 0, stagger: 0.12, duration: 0.6, ease: "power2.out" }, "-=0.6");
+    // Subtle smooth reveal with clearProps so elements NEVER stay hidden
+    gsap.fromTo(
+      ".metric-card",
+      { y: 15, opacity: 0.8 },
+      { y: 0, opacity: 1, stagger: 0.05, duration: 0.4, ease: "power2.out", clearProps: "opacity,visibility,transform" }
+    );
+    gsap.fromTo(
+      ".mode-switch-bar",
+      { y: 12, opacity: 0.8 },
+      { y: 0, opacity: 1, duration: 0.4, delay: 0.15, ease: "power2.out", clearProps: "opacity,visibility,transform" }
+    );
+    gsap.fromTo(
+      "main .card, aside .card",
+      { y: 15, opacity: 0.85 },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.08,
+        duration: 0.45,
+        delay: 0.2,
+        ease: "power2.out",
+        clearProps: "opacity,visibility,transform",
+        onComplete: () => {
+          if (yieldChartInstance && typeof yieldChartInstance.render === "function") {
+            yieldChartInstance.render();
+          }
+        }
+      }
+    );
   });
 
   // Hover micro-animations on interactive cards
@@ -995,13 +998,23 @@ function initDashboardViewModes() {
   const currentViewModeText = document.getElementById("currentViewModeText");
   const vaultPortal = document.getElementById("vaultPortalSection");
   const chartSection = document.getElementById("chartSection");
+  const amountInput = document.getElementById("amountInput");
 
   function setViewMode(mode) {
     state.viewMode = mode;
+
+    // Guarantee all cards and sections are always visible
+    document.querySelectorAll("main .card, aside .card, .metric-card, .strategy-item, .mode-switch-bar, .main-grid").forEach((c) => {
+      c.style.opacity = "1";
+      c.style.visibility = "visible";
+    });
+
     if (mode === "simple") {
       if (btnSimpleMode) btnSimpleMode.classList.add("active");
       if (btnProMode) btnProMode.classList.remove("active");
-      if (currentViewModeText) currentViewModeText.innerText = "Simple 1-Click Staking Mode (Quick Presets Focused)";
+      if (currentViewModeText) {
+        currentViewModeText.innerText = "Simple 1-Click Staking Mode (Quick Presets Focused)";
+      }
       addLog("[Dashboard]", "Switched to Simple 1-Click mode: 1-Click Staking portal focused with 100/500/1000 XLM presets.", "log-tag-success");
 
       // Auto-switch to Stake tab if not already on it
@@ -1013,13 +1026,14 @@ function initDashboardViewModes() {
         vaultPortal.classList.remove("portal-focus-ring");
         void vaultPortal.offsetWidth; // trigger reflow
         vaultPortal.classList.add("portal-focus-ring");
-        vaultPortal.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        setTimeout(() => vaultPortal.classList.remove("portal-focus-ring"), 3000);
+        setTimeout(() => vaultPortal.classList.remove("portal-focus-ring"), 2500);
       }
     } else {
       if (btnProMode) btnProMode.classList.add("active");
       if (btnSimpleMode) btnSimpleMode.classList.remove("active");
-      if (currentViewModeText) currentViewModeText.innerText = "Advanced Pro Analytics Mode (AI Engine & Risk Telemetry Active)";
+      if (currentViewModeText) {
+        currentViewModeText.innerText = "Advanced Pro Analytics Mode (AI Engine & Risk Telemetry Active)";
+      }
       addLog("[Dashboard]", "Switched to Advanced Pro Mode: Real-time telemetry, risk engine & MEV monitors active.", "log-tag-agent");
 
       // Highlight the analytics section
@@ -1027,14 +1041,31 @@ function initDashboardViewModes() {
         chartSection.classList.remove("portal-focus-ring");
         void chartSection.offsetWidth;
         chartSection.classList.add("portal-focus-ring");
-        chartSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        setTimeout(() => chartSection.classList.remove("portal-focus-ring"), 3000);
+        setTimeout(() => chartSection.classList.remove("portal-focus-ring"), 2500);
       }
+    }
+
+    // Always re-render the chart so it is crisp and properly sized
+    if (yieldChartInstance && typeof yieldChartInstance.render === "function") {
+      yieldChartInstance.render();
     }
   }
 
   if (btnSimpleMode) btnSimpleMode.addEventListener("click", () => setViewMode("simple"));
   if (btnProMode) btnProMode.addEventListener("click", () => setViewMode("pro"));
+
+  // 1-Click Quick Preset Amount Chips
+  document.querySelectorAll(".btn-preset-amt").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const amt = btn.getAttribute("data-amt");
+      if (amountInput && amt) {
+        amountInput.value = amt;
+        amountInput.dispatchEvent(new Event("input", { bubbles: true }));
+        document.querySelectorAll(".btn-preset-amt").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+      }
+    });
+  });
 }
 
 initVaultTiers();
@@ -1369,6 +1400,16 @@ function initVoxrTemplate() {
       stagger: 0.08,
       ease: "power2.out",
     }, 1);
+
+    tl.call(() => {
+      document.querySelectorAll("main .card, aside .card, .metric-card, .strategy-item, .mode-switch-bar, .main-grid").forEach((c) => {
+        c.style.opacity = "1";
+        c.style.visibility = "visible";
+      });
+      if (yieldChartInstance && typeof yieldChartInstance.render === "function") {
+        yieldChartInstance.render();
+      }
+    }, null, 0.6);
 
     tl.call(startContinuous, null, 1.8);
     tl.call(enableInteractions, null, 1.8);
@@ -1770,6 +1811,9 @@ function initNavSliderAndCalculator() {
       btnTabTradingBots.classList.remove("active");
       viewNavChart.style.display = "block";
       viewTradingBots.style.display = "none";
+      if (yieldChartInstance && typeof yieldChartInstance.render === "function") {
+        yieldChartInstance.render();
+      }
     });
 
     btnTabTradingBots.addEventListener("click", () => {
