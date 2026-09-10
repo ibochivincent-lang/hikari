@@ -9,6 +9,8 @@ members = [
     "policy_account",
     "mock_strategy",
     "blend_adapter",
+    "soroswap_adapter",
+    "fee_controller",
 ]
 
 [workspace.package]

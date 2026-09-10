@@ -10,7 +10,9 @@ $packages = @(
     "hikari-withdrawal-queue",
     "hikari-policy-account",
     "hikari-mock-strategy",
-    "hikari-blend-adapter"
+    "hikari-blend-adapter",
+    "hikari-soroswap-adapter",
+    "hikari-fee-controller"
 )
 
 $outDir = Join-Path $PSScriptRoot "..\contracts\wasm"
