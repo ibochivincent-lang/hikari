@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
 <body>
   <div class="container">
@@ -34,6 +35,27 @@
         </button>
       </div>
     </header>
+
+    <!-- Landing Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span>✨ Stellar Protocol 27 • Autonomous Liquid-Yield Engine</span>
+      </div>
+      <h2 class="hero-title">
+        Next-Generation <span class="gradient-text">Agentic Finance</span> on Stellar
+      </h2>
+      <p class="hero-description">
+        Hikari orchestrates multi-agent intelligence with deterministic Soroban policy guardrails. Deposit XLM to mint yield-bearing <strong>hXLM</strong>, optimized continuously across AMM and lending markets.
+      </p>
+      <div class="hero-actions">
+        <a href="#vaultForm" class="btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; width: auto; padding: 0.75rem 1.6rem;">
+          🚀 Launch Vault Portal
+        </a>
+        <button id="btnHeroDemo" class="btn-secondary">
+          ⚡ Simulate Agent Cycle
+        </button>
+      </div>
+    </section>
 
     <!-- Human Approval Alert (conditionally displayed by JS) -->
     <div id="approvalBanner" class="approval-banner">

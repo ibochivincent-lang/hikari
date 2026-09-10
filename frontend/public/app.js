@@ -44,12 +44,23 @@ const btnReject = document.getElementById("btnReject");
 
 const agentConsole = document.getElementById("agentConsole");
 const btnRunAgent = document.getElementById("btnRunAgent");
+const btnHeroDemo = document.getElementById("btnHeroDemo");
 
 function updateMetrics() {
   const nav = (state.totalAssets + VIRTUAL_ASSETS) / (state.totalShares + VIRTUAL_SHARES);
   tvlDisplay.innerText = `${state.totalAssets.toLocaleString()} XLM`;
   navDisplay.innerText = `${nav.toFixed(4)} XLM`;
   reserveDisplay.innerText = `${state.idleAssets.toLocaleString()} XLM`;
+}
+
+if (btnHeroDemo) {
+  btnHeroDemo.addEventListener("click", () => {
+    document.querySelector(".main-grid").scrollIntoView({ behavior: "smooth" });
+    if (typeof gsap !== "undefined") {
+      gsap.fromTo(btnHeroDemo, { scale: 0.95 }, { scale: 1, duration: 0.2, ease: "back.out(2)" });
+    }
+    btnRunAgent.click();
+  });
 }
 
 // Wallet Connection
@@ -98,26 +109,38 @@ function setConnectedWallet(address, providerName) {
   btnConnectWallet.style.border = "1px solid #34d399";
   btnConnectWallet.style.color = "#34d399";
 
+  if (typeof gsap !== "undefined") {
+    gsap.fromTo(btnConnectWallet, { scale: 0.88 }, { scale: 1, duration: 0.35, ease: "back.out(2)" });
+  }
+
   addLog("[Wallet]", `Connected via ${providerName}: ${shortAddr} (Balance: 10,000 XLM)`, "log-tag-success");
 }
 
-// Tab Switching
+// Tab Switching with smooth GSAP transition
 tabDeposit.addEventListener("click", () => {
+  if (state.activeTab === "deposit") return;
   state.activeTab = "deposit";
   tabDeposit.classList.add("active");
   tabWithdraw.classList.remove("active");
   inputLabel.innerText = "Deposit XLM Amount";
   btnSubmitAction.innerText = "Deposit XLM";
   calculateConversion();
+  if (typeof gsap !== "undefined") {
+    gsap.fromTo(".input-group", { autoAlpha: 0.5, y: -4 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "power2.out" });
+  }
 });
 
 tabWithdraw.addEventListener("click", () => {
+  if (state.activeTab === "withdraw") return;
   state.activeTab = "withdraw";
   tabWithdraw.classList.add("active");
   tabDeposit.classList.remove("active");
   inputLabel.innerText = "Redeem hXLM Shares";
   btnSubmitAction.innerText = "Redeem Shares";
   calculateConversion();
+  if (typeof gsap !== "undefined") {
+    gsap.fromTo(".input-group", { autoAlpha: 0.5, y: 4 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "power2.out" });
+  }
 });
 
 // Conversion Calculation
@@ -126,17 +149,15 @@ amountInput.addEventListener("input", calculateConversion);
 function calculateConversion() {
   const val = parseFloat(amountInput.value) || 0;
   if (state.activeTab === "deposit") {
-    // shares = val * (totalShares + 1000) / (totalAssets + 1)
     const shares = (val * (state.totalShares + VIRTUAL_SHARES)) / (state.totalAssets + VIRTUAL_ASSETS);
     estShares.innerText = `${shares.toFixed(2)} hXLM`;
   } else {
-    // assets = shares * (totalAssets + 1) / (totalShares + 1000)
     const assets = (val * (state.totalAssets + VIRTUAL_ASSETS)) / (state.totalShares + VIRTUAL_SHARES);
     estShares.innerText = `${assets.toFixed(2)} XLM`;
   }
 }
 
-// Form Submission
+// Form Submission with Pulse Flash
 vaultForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const val = parseFloat(amountInput.value);
@@ -163,9 +184,14 @@ vaultForm.addEventListener("submit", (e) => {
   amountInput.value = "";
   estShares.innerText = "0.00";
   updateMetrics();
+
+  if (typeof gsap !== "undefined") {
+    gsap.fromTo("#tvlDisplay", { scale: 1.15, color: "#38bdf8" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
+    gsap.fromTo("#reserveDisplay", { scale: 1.12, color: "#34d399" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
+  }
 });
 
-// Human Approval Flow
+// Human Approval Flow with GSAP
 btnApprove.addEventListener("click", () => {
   if (state.pendingProposal) {
     addLog(
@@ -173,7 +199,17 @@ btnApprove.addEventListener("click", () => {
       `Approved ${state.pendingProposal.id}: Deployed ${state.pendingProposal.amount} XLM to ${state.pendingProposal.strategy}.`,
       "log-tag-success"
     );
-    approvalBanner.style.display = "none";
+    if (typeof gsap !== "undefined") {
+      gsap.to(approvalBanner, {
+        y: -15,
+        autoAlpha: 0,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => { approvalBanner.style.display = "none"; }
+      });
+    } else {
+      approvalBanner.style.display = "none";
+    }
     state.pendingProposal = null;
   }
 });
@@ -185,7 +221,17 @@ btnReject.addEventListener("click", () => {
       `Rejected proposal ${state.pendingProposal.id}. Allocation cancelled.`,
       "log-tag-warn"
     );
-    approvalBanner.style.display = "none";
+    if (typeof gsap !== "undefined") {
+      gsap.to(approvalBanner, {
+        y: -15,
+        autoAlpha: 0,
+        duration: 0.3,
+        ease: "power2.in",
+        onComplete: () => { approvalBanner.style.display = "none"; }
+      });
+    } else {
+      approvalBanner.style.display = "none";
+    }
     state.pendingProposal = null;
   }
 });
@@ -194,6 +240,9 @@ btnReject.addEventListener("click", () => {
 btnRunAgent.addEventListener("click", () => {
   btnRunAgent.disabled = true;
   btnRunAgent.innerText = "Processing...";
+  if (typeof gsap !== "undefined") {
+    gsap.to(btnRunAgent, { scale: 0.95, duration: 0.15, yoyo: true, repeat: 1 });
+  }
 
   setTimeout(() => {
     addLog("[PaymentAgent]", "Triggered x402 payment: 0.001 USDC for fresh market feed.", "log-tag-agent");
@@ -216,6 +265,9 @@ btnRunAgent.addEventListener("click", () => {
     addLog("[AuditChain]", `Committed state hash: ${randomHash()}`, "log-tag-success");
     btnRunAgent.disabled = false;
     btnRunAgent.innerText = "▶ Trigger Cycle";
+    if (typeof gsap !== "undefined") {
+      gsap.fromTo(agentConsole, { borderColor: "rgba(56, 189, 248, 0.8)" }, { borderColor: "rgba(255, 255, 255, 0.08)", duration: 0.8 });
+    }
   }, 1900);
 });
 
@@ -232,11 +284,97 @@ function addLog(tag, message, tagClass) {
   `;
   agentConsole.appendChild(line);
   agentConsole.scrollTop = agentConsole.scrollHeight;
+
+  if (typeof gsap !== "undefined") {
+    gsap.from(line, {
+      y: 10,
+      autoAlpha: 0,
+      duration: 0.35,
+      ease: "power2.out"
+    });
+  }
 }
 
 function randomHash() {
   return Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
 }
 
+// Master GSAP Animations & Choreography
+function initGsapAnimations() {
+  if (typeof gsap === "undefined") return;
+
+  const mm = gsap.matchMedia();
+
+  mm.add("(prefers-reduced-motion: no-preference)", () => {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    // 1. Header & Brand Elements
+    tl.from("header", { y: -25, autoAlpha: 0, duration: 0.65 })
+      .from(".logo-icon", { scale: 0.4, rotation: -30, duration: 0.5, ease: "back.out(1.8)" }, "<0.15")
+      .from(".brand-badge", { scale: 0.8, autoAlpha: 0, duration: 0.35 }, "<0.2")
+      .from(".header-meta > *", { y: -12, autoAlpha: 0, stagger: 0.1, duration: 0.4 }, "<0.2");
+
+    // 2. Landing Hero Section
+    tl.from(".hero-badge", { y: 15, autoAlpha: 0, duration: 0.4 }, "-=0.2")
+      .from(".hero-title", { y: 25, autoAlpha: 0, duration: 0.6 }, "-=0.25")
+      .from(".hero-description", { y: 20, autoAlpha: 0, duration: 0.5 }, "-=0.3")
+      .from(".hero-actions .btn-primary, .hero-actions .btn-secondary", { y: 15, autoAlpha: 0, stagger: 0.1, duration: 0.4 }, "-=0.2");
+
+    // 3. Approval Banner (if present)
+    if (approvalBanner && approvalBanner.style.display !== "none") {
+      tl.from(approvalBanner, { y: -15, autoAlpha: 0, duration: 0.4, ease: "back.out(1.5)" }, "-=0.2");
+    }
+
+    // 4. Metric Cards & Animated Counters
+    tl.from(".metric-card", {
+      y: 35,
+      autoAlpha: 0,
+      stagger: 0.08,
+      duration: 0.55,
+      ease: "back.out(1.2)"
+    }, "-=0.2");
+
+    // Dynamic Counter rollup
+    const counter = { tvl: 0, nav: 1.0, reserve: 0 };
+    tl.to(counter, {
+      tvl: state.totalAssets,
+      nav: (state.totalAssets + VIRTUAL_ASSETS) / (state.totalShares + VIRTUAL_SHARES),
+      reserve: state.idleAssets,
+      duration: 1.2,
+      ease: "power2.out",
+      onUpdate: () => {
+        tvlDisplay.innerText = `${Math.round(counter.tvl).toLocaleString()} XLM`;
+        navDisplay.innerText = `${counter.nav.toFixed(4)} XLM`;
+        reserveDisplay.innerText = `${Math.round(counter.reserve).toLocaleString()} XLM`;
+      }
+    }, "<0.1");
+
+    // 5. Main Content Grid Cards
+    tl.from("main .card", { y: 30, autoAlpha: 0, stagger: 0.15, duration: 0.6, ease: "power2.out" }, "-=0.6")
+      .from(".strategy-item", { x: -20, autoAlpha: 0, stagger: 0.08, duration: 0.4, ease: "power2.out" }, "-=0.35")
+      .from("aside .card", { x: 30, autoAlpha: 0, stagger: 0.12, duration: 0.6, ease: "power2.out" }, "-=0.6");
+  });
+
+  // Hover micro-animations on interactive cards
+  document.querySelectorAll(".metric-card").forEach((card) => {
+    card.addEventListener("mouseenter", () => {
+      gsap.to(card, { y: -5, duration: 0.25, ease: "power2.out" });
+    });
+    card.addEventListener("mouseleave", () => {
+      gsap.to(card, { y: 0, duration: 0.25, ease: "power2.out" });
+    });
+  });
+
+  document.querySelectorAll(".strategy-item").forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      gsap.to(item, { x: 5, backgroundColor: "rgba(56, 189, 248, 0.05)", duration: 0.2, ease: "power1.out" });
+    });
+    item.addEventListener("mouseleave", () => {
+      gsap.to(item, { x: 0, backgroundColor: "rgba(255, 255, 255, 0.02)", duration: 0.2, ease: "power1.out" });
+    });
+  });
+}
+
 // Initial Run
 updateMetrics();
+initGsapAnimations();
