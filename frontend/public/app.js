@@ -888,11 +888,11 @@ let yieldChartInstance = null;
 if (typeof HikariYieldChart !== "undefined" && document.getElementById("yieldChartCanvas")) {
   yieldChartInstance = new HikariYieldChart("yieldChartCanvas");
 
-  document.querySelectorAll(".tf-btn").forEach((btn) => {
+  document.querySelectorAll(".chart-tab, .tf-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document.querySelectorAll(".tf-btn").forEach((b) => b.classList.remove("active"));
+      document.querySelectorAll(".chart-tab, .tf-btn").forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
-      const tf = btn.getAttribute("data-tf");
+      const tf = btn.getAttribute("data-tf") || btn.innerText.trim();
       if (yieldChartInstance) {
         yieldChartInstance.setTimeframe(tf);
       }
