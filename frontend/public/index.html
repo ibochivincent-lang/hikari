@@ -576,19 +576,19 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
         </div>
         <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.85rem;">
           <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
-            <h4 style="color: #fff; font-size: 0.92rem; margin-bottom: 0.3rem;">What is hXLM?</h4>
+            <h4 class="faq-modal-q">What is hXLM?</h4>
             <p style="color: var(--text-muted); line-height: 1.4;">
               hXLM is the SEP-41 compliant yield-bearing liquid staking token on Stellar. Holding hXLM continuously earns compounded yield from Blend lending, Phoenix CLAMM fees, and Jito MEV backruns.
             </p>
           </div>
           <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
-            <h4 style="color: #fff; font-size: 0.92rem; margin-bottom: 0.3rem;">How does unbonding work?</h4>
+            <h4 class="faq-modal-q">How does unbonding work?</h4>
             <p style="color: var(--text-muted); line-height: 1.4;">
               Under <strong>Turbo Mode</strong>, unstaking requests are settled immediately from the 15%+ liquid reserve buffer. If the queue is congested or market volatility spikes, requests are queued in FIFO order to protect the vault.
             </p>
           </div>
           <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
-            <h4 style="color: #fff; font-size: 0.92rem; margin-bottom: 0.3rem;">What is GateSeal and Dual Governance?</h4>
+            <h4 class="faq-modal-q">What is GateSeal and Dual Governance?</h4>
             <p style="color: var(--text-muted); line-height: 1.4;">
               Adopted directly from Lido, GateSeal is a one-shot circuit breaker that pauses contract allocations for 7 days during critical anomalies. Dual Governance empowers stakers with veto rights against malicious DAO proposals.
             </p>
@@ -732,8 +732,8 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
     <!-- Dashboard View Mode Switch: Simple 1-Click vs. Advanced Pro Mode -->
     <div class="mode-switch-bar">
       <div class="mode-switch-info">
-        <span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Dashboard View:</span>
-        <span id="currentViewModeText" style="font-size: 0.8rem; color: var(--purple-soft);">Pro Analytics Mode (AI Engine & Risk Active)</span>
+        <span class="mode-switch-title">Dashboard View:</span>
+        <span id="currentViewModeText" class="mode-switch-subtext">Advanced Pro Analytics Mode (AI Engine & Risk Telemetry Active)</span>
       </div>
       <div class="mode-toggle-group">
         <button id="btnSimpleMode" class="btn-mode-toggle"> Simple 1-Click</button>
@@ -995,14 +995,14 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             <div class="rationale-header">
               <div style="display: flex; align-items: center; gap: 0.4rem;">
                 <span></span>
-                <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">Autonomous Decision Rationale</span>
+                <span class="rationale-header-title">Autonomous Decision Rationale</span>
                 <span class="lido-chip chip-cyan" style="font-size: 0.6rem;">Live Telemetry</span>
               </div>
               <span id="rationaleConfidence" style="font-size: 0.72rem; color: var(--accent-emerald);">Policy Confidence: 98.4%</span>
             </div>
             <div id="rationaleStream" class="rationale-content">
-              <p style="margin: 0; font-size: 0.78rem; color: #94a3b8; line-height: 1.4;">
-                <strong style="color: #fff;">[YieldAgent]:</strong> Rebalanced 25,000 XLM into Phoenix CLAMM. Observed 87 bps cross-DEX spread exceeding threshold (25 bps). Portfolio 95% VaR remains healthy at 4.2% (safe boundary: &lt; 5.0%).
+              <p style="margin: 0; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+                <strong class="agent-name-tag">[YieldAgent]:</strong> Rebalanced 25,000 XLM into Phoenix CLAMM. Observed 87 bps cross-DEX spread exceeding threshold (25 bps). Portfolio 95% VaR remains healthy at 4.2% (safe boundary: &lt; 5.0%).
               </p>
             </div>
           </div>
@@ -1028,7 +1028,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
               </div>
               <div>
                 <div style="color: var(--text-muted); font-size: 0.72rem;">Target DEX Venues:</div>
-                <div style="font-size: 0.85rem; color: #fff; font-weight: 600;">Phoenix ↔ Soroswap</div>
+                <div class="mev-venue-text">Phoenix ↔ Soroswap</div>
               </div>
             </div>
 
@@ -1081,7 +1081,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.8rem; margin-bottom: 0.8rem; background: rgba(255,255,255,0.02); padding: 0.6rem; border-radius: 8px;">
               <div>
                 <span style="color: var(--text-dim); font-size: 0.72rem;">Last Settlement Asset:</span>
-                <div style="font-weight: 600; color: #fff;">USDC (SEP-41 SAC)</div>
+                <div class="x402-asset-text">USDC (SEP-41 SAC)</div>
               </div>
               <div>
                 <span style="color: var(--text-dim); font-size: 0.72rem;">Target Oracle Endpoint:</span>
@@ -1156,7 +1156,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
               <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem; font-size: 0.85rem;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
                   <span style="color: var(--text-muted);">You will receive:</span>
-                  <span id="estShares" style="font-weight: 600; color: #fff;">0.00 hXLM</span>
+                  <span id="estShares" class="est-shares-val">0.00 hXLM</span>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
                   <span style="color: var(--text-muted);">Safety Buffer Mode:</span>
@@ -1164,7 +1164,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
                 </div>
                 <div style="display: flex; justify-content: space-between;">
                   <span style="color: var(--text-muted);">Estimated Network Fee:</span>
-                  <span style="color: #fff;">~0.00001 XLM</span>
+                  <span class="est-fee-val">~0.00001 XLM</span>
                 </div>
               </div>
 
@@ -1211,7 +1211,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             </div>
             <div class="input-group">
               <label class="input-label">Select Origin Chain</label>
-              <select id="bridgeOriginSelect" class="input-field" style="background: rgba(20, 10, 38, 0.8); color: #fff; cursor: pointer;">
+              <select id="bridgeOriginSelect" class="input-field bridge-select" style="cursor: pointer;">
                 <option value="ethereum">Ethereum (Circle Domain 0)</option>
                 <option value="arbitrum" selected>Arbitrum (Circle Domain 3)</option>
                 <option value="solana">Solana (Circle Domain 5)</option>
@@ -1257,7 +1257,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             </div>
             <div>
               <div style="color: var(--text-muted); font-size: 0.75rem;">Strategy Registry:</div>
-              <a href="https://stellar.expert/explorer/testnet/contract/CB7EOUYL5V22KCUK27LACLMDYDQMBCJMNQUWSALEGBEZXEK4LH76VZFQ" target="_blank" style="color: #fff; text-decoration: none; word-break: break-all;">
+              <a href="https://stellar.expert/explorer/testnet/contract/CB7EOUYL5V22KCUK27LACLMDYDQMBCJMNQUWSALEGBEZXEK4LH76VZFQ" target="_blank" class="contract-explorer-link" style="text-decoration: none; word-break: break-all;">
                 CB7EOUY...VZFQ ↗
               </a>
             </div>
@@ -1298,7 +1298,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
           <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.85rem;">
             <div style="display: flex; justify-content: space-between;">
               <span style="color: var(--text-muted);">Management Fee:</span>
-              <span style="color: #fff;">0.50% annualized</span>
+              <span class="fee-stat-val">0.50% annualized</span>
             </div>
             <div style="display: flex; justify-content: space-between;">
               <span style="color: var(--text-muted);">Performance Fee:</span>
@@ -1310,7 +1310,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             </div>
             <div style="display: flex; justify-content: space-between;">
               <span style="color: var(--text-muted);">Protocol Treasury:</span>
-              <span style="color: #fff;">50% of fees routed</span>
+              <span class="fee-stat-val">50% of fees routed</span>
             </div>
           </div>
         </div>
@@ -1320,7 +1320,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
     <!-- Footer -->
     <footer>
       <div>Hikari Protocol • Built natively for Stellar & Soroban</div>
-      <div>Sole Contributor: <strong style="color: #fff;">ibochivincent-lang</strong></div>
+      <div>Sole Contributor: <strong class="footer-author">ibochivincent-lang</strong></div>
     </footer>
   </div>
 

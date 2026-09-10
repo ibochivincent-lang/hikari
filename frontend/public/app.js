@@ -993,28 +993,43 @@ function initDashboardViewModes() {
   const btnSimpleMode = document.getElementById("btnSimpleMode");
   const btnProMode = document.getElementById("btnProMode");
   const currentViewModeText = document.getElementById("currentViewModeText");
-  const mainCol = document.querySelector(".main-grid main");
-  const mainGrid = document.querySelector(".main-grid");
+  const vaultPortal = document.getElementById("vaultPortalSection");
+  const chartSection = document.getElementById("chartSection");
 
   function setViewMode(mode) {
     state.viewMode = mode;
     if (mode === "simple") {
       if (btnSimpleMode) btnSimpleMode.classList.add("active");
       if (btnProMode) btnProMode.classList.remove("active");
-      if (mainCol) mainCol.classList.add("simple-mode-hidden");
-      if (mainGrid) mainGrid.classList.add("simple-mode");
-      if (currentViewModeText) currentViewModeText.innerText = "Simple 1-Click Staking Mode (Streamlined)";
-      addLog("[Dashboard]", "Switched to Simple 1-Click mode for streamlined staking.", "log-tag-success");
+      if (currentViewModeText) currentViewModeText.innerText = "Simple 1-Click Staking Mode (Quick Presets Focused)";
+      addLog("[Dashboard]", "Switched to Simple 1-Click mode: 1-Click Staking portal focused with 100/500/1000 XLM presets.", "log-tag-success");
+
+      // Auto-switch to Stake tab if not already on it
+      const tabStake = document.getElementById("tabStake");
+      if (tabStake) tabStake.click();
+
+      // Highlight the vault portal with a soft glowing focus ring
+      if (vaultPortal) {
+        vaultPortal.classList.remove("portal-focus-ring");
+        void vaultPortal.offsetWidth; // trigger reflow
+        vaultPortal.classList.add("portal-focus-ring");
+        vaultPortal.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        setTimeout(() => vaultPortal.classList.remove("portal-focus-ring"), 3000);
+      }
     } else {
       if (btnProMode) btnProMode.classList.add("active");
       if (btnSimpleMode) btnSimpleMode.classList.remove("active");
-      if (mainCol) mainCol.classList.remove("simple-mode-hidden");
-      if (mainGrid) mainGrid.classList.remove("simple-mode");
-      if (currentViewModeText) currentViewModeText.innerText = "[SIM] Pro Analytics Mode (AI Engine & Risk Active)";
+      if (currentViewModeText) currentViewModeText.innerText = "Advanced Pro Analytics Mode (AI Engine & Risk Telemetry Active)";
       addLog("[Dashboard]", "Switched to Advanced Pro Mode: Real-time telemetry, risk engine & MEV monitors active.", "log-tag-agent");
-    }
-    if (typeof gsap !== "undefined") {
-      gsap.fromTo(".main-grid aside", { autoAlpha: 0.8, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.3 });
+
+      // Highlight the analytics section
+      if (chartSection) {
+        chartSection.classList.remove("portal-focus-ring");
+        void chartSection.offsetWidth;
+        chartSection.classList.add("portal-focus-ring");
+        chartSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        setTimeout(() => chartSection.classList.remove("portal-focus-ring"), 3000);
+      }
     }
   }
 
