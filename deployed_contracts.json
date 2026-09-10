@@ -1,0 +1,46 @@
+{
+  "network": "testnet",
+  "passphrase": "Test SDF Network ; September 2015",
+  "rpcUrl": "https://soroban-testnet.stellar.org",
+  "horizonUrl": "https://horizon-testnet.stellar.org",
+  "contracts": {
+    "vault": {
+      "id": "CCR6NFKICAK4KW2SVKU4UESG5SR6RMYRVUDDO6K7BB6NUWYSMGQS5KT5",
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CCR6NFKICAK4KW2SVKU4UESG5SR6RMYRVUDDO6K7BB6NUWYSMGQS5KT5"
+    },
+    "token": {
+      "id": "CA36LWOMIDPXFMVTQR6TODLSAO6QFNSYK6UBP5CS5MWGC2UHIDT23QLH",
+      "symbol": "hXLM",
+      "decimals": 7,
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CA36LWOMIDPXFMVTQR6TODLSAO6QFNSYK6UBP5CS5MWGC2UHIDT23QLH"
+    },
+    "strategyRegistry": {
+      "id": "CB7EOUYL5V22KCUK27LACLMDYDQMBCJMNQUWSALEGBEZXEK4LH76VZFQ",
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CB7EOUYL5V22KCUK27LACLMDYDQMBCJMNQUWSALEGBEZXEK4LH76VZFQ"
+    },
+    "withdrawalQueue": {
+      "id": "CBTICEQ2OQ5KTCCWPYT4Q3SROZORZCJBSHR2J4RSGI5TESKWEW34TOXQ",
+      "cooldownLedgers": 50,
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CBTICEQ2OQ5KTCCWPYT4Q3SROZORZCJBSHR2J4RSGI5TESKWEW34TOXQ"
+    },
+    "policyAccount": {
+      "id": "CAPXDOMRO7U6XGOSNWKP6YBY7GMBRH7FPTYWTAW6CRGPMYIZHIJDO3UP",
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CAPXDOMRO7U6XGOSNWKP6YBY7GMBRH7FPTYWTAW6CRGPMYIZHIJDO3UP"
+    },
+    "blendAdapter": {
+      "id": "CDLG3GFOQ6WFVTFXQCW3ZSJMMMXIEQVEGZKMERS4ITBDZOHKXPRB5EAL",
+      "riskTier": 1,
+      "capStroops": "500000000000",
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CDLG3GFOQ6WFVTFXQCW3ZSJMMMXIEQVEGZKMERS4ITBDZOHKXPRB5EAL"
+    },
+    "underlyingNativeXlmSac": {
+      "id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+      "explorer": "https://stellar.expert/explorer/testnet/contract/CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC"
+    }
+  },
+  "identities": {
+    "admin": "GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN",
+    "agent": "GAQZQABZADRIHXJSNS75OLEKNE65ZFU273PBSA6H23IHILQVFK3VQ5L2"
+  },
+  "author": "ibochivincent-lang"
+}
