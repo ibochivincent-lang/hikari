@@ -97,8 +97,14 @@ if (btnHeroDemo) {
   });
 }
 
-// Wallet Connection
-btnConnectWallet.addEventListener("click", async () => {
+// Modal Elements
+const walletModal = document.getElementById("walletModal");
+const btnCloseWalletModal = document.getElementById("btnCloseWalletModal");
+const optPasskey = document.getElementById("optPasskey");
+const optFreighter = document.getElementById("optFreighter");
+
+// Wallet Connection & Modal Trigger
+btnConnectWallet.addEventListener("click", () => {
   if (state.wallet.connected) {
     state.wallet.connected = false;
     state.wallet.address = null;
@@ -108,26 +114,62 @@ btnConnectWallet.addEventListener("click", async () => {
     addLog("[Wallet]", "Disconnected from wallet session.", "log-tag-warn");
     return;
   }
-
-  try {
-    if (window.freighterApi && typeof window.freighterApi.isConnected === "function") {
-      const isConnected = await window.freighterApi.isConnected();
-      if (isConnected) {
-        const address = await window.freighterApi.getPublicKey();
-        setConnectedWallet(address, "Freighter (Extension)");
-        return;
-      }
-    }
-  } catch (err) {
-    console.warn("Freighter check error:", err);
+  if (walletModal) {
+    walletModal.style.display = "flex";
   }
-
-  const randomSuffix = Array.from({ length: 4 }, () =>
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
-  ).join("");
-  const demoAddress = `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLL${randomSuffix}`;
-  setConnectedWallet(demoAddress, "Stellar Testnet Account");
 });
+
+if (btnCloseWalletModal) {
+  btnCloseWalletModal.addEventListener("click", () => {
+    walletModal.style.display = "none";
+  });
+}
+
+if (optPasskey) {
+  optPasskey.addEventListener("click", async () => {
+    optPasskey.style.opacity = "0.7";
+    addLog("[Passkey]", "Prompting device biometric authentication (WebAuthn)...", "log-tag-agent");
+    try {
+      const passkeyAuth = new PasskeySmartAccount();
+      const session = await passkeyAuth.loginPasskey();
+      setConnectedWallet(session.smartAddress, "Biometric Passkey (SEP-43)");
+      addLog("[Passkey]", `Authenticated! Smart Account: ${session.smartAddress.slice(0, 16)}...`, "log-tag-success");
+    } catch (err) {
+      addLog("[Passkey]", `Authentication error: ${err.message}`, "log-tag-warn");
+    } finally {
+      optPasskey.style.opacity = "1";
+      if (walletModal) walletModal.style.display = "none";
+    }
+  });
+}
+
+if (optFreighter) {
+  optFreighter.addEventListener("click", async () => {
+    optFreighter.style.opacity = "0.7";
+    try {
+      if (window.freighterApi && typeof window.freighterApi.isConnected === "function") {
+        const isConnected = await window.freighterApi.isConnected();
+        if (isConnected) {
+          const address = await window.freighterApi.getPublicKey();
+          setConnectedWallet(address, "Freighter (Extension)");
+          addLog("[Freighter]", `Connected extension account: ${address.slice(0, 8)}...`, "log-tag-success");
+          return;
+        }
+      }
+      const randomSuffix = Array.from({ length: 4 }, () =>
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
+      ).join("");
+      const demoAddress = `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLL${randomSuffix}`;
+      setConnectedWallet(demoAddress, "Stellar Testnet Account");
+      addLog("[Freighter]", `Connected testnet account: ${demoAddress.slice(0, 8)}...`, "log-tag-success");
+    } catch (err) {
+      console.warn("Freighter error:", err);
+    } finally {
+      optFreighter.style.opacity = "1";
+      if (walletModal) walletModal.style.display = "none";
+    }
+  });
+}
 
 function setConnectedWallet(address, providerName) {
   state.wallet.connected = true;
@@ -138,6 +180,8 @@ function setConnectedWallet(address, providerName) {
   const shortAddr = `${address.slice(0, 4)}...${address.slice(-4)}`;
   btnConnectWallet.innerText = `🟢 ${shortAddr}`;
   btnConnectWallet.style.background = "rgba(52, 211, 153, 0.2)";
+  btnConnectWallet.title = `Connected via ${providerName}: ${address}`;
+
   btnConnectWallet.style.border = "1px solid #34d399";
   btnConnectWallet.style.color = "#34d399";
 
@@ -650,3 +694,21 @@ function initGsapAnimations() {
 // Initial Run
 updateMetrics();
 initGsapAnimations();
+
+// Initialize Canvas Yield & NAV Chart
+let yieldChartInstance = null;
+if (typeof HikariYieldChart !== "undefined" && document.getElementById("yieldChartCanvas")) {
+  yieldChartInstance = new HikariYieldChart("yieldChartCanvas");
+
+  document.querySelectorAll(".tf-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tf-btn").forEach((b) => b.classList.remove("active"));
+      btn.classList.add("active");
+      const tf = btn.getAttribute("data-tf");
+      if (yieldChartInstance) {
+        yieldChartInstance.setTimeframe(tf);
+      }
+    });
+  });
+}
+

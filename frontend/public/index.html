@@ -40,8 +40,47 @@
       </div>
     </header>
 
+    <!-- Wallet Selection Modal (Passkey / WebAuthn & Freighter) -->
+    <div id="walletModal" class="modal-backdrop" style="display: none;">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 style="font-size: 1.1rem; font-weight: 700;">Connect to Hikari Protocol</h3>
+          <button id="btnCloseWalletModal" class="modal-close-btn">&times;</button>
+        </div>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1.2rem;">
+          Select your preferred authentication method to interact with Soroban contracts on Stellar Testnet.
+        </p>
+        
+        <div class="wallet-options">
+          <div id="optPasskey" class="wallet-option-card">
+            <div class="wallet-option-icon">🔑</div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 0.4rem;">
+                <span>Biometric Passkey</span>
+                <span class="badge-recommended">Recommended</span>
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">
+                Instant 1-click staking with Windows Hello, Touch ID, or Face ID (No extension needed)
+              </div>
+            </div>
+          </div>
+
+          <div id="optFreighter" class="wallet-option-card">
+            <div class="wallet-option-icon">🚀</div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 0.95rem;">Freighter Wallet</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">
+                Connect using the official Stellar browser extension
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Landing Hero Section -->
     <section class="hero-section">
+
       <div class="hero-badge">
         <span>✨ Stellar Protocol 27 • Autonomous Liquid-Yield Engine</span>
       </div>
@@ -101,8 +140,47 @@
     <div class="main-grid">
       <!-- Left Column: Strategy Registry & AI Console -->
       <main>
+        <!-- Cumulative Yield & NAV Progression Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">
+                <span>📈 Cumulative Yield & NAV Progression</span>
+              </h2>
+              <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                Compounding hXLM / XLM exchange rate & stacked protocol yields
+              </div>
+            </div>
+            <div class="timeframe-buttons">
+              <button class="tf-btn" data-tf="7D">7D</button>
+              <button class="tf-btn active" data-tf="30D">30D</button>
+              <button class="tf-btn" data-tf="90D">90D</button>
+            </div>
+          </div>
+
+          <div class="chart-container" style="position: relative; width: 100%; height: 210px; margin: 0.8rem 0;">
+            <canvas id="yieldChartCanvas" style="width: 100%; height: 100%;"></canvas>
+          </div>
+
+          <div class="chart-summary-bar">
+            <div class="chart-stat">
+              <span class="stat-lbl">Blend Money Market</span>
+              <span class="stat-val" style="color: var(--accent-amber);">5.20% APY</span>
+            </div>
+            <div class="chart-stat">
+              <span class="stat-lbl">Phoenix CLAMM Fees</span>
+              <span class="stat-val" style="color: var(--accent-cyan);">6.40% APY</span>
+            </div>
+            <div class="chart-stat">
+              <span class="stat-lbl">Jito MEV Backrun Boost</span>
+              <span class="stat-val" style="color: var(--accent-emerald);">+1.80% Net APY</span>
+            </div>
+          </div>
+        </div>
+
         <!-- Strategy Registry -->
         <div class="card">
+
           <div class="card-header">
             <h2 class="card-title">
               <span>🏛️ Approved Strategy Adapters</span>
@@ -441,6 +519,9 @@
     </footer>
   </div>
 
+  <script src="passkey.js"></script>
+  <script src="chart.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
+
