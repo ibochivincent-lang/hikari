@@ -121,11 +121,11 @@ class HikariYieldChart {
       return { x, y, label: d.label, nav: d.nav };
     });
 
-    // Fill area under curve with copper gradient
+    // Fill area under curve with violet/lavender gradient
     const gradient = ctx.createLinearGradient(0, padding.top, 0, padding.top + chartH);
-    gradient.addColorStop(0, isLight ? "rgba(212, 148, 90, 0.40)" : "rgba(184, 115, 51, 0.45)");
-    gradient.addColorStop(0.6, isLight ? "rgba(232, 184, 138, 0.15)" : "rgba(201, 132, 90, 0.15)");
-    gradient.addColorStop(1, "rgba(184, 115, 51, 0.0)");
+    gradient.addColorStop(0, "rgba(139, 47, 230, 0.42)");
+    gradient.addColorStop(0.6, "rgba(192, 132, 252, 0.12)");
+    gradient.addColorStop(1, "rgba(139, 47, 230, 0.0)");
 
     ctx.beginPath();
     ctx.moveTo(points[0].x, padding.top + chartH);
@@ -135,7 +135,7 @@ class HikariYieldChart {
     ctx.fillStyle = gradient;
     ctx.fill();
 
-    // Stroke curve in copper/bronze
+    // Stroke curve in vibrant violet / lavender
     ctx.beginPath();
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 0; i < points.length - 1; i++) {
@@ -144,9 +144,12 @@ class HikariYieldChart {
       ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
     }
     ctx.lineTo(points[points.length - 1].x, points[points.length - 1].y);
-    ctx.strokeStyle = isLight ? "#d4945a" : "#c9845a";
+    ctx.strokeStyle = "#c084fc";
     ctx.lineWidth = 3;
+    ctx.shadowColor = "rgba(192, 132, 252, 0.6)";
+    ctx.shadowBlur = 8;
     ctx.stroke();
+    ctx.shadowBlur = 0;
 
     // 3. Draw points & X-axis labels
     ctx.textAlign = "center";
@@ -154,14 +157,14 @@ class HikariYieldChart {
       // Glow dot
       ctx.beginPath();
       ctx.arc(p.x, p.y, 4.5, 0, Math.PI * 2);
-      ctx.fillStyle = "#b87333";
+      ctx.fillStyle = "#e9d5ff";
       ctx.fill();
-      ctx.strokeStyle = isLight ? "#ffffff" : "#1c1c1e";
+      ctx.strokeStyle = "#8b2fe6";
       ctx.lineWidth = 2;
       ctx.stroke();
 
       // Label below
-      ctx.fillStyle = isLight ? "rgba(110, 110, 110, 0.85)" : "rgba(168, 168, 168, 0.8)";
+      ctx.fillStyle = isLight ? "rgba(110, 110, 110, 0.85)" : "rgba(233, 213, 255, 0.75)";
       ctx.fillText(p.label, p.x, height - 10);
     });
   }

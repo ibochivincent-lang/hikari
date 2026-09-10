@@ -27,16 +27,16 @@ async function fundAccount(publicKey) {
     if (res.ok) {
       console.log(`✓ Friendbot funding confirmed.`);
     } else {
-      console.log(`⚠️ Friendbot returned status: ${res.statusText} (Account may already exist).`);
+      console.log(`[WARN] Friendbot returned status: ${res.statusText} (Account may already exist).`);
     }
   } catch (e) {
-    console.log(`⚠️ Friendbot call failed: ${e.message}`);
+    console.log(`[WARN] Friendbot call failed: ${e.message}`);
   }
 }
 
 async function verifyContracts(config) {
   console.log("\n================================================================================");
-  console.log("🔍 [HIKARI AUDIT] Verifying Live Stellar Testnet Contracts");
+  console.log("[HIKARI AUDIT] Verifying Live Stellar Testnet Contracts");
   console.log("================================================================================");
 
   const { vault, token, strategyRegistry, withdrawalQueue, gateSeal, blendAdapter, phoenixAdapter } = config.contracts;
@@ -48,27 +48,27 @@ async function verifyContracts(config) {
     const totalSharesRaw = runCmd(`stellar contract invoke --id ${vault.id} --source hikari-admin --network testnet -- total_shares`);
     const assets = Number(JSON.parse(totalAssetsRaw.split("\n").pop().trim())) / 1e7;
     const shares = Number(JSON.parse(totalSharesRaw.split("\n").pop().trim())) / 1e7;
-    console.log(`   ✓ Total Assets: ${assets.toFixed(4)} XLM`);
-    console.log(`   ✓ Total Shares: ${shares.toFixed(4)} hXLM`);
-    console.log(`   ✓ NAV / Share:  ${shares > 0 ? (assets / shares).toFixed(4) : "1.0000"} XLM`);
+    console.log(`   [OK] Total Assets: ${assets.toFixed(4)} XLM`);
+    console.log(`   [OK] Total Shares: ${shares.toFixed(4)} hXLM`);
+    console.log(`   [OK] NAV / Share:  ${shares > 0 ? (assets / shares).toFixed(4) : "1.0000"} XLM`);
 
     console.log(`\n2. GateSeal Circuit Breaker (${gateSeal.id}):`);
     const isSealedRaw = runCmd(`stellar contract invoke --id ${gateSeal.id} --source hikari-admin --network testnet -- is_sealed`);
     const isSealed = JSON.parse(isSealedRaw.split("\n").pop().trim());
-    console.log(`   ✓ Sealed Status: ${isSealed ? "🚨 SEALED (Allocations Frozen)" : "🟢 UNSEALED (System Nominal)"}`);
+    console.log(`   [OK] Sealed Status: ${isSealed ? "[SEALED] (Allocations Frozen)" : "[UNSEALED] (System Nominal)"}`);
 
     console.log(`\n3. Blend Protocol Adapter (${blendAdapter.id}):`);
     const blendValRaw = runCmd(`stellar contract invoke --id ${blendAdapter.id} --source hikari-admin --network testnet -- total_value`);
     const blendVal = Number(JSON.parse(blendValRaw.split("\n").pop().trim())) / 1e7;
-    console.log(`   ✓ Blend Collateral Value: ${blendVal.toFixed(4)} XLM`);
+    console.log(`   [OK] Blend Collateral Value: ${blendVal.toFixed(4)} XLM`);
 
     console.log(`\n4. Phoenix CLAMM Adapter (${phoenixAdapter.id}):`);
     const phxValRaw = runCmd(`stellar contract invoke --id ${phoenixAdapter.id} --source hikari-admin --network testnet -- total_value`);
     const phxVal = Number(JSON.parse(phxValRaw.split("\n").pop().trim())) / 1e7;
-    console.log(`   ✓ Phoenix Concentrated Position: ${phxVal.toFixed(4)} XLM`);
+    console.log(`   [OK] Phoenix Concentrated Position: ${phxVal.toFixed(4)} XLM`);
 
     console.log("\n================================================================================");
-    console.log("✅ All tested Testnet contracts are active, responding, and state-verified!");
+    console.log("[SUCCESS] All tested Testnet contracts are active, responding, and state-verified!");
     console.log("================================================================================\n");
   } catch (err) {
     console.error("Verification encounter error:", err.message);
@@ -77,7 +77,7 @@ async function verifyContracts(config) {
 
 async function main() {
   console.log("================================================================================");
-  console.log("🌟 [HIKARI] Stellar Testnet Deployment & Operations Suite");
+  console.log("[HIKARI] Stellar Testnet Deployment & Operations Suite");
   console.log("Author & Maintainer: ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>");
   console.log("================================================================================");
 

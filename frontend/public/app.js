@@ -160,7 +160,7 @@ btnConnectWallet.addEventListener("click", () => {
     if (btnConnectWalletText) {
       btnConnectWalletText.innerText = "Connect Wallet";
     } else {
-      btnConnectWallet.innerText = "🔗 Connect Wallet";
+      btnConnectWallet.innerText = "Connect Wallet";
     }
     btnConnectWallet.style.background = "";
     btnConnectWallet.style.borderColor = "";
@@ -267,9 +267,9 @@ function setConnectedWallet(address, providerName) {
   const shortAddr = `${address.slice(0, 4)}...${address.slice(-4)}`;
   const btnConnectWalletText = document.getElementById("btnConnectWalletText");
   if (btnConnectWalletText) {
-    btnConnectWalletText.innerText = `🟢 ${shortAddr}`;
+    btnConnectWalletText.innerText = `Connected: ${shortAddr}`;
   } else {
-    btnConnectWallet.innerText = `🟢 ${shortAddr}`;
+    btnConnectWallet.innerText = `Connected: ${shortAddr}`;
   }
   btnConnectWallet.style.background = "rgba(52, 211, 153, 0.2)";
   btnConnectWallet.title = `Connected via ${providerName}: ${address}`;
@@ -390,7 +390,7 @@ if (btnBridgeAction) {
       state.totalAssets += Math.round(amount / 0.125); // XLM equivalent
       updateMetrics();
       btnBridgeAction.disabled = false;
-      btnBridgeAction.innerText = "🌉 Bridge & Stake to hXLM";
+      btnBridgeAction.innerText = "Bridge & Stake to hXLM";
     }, 1800);
   });
 }
@@ -418,7 +418,7 @@ if (btnTestX402) {
       addLog("[x402]", "x402 payment settled locally.", "log-tag-success");
     } finally {
       btnTestX402.disabled = false;
-      btnTestX402.innerText = "⚡ Query Oracle (x402)";
+      btnTestX402.innerText = "Query Oracle (x402)";
     }
   });
 }
@@ -565,7 +565,7 @@ vaultForm.addEventListener("submit", (e) => {
   updateBalanceLabel();
 
   if (typeof gsap !== "undefined") {
-    gsap.fromTo("#tvlDisplay", { scale: 1.15, color: "#38bdf8" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
+    gsap.fromTo("#tvlDisplay", { scale: 1.15, color: "#c084fc" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
     gsap.fromTo("#reserveDisplay", { scale: 1.12, color: "#34d399" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
   }
 });
@@ -643,7 +643,7 @@ async function applyTelemetry(data) {
     const cb = data.circuitBreaker;
     if (cb.isGateSealed || cb.isBunkerMode) {
       if (circuitStateBadge) {
-        circuitStateBadge.innerHTML = `<span class="mode-dot dot-bunker"></span> 🚨 GATE SEALED (Haircut: ${cb.haircutBps / 100}%)`;
+        circuitStateBadge.innerHTML = `<span class="mode-dot dot-bunker"></span> [ALERT] GATE SEALED (Haircut: ${cb.haircutBps / 100}%)`;
         circuitStateBadge.style.background = "rgba(244, 63, 94, 0.15)";
         circuitStateBadge.style.borderColor = "rgba(244, 63, 94, 0.4)";
         circuitStateBadge.style.color = "var(--accent-rose)";
@@ -738,9 +738,9 @@ btnRunAgent.addEventListener("click", async () => {
     addLog("[Agent]", `Cycle completed locally.`, "log-tag-warn");
   } finally {
     btnRunAgent.disabled = false;
-    btnRunAgent.innerText = "▶ Trigger Cycle";
+    btnRunAgent.innerText = "Trigger Cycle";
     if (typeof gsap !== "undefined") {
-      gsap.fromTo(agentConsole, { borderColor: "rgba(56, 189, 248, 0.8)" }, { borderColor: "rgba(255, 255, 255, 0.08)", duration: 0.8 });
+      gsap.fromTo(agentConsole, { borderColor: "rgba(192, 132, 252, 0.8)" }, { borderColor: "rgba(255, 255, 255, 0.08)", duration: 0.8 });
     }
   }
 });
@@ -750,9 +750,9 @@ if (btnSimulateShock) {
   btnSimulateShock.addEventListener("click", async () => {
     btnSimulateShock.disabled = true;
     try {
-      addLog("[RiskEngine]", "⚠️ CRITICAL DRAWDOWN (16.5%) DETECTED IN DEFI POOLS!", "log-tag-warn");
-      addLog("[GateSeal]", "🚨 GateSeal tripped! All strategy allocations frozen for 10,000 ledgers.", "log-tag-warn");
-      addLog("[WithdrawalQueue]", "🛡️ Bunker Mode ENGAGED. Haircut of 16.5% applied to prevent run on idle reserves.", "log-tag-warn");
+      addLog("[RiskEngine]", "[WARN] CRITICAL DRAWDOWN (16.5%) DETECTED IN DEFI POOLS!", "log-tag-warn");
+      addLog("[GateSeal]", "[ALERT] GateSeal tripped! All strategy allocations frozen for 10,000 ledgers.", "log-tag-warn");
+      addLog("[WithdrawalQueue]", "[SECURITY] Bunker Mode ENGAGED. Haircut of 16.5% applied to prevent run on idle reserves.", "log-tag-warn");
       pushDecisionRationale(
         "RiskEngine",
         "EMERGENCY DE-RISKING: Drawdown 16.5% breached 15.0% threshold. GateSeal locked Soroswap and Blend allocations. Vault transitioned to Bunker Mode with 16.5% FIFO redemption haircut.",
@@ -770,7 +770,7 @@ if (btnResetCircuit) {
   btnResetCircuit.addEventListener("click", async () => {
     btnResetCircuit.disabled = true;
     try {
-      addLog("[Governance]", "🏛️ Timelock expired & DAO verified collateral recovery.", "log-tag-success");
+      addLog("[Governance]", "[GOV] Timelock expired & DAO verified collateral recovery.", "log-tag-success");
       addLog("[GateSeal]", "GateSeal unsealed. Normal rebalancing resumed.", "log-tag-success");
       addLog("[WithdrawalQueue]", "Bunker Mode lifted. Turbo Mode 0% haircut restored.", "log-tag-success");
       pushDecisionRationale(
@@ -883,7 +883,7 @@ function initGsapAnimations() {
 
   document.querySelectorAll(".strategy-item").forEach((item) => {
     item.addEventListener("mouseenter", () => {
-      gsap.to(item, { x: 5, backgroundColor: "rgba(56, 189, 248, 0.05)", duration: 0.2, ease: "power1.out" });
+      gsap.to(item, { x: 5, backgroundColor: "rgba(139, 47, 230, 0.08)", duration: 0.2, ease: "power1.out" });
     });
     item.addEventListener("mouseleave", () => {
       gsap.to(item, { x: 0, backgroundColor: "rgba(255, 255, 255, 0.02)", duration: 0.2, ease: "power1.out" });
@@ -913,12 +913,10 @@ if (typeof HikariYieldChart !== "undefined" && document.getElementById("yieldCha
 }
 
 // ==========================================
-// Lido Mega-Menu & Navigation Interactions
+// TopNav Interactions (Clean Typed Navigation)
 // ==========================================
-function initLidoMenu() {
+function initTopNav() {
   const mainHeader = document.getElementById("mainHeader");
-  const btnMobileMenuToggle = document.getElementById("btnMobileMenuToggle");
-  const lidoMobileDrawer = document.getElementById("lidoMobileDrawer");
 
   // Sticky Header Scroll Effect
   if (mainHeader) {
@@ -927,181 +925,22 @@ function initLidoMenu() {
     });
   }
 
-  // Mobile Hamburger Menu Toggle
-  if (btnMobileMenuToggle && lidoMobileDrawer) {
-    btnMobileMenuToggle.addEventListener("click", () => {
-      const isClosed = lidoMobileDrawer.style.display === "none" || !lidoMobileDrawer.style.display;
-      lidoMobileDrawer.style.display = isClosed ? "block" : "none";
-      btnMobileMenuToggle.classList.toggle("open", isClosed);
-      if (isClosed && typeof gsap !== "undefined") {
-        gsap.from(".lido-accordion-item", {
-          y: -10,
-          opacity: 0,
-          stagger: 0.05,
-          duration: 0.25,
-          ease: "power2.out"
-        });
-      }
-    });
-  }
-
-  // Mobile Accordion Items
-  document.querySelectorAll(".lido-accordion-trigger").forEach((trigger) => {
-    trigger.addEventListener("click", () => {
-      const body = trigger.nextElementSibling;
-      if (body) {
-        const isShown = body.style.display === "flex";
-        body.style.display = isShown ? "none" : "flex";
-        const chevron = trigger.querySelector(".chevron-icon");
-        if (chevron) {
-          chevron.style.transform = isShown ? "rotate(0deg)" : "rotate(180deg)";
-        }
-      }
-    });
-  });
-
-  // Action Dispatcher for Lido Menu Cards & Drawer Links
-  document.querySelectorAll(".lido-menu-card, .lido-drawer-link, .lido-feature-btn").forEach((elem) => {
-    elem.addEventListener("click", (e) => {
-      const action = elem.getAttribute("data-action");
-      const href = elem.getAttribute("href");
-
-      if (action) {
-        if (action === "tab-stake") switchTab("stake");
-        else if (action === "tab-request") switchTab("request");
-        else if (action === "tab-claim") switchTab("claim");
-        else if (action === "tab-basket") switchTab("basket");
-        else if (action === "tab-bridge") switchTab("bridge");
-        else if (action === "opt-passkey") {
-          const optPasskey = document.getElementById("optPasskey");
-          if (optPasskey) optPasskey.click();
-        }
-      }
-
-      // Smooth scroll if anchor
-      if (href && href.startsWith("#") && href.length > 1) {
+  // Smooth scroll for topnav links
+  document.querySelectorAll(".topnav__links a").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (href && href.startsWith("#") && href.length > 1) {
+      link.addEventListener("click", (e) => {
         e.preventDefault();
         const target = document.querySelector(href);
         if (target) {
           target.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-      }
-
-      // Close mobile drawer if open
-      if (lidoMobileDrawer && lidoMobileDrawer.style.display === "block") {
-        lidoMobileDrawer.style.display = "none";
-        if (btnMobileMenuToggle) btnMobileMenuToggle.classList.remove("open");
-      }
-    });
-  });
-
-  // Modals: SDK Modal
-  const sdkModal = document.getElementById("sdkModal");
-  const btnCloseSdkModal = document.getElementById("btnCloseSdkModal");
-  const btnDoneSdk = document.getElementById("btnDoneSdk");
-  const openSdkButtons = [
-    document.getElementById("btnOpenSdkModal"),
-    document.getElementById("btnFeatureOpenSdk"),
-    document.getElementById("btnDrawerOpenSdk"),
-  ];
-
-  openSdkButtons.forEach((btn) => {
-    if (btn) {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (sdkModal) sdkModal.style.display = "flex";
-        if (lidoMobileDrawer) lidoMobileDrawer.style.display = "none";
-      });
-    }
-  });
-
-  if (btnCloseSdkModal && sdkModal) btnCloseSdkModal.addEventListener("click", () => sdkModal.style.display = "none");
-  if (btnDoneSdk && sdkModal) btnDoneSdk.addEventListener("click", () => sdkModal.style.display = "none");
-
-  // Copy Install Command
-  const btnCopyInstall = document.getElementById("btnCopyInstall");
-  const installCmdText = document.getElementById("installCmdText");
-  if (btnCopyInstall && installCmdText) {
-    btnCopyInstall.addEventListener("click", () => {
-      navigator.clipboard.writeText(installCmdText.innerText).then(() => {
-        const old = btnCopyInstall.innerText;
-        btnCopyInstall.innerText = "✓ Copied!";
-        btnCopyInstall.style.color = "var(--accent-emerald)";
-        setTimeout(() => {
-          btnCopyInstall.innerText = old;
-          btnCopyInstall.style.color = "";
-        }, 2000);
-      });
-    });
-  }
-
-  // Modals: Invariants Modal
-  const invariantsModal = document.getElementById("invariantsModal");
-  const btnCloseInvariantsModal = document.getElementById("btnCloseInvariantsModal");
-  const btnDoneInvariants = document.getElementById("btnDoneInvariants");
-  const openInvariantsButtons = [
-    document.getElementById("btnOpenInvariantsModal"),
-    document.getElementById("btnDrawerOpenInvariants"),
-  ];
-
-  openInvariantsButtons.forEach((btn) => {
-    if (btn) {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (invariantsModal) invariantsModal.style.display = "flex";
-        if (lidoMobileDrawer) lidoMobileDrawer.style.display = "none";
-      });
-    }
-  });
-
-  if (btnCloseInvariantsModal && invariantsModal) btnCloseInvariantsModal.addEventListener("click", () => invariantsModal.style.display = "none");
-  if (btnDoneInvariants && invariantsModal) btnDoneInvariants.addEventListener("click", () => invariantsModal.style.display = "none");
-
-  // Modals: FAQ Modal
-  const faqModal = document.getElementById("faqModal");
-  const btnCloseFaqModal = document.getElementById("btnCloseFaqModal");
-  const btnDoneFaq = document.getElementById("btnDoneFaq");
-  const openFaqButtons = [
-    document.getElementById("btnOpenFaqModal"),
-    document.getElementById("btnDrawerOpenFaq"),
-  ];
-
-  openFaqButtons.forEach((btn) => {
-    if (btn) {
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        if (faqModal) faqModal.style.display = "flex";
-        if (lidoMobileDrawer) lidoMobileDrawer.style.display = "none";
-      });
-    }
-  });
-
-  if (btnCloseFaqModal && faqModal) btnCloseFaqModal.addEventListener("click", () => faqModal.style.display = "none");
-  if (btnDoneFaq && faqModal) btnDoneFaq.addEventListener("click", () => faqModal.style.display = "none");
-
-  // Global Backdrop Click & Escape Key to Dismiss
-  window.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (sdkModal) sdkModal.style.display = "none";
-      if (invariantsModal) invariantsModal.style.display = "none";
-      if (faqModal) faqModal.style.display = "none";
-      if (lidoMobileDrawer) {
-        lidoMobileDrawer.style.display = "none";
-        if (btnMobileMenuToggle) btnMobileMenuToggle.classList.remove("open");
-      }
-    }
-  });
-
-  [sdkModal, invariantsModal, faqModal].forEach((m) => {
-    if (m) {
-      m.addEventListener("click", (e) => {
-        if (e.target === m) m.style.display = "none";
       });
     }
   });
 }
 
-initLidoMenu();
+initTopNav();
 
 // Multi-Vault Strategy Tier Switching
 function initVaultTiers() {
@@ -1158,14 +997,14 @@ function initDashboardViewModes() {
       if (btnProMode) btnProMode.classList.remove("active");
       if (mainCol) mainCol.classList.add("simple-mode-hidden");
       if (mainGrid) mainGrid.classList.add("simple-mode");
-      if (currentViewModeText) currentViewModeText.innerText = "✨ Simple 1-Click Staking Mode (Streamlined)";
+      if (currentViewModeText) currentViewModeText.innerText = "Simple 1-Click Staking Mode (Streamlined)";
       addLog("[Dashboard]", "Switched to Simple 1-Click mode for streamlined staking.", "log-tag-success");
     } else {
       if (btnProMode) btnProMode.classList.add("active");
       if (btnSimpleMode) btnSimpleMode.classList.remove("active");
       if (mainCol) mainCol.classList.remove("simple-mode-hidden");
       if (mainGrid) mainGrid.classList.remove("simple-mode");
-      if (currentViewModeText) currentViewModeText.innerText = "🔬 Pro Analytics Mode (AI Engine & Risk Active)";
+      if (currentViewModeText) currentViewModeText.innerText = "[SIM] Pro Analytics Mode (AI Engine & Risk Active)";
       addLog("[Dashboard]", "Switched to Advanced Pro Mode: Real-time telemetry, risk engine & MEV monitors active.", "log-tag-agent");
     }
     if (typeof gsap !== "undefined") {
@@ -1203,7 +1042,7 @@ function initShardsSystem() {
         const data = await res.json();
         if (headerShardsText) headerShardsText.innerText = `${(data.totalShards / 1000).toFixed(1)}k Shards`;
         if (headerMultiplierTag) headerMultiplierTag.innerText = `${data.activeMultiplier}x`;
-        if (modalUserShards) modalUserShards.innerText = `${data.totalShards.toLocaleString()} ✨`;
+        if (modalUserShards) modalUserShards.innerText = `${data.totalShards.toLocaleString()} `;
         if (modalDailyRate) modalDailyRate.innerText = `+${data.baseRatePerDay.toLocaleString()} / day`;
         if (modalMultiplier) modalMultiplier.innerText = `${data.activeMultiplier}x`;
         if (modalRank) modalRank.innerText = `#${data.rank}`;
@@ -1222,12 +1061,11 @@ function initShardsSystem() {
       if (res.ok) {
         const { leaderboard } = await res.json();
         if (leaderboardList && leaderboard && leaderboard.length > 0) {
-          const medals = ["🥇", "🥈", "🥉", "🎖️", "🎖️"];
           leaderboardList.innerHTML = leaderboard.map((item, idx) => `
             <div class="shards-table-row">
-              <span style="font-weight: 700; color: ${idx === 0 ? '#fbbf24' : idx === 1 ? '#cbd5e1' : idx === 2 ? '#d97706' : 'var(--text-dim)'};">${medals[idx] || '#' + item.rank} #${item.rank}</span>
+              <span style="font-weight: 700; color: ${idx === 0 ? 'var(--lavender)' : idx === 1 ? '#cbd5e1' : idx === 2 ? 'var(--purple-soft)' : 'var(--text-dim)'};">#${item.rank}</span>
               <span style="font-family: monospace;">${item.address}</span>
-              <span class="tier-pill" style="background: rgba(251,191,36,0.15); color: #fbbf24;">${item.tier}</span>
+              <span class="tier-pill" style="background: rgba(139, 47, 230, 0.15); color: var(--lavender);">${item.tier}</span>
               <span style="text-align: right; font-weight: 600;">${item.shards.toLocaleString()}</span>
             </div>
           `).join("");
@@ -1333,24 +1171,7 @@ function initVoxrTemplate() {
     line.appendChild(frag);
   });
 
-  // 2. BUILD LOADER RINGS & EQUALIZER BARS
-  const ringsHost = document.getElementById("loader-rings");
-  const RING_COUNT = 4;
-  if (ringsHost && ringsHost.children.length === 0) {
-    for (let i = 0; i < RING_COUNT; i++) {
-      ringsHost.appendChild(document.createElement("span"));
-    }
-  }
-  const ringEls = ringsHost ? ringsHost.querySelectorAll("span") : [];
 
-  const barsHost = document.getElementById("loader-bars");
-  const BAR_COUNT = 16;
-  if (barsHost && barsHost.children.length === 0) {
-    for (let i = 0; i < BAR_COUNT; i++) {
-      barsHost.appendChild(document.createElement("span"));
-    }
-  }
-  const barEls = barsHost ? barsHost.querySelectorAll("span") : [];
 
   // References
   const loader = document.getElementById("loader");
@@ -1386,91 +1207,56 @@ function initVoxrTemplate() {
   gsap.set(sceneEls, { opacity: 0 });
   gsap.set(ringEls, { scale: 0.6, opacity: 0 });
 
-  // 3. LOADER TIMELINE
+  // 3. JAPANESE KANJI "光" (HIKARI) LOADER TIMELINE
   const loaderTl = gsap.timeline({ onComplete: playScene });
+  const loaderKanji = document.getElementById("loader-kanji");
 
-  const ringTweens = [];
-  ringEls.forEach((r, i) => {
-    const t = gsap.fromTo(
-      r,
-      { scale: 0.8, opacity: 0.7 },
-      {
-        scale: 2.8,
-        opacity: 0,
-        duration: 2,
-        repeat: -1,
-        ease: "power1.out",
-        delay: i * 0.5,
-      }
+  if (loaderKanji) {
+    gsap.fromTo(
+      loaderKanji,
+      { scale: 0.75, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" }
     );
-    ringTweens.push(t);
-  });
-
-  gsap.to(loaderOrb, {
-    scale: 1.1,
-    duration: 0.8,
-    yoyo: true,
-    repeat: -1,
-    ease: "sine.inOut",
-  });
-
-  barEls.forEach((bar, i) => {
-    gsap.to(bar, {
-      height: () => gsap.utils.random(8, 38),
-      duration: () => gsap.utils.random(0.25, 0.5),
+    gsap.to(loaderKanji, {
+      scale: 1.05,
+      duration: 1.2,
       yoyo: true,
       repeat: -1,
       ease: "sine.inOut",
-      delay: i * 0.04,
     });
-  });
+  }
 
   const p = { v: 0 };
   loaderTl.to(p, {
     v: 100,
-    duration: 2.2,
+    duration: 1.8,
     ease: "power1.inOut",
     onUpdate: () => {
       if (loaderCounter) loaderCounter.textContent = Math.floor(p.v) + "%";
       if (loaderLabel) {
-        if (p.v > 25 && loaderLabel.textContent === "INITIALIZING AI") loaderLabel.textContent = "CONNECTING SOROBAN";
-        if (p.v > 55 && loaderLabel.textContent === "CONNECTING SOROBAN") loaderLabel.textContent = "LOADING RISK ENGINE";
-        if (p.v > 90 && loaderLabel.textContent === "LOADING RISK ENGINE") loaderLabel.textContent = "HIKARI READY";
+        if (p.v > 25 && loaderLabel.textContent.includes("HIKARI AI")) loaderLabel.textContent = "光 • CONNECTING SOROBAN";
+        if (p.v > 60 && loaderLabel.textContent.includes("CONNECTING")) loaderLabel.textContent = "光 • LOADING 12.4% YIELD ENGINE";
+        if (p.v > 90 && loaderLabel.textContent.includes("LOADING")) loaderLabel.textContent = "光 • HIKARI READY";
       }
     },
   });
 
-  loaderTl.to(loaderCheck, {
-    opacity: 1,
-    duration: 0.3,
-    ease: "back.out(2)",
-  }, "+=0.1");
-  loaderTl.from(loaderCheck, {
-    scale: 0,
-    rotation: -45,
-    duration: 0.5,
-    ease: "back.out(2.5)",
-  }, "<");
+  if (loaderKanji) {
+    loaderTl.to(loaderKanji, {
+      scale: 1.5,
+      opacity: 0,
+      duration: 0.6,
+      ease: "power2.in",
+    }, "+=0.1");
+  }
 
-  loaderTl.to(ringEls, {
-    scale: 6,
-    opacity: 0,
-    duration: 0.8,
-    ease: "power2.out",
-    onStart: () => ringTweens.forEach((t) => t.pause()),
-  }, "+=0.2");
-  loaderTl.to(loaderOrb, {
-    scale: 2.5,
-    opacity: 0,
-    duration: 0.7,
-    ease: "power3.in",
-  }, "-=0.5");
-  loaderTl.to([loaderCounter, loaderLabel, barsHost], {
+  loaderTl.to([loaderCounter, loaderLabel], {
     y: 10,
     opacity: 0,
     duration: 0.3,
     stagger: 0.04,
-  }, "-=0.6");
+  }, "-=0.4");
+
   loaderTl.to(loader, {
     opacity: 0,
     duration: 0.4,
@@ -1808,4 +1594,166 @@ if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initVoxrTemplate);
 } else {
   initVoxrTemplate();
+}
+
+
+// ==========================================
+// Japanese Kanji "光" Loader & Nav Slider Init
+// ==========================================
+function initNavSliderAndCalculator() {
+  const btnOpenNavSlider = document.getElementById("btnOpenNavSlider");
+  const btnCloseNavSlider = document.getElementById("btnCloseNavSlider");
+  const navSlider = document.getElementById("navSlider");
+
+  if (btnOpenNavSlider && navSlider) {
+    btnOpenNavSlider.addEventListener("click", () => {
+      navSlider.style.display = "flex";
+      if (typeof gsap !== "undefined") {
+        gsap.fromTo(".nav-slider-deck", { y: -25, opacity: 0 }, { y: 0, opacity: 1, duration: 0.35, ease: "power3.out" });
+      }
+    });
+  }
+
+  if (btnCloseNavSlider && navSlider) {
+    btnCloseNavSlider.addEventListener("click", () => {
+      navSlider.style.display = "none";
+    });
+  }
+
+  if (navSlider) {
+    navSlider.addEventListener("click", (e) => {
+      if (e.target === navSlider) {
+        navSlider.style.display = "none";
+      }
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navSlider && navSlider.style.display !== "none") {
+      navSlider.style.display = "none";
+    }
+  });
+
+  // Slider links close and scroll smoothly
+  document.querySelectorAll(".nav-slider-card").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = link.getAttribute("href");
+      const navAction = link.getAttribute("data-nav-action");
+
+      if (navAction) {
+        if (navAction === "tab-stake" && typeof switchTab === "function") switchTab("stake");
+        else if (navAction === "tab-basket" && typeof switchTab === "function") switchTab("basket");
+        else if (navAction === "tab-bridge" && typeof switchTab === "function") switchTab("bridge");
+        else if (navAction === "tab-bots") {
+          const btnTabTradingBots = document.getElementById("btnTabTradingBots");
+          if (btnTabTradingBots) btnTabTradingBots.click();
+        }
+      }
+
+      if (href && href.startsWith("#") && href.length > 1) {
+        e.preventDefault();
+        if (navSlider) navSlider.style.display = "none";
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else if (href === "javascript:void(0)") {
+        if (navSlider) navSlider.style.display = "none";
+      }
+    });
+  });
+
+  // Analytics Sub-Tabs: NAV Progression vs. Trading Bots
+  const btnTabNavChart = document.getElementById("btnTabNavChart");
+  const btnTabTradingBots = document.getElementById("btnTabTradingBots");
+  const viewNavChart = document.getElementById("viewNavChart");
+  const viewTradingBots = document.getElementById("viewTradingBots");
+  const btnSimulateBotTrade = document.getElementById("btnSimulateBotTrade");
+  const botSimStatus = document.getElementById("botSimStatus");
+
+  if (btnTabNavChart && btnTabTradingBots && viewNavChart && viewTradingBots) {
+    btnTabNavChart.addEventListener("click", () => {
+      btnTabNavChart.classList.add("active");
+      btnTabTradingBots.classList.remove("active");
+      viewNavChart.style.display = "block";
+      viewTradingBots.style.display = "none";
+    });
+
+    btnTabTradingBots.addEventListener("click", () => {
+      btnTabTradingBots.classList.add("active");
+      btnTabNavChart.classList.remove("active");
+      viewNavChart.style.display = "none";
+      viewTradingBots.style.display = "block";
+    });
+  }
+
+  if (btnSimulateBotTrade && botSimStatus) {
+    btnSimulateBotTrade.addEventListener("click", () => {
+      btnSimulateBotTrade.disabled = true;
+      btnSimulateBotTrade.innerText = "Scanning Mempool...";
+      botSimStatus.innerText = "Evaluating price discrepancy between Phoenix CLAMM and Soroswap...";
+      botSimStatus.style.color = "var(--purple-soft)";
+
+      setTimeout(() => {
+        btnSimulateBotTrade.disabled = false;
+        btnSimulateBotTrade.innerText = "Simulate Arbitrage Execution";
+        botSimStatus.innerText = "Arbitrage executed: +42.80 XLM captured and routed to hXLM reserve!";
+        botSimStatus.style.color = "var(--accent-emerald)";
+        if (typeof addLog === "function") {
+          addLog("[TradingBot]", "Jito MEV arb executed: Swapped 1,200 XLM on Phoenix -> Soroswap (+42.80 XLM profit).", "log-tag-success");
+        }
+      }, 1200);
+    });
+  }
+
+  // Slider modal triggers
+  const btnSliderOpenSdk = document.getElementById("btnSliderOpenSdk");
+  const btnSliderOpenInvariants = document.getElementById("btnSliderOpenInvariants");
+  const sdkModal = document.getElementById("sdkModal");
+  const invariantsModal = document.getElementById("invariantsModal");
+
+  if (btnSliderOpenSdk && sdkModal) {
+    btnSliderOpenSdk.addEventListener("click", () => {
+      if (navSlider) navSlider.style.display = "none";
+      sdkModal.style.display = "flex";
+    });
+  }
+
+  if (btnSliderOpenInvariants && invariantsModal) {
+    btnSliderOpenInvariants.addEventListener("click", () => {
+      if (navSlider) navSlider.style.display = "none";
+      invariantsModal.style.display = "flex";
+    });
+  }
+
+  // Interactive 12.4% APY Calculator Slider in Hero
+  const heroCalcSlider = document.getElementById("heroCalcSlider");
+  const calcDepositVal = document.getElementById("calcDepositVal");
+  const calcReturnVal = document.getElementById("calcReturnVal");
+
+  if (heroCalcSlider && calcDepositVal && calcReturnVal) {
+    heroCalcSlider.addEventListener("input", () => {
+      const val = parseFloat(heroCalcSlider.value);
+      calcDepositVal.innerText = val.toLocaleString() + " XLM";
+      const ret = (val * 0.124).toFixed(2);
+      calcReturnVal.innerText = "+" + ret + " XLM";
+    });
+  }
+
+  // Live Yield Ticker animation in Hero
+  const heroYieldCounter = document.getElementById("heroYieldCounter");
+  if (heroYieldCounter) {
+    let accrued = 0.0034;
+    setInterval(() => {
+      accrued += (Math.random() * 0.0006 + 0.0002);
+      heroYieldCounter.innerText = "+" + accrued.toFixed(4) + " XLM / min";
+    }, 3500);
+  }
+}
+
+// Call on load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initNavSliderAndCalculator);
+} else {
+  initNavSliderAndCalculator();
 }
