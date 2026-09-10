@@ -15,9 +15,12 @@
     "test:engine": "npm test --prefix engine",
     "test:agents": "npm run simulate --prefix agents",
     "test:x402": "npm test --prefix services/x402-gateway",
+    "test:sdk": "npm test --prefix sdk",
+    "test:stress": "node scripts/simulate_stress_test.js",
     "test:testnet": "node scripts/test_live_cycle.js",
     "verify:testnet": "node scripts/deploy_testnet.js --verify",
     "build:wasm": "powershell -ExecutionPolicy Bypass -File scripts/build_wasm.ps1"
+
 
   }
 }
