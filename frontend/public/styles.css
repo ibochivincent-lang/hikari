@@ -1654,7 +1654,7 @@ footer {
 .voxr {
   position: relative;
   width: 100%;
-  min-height: 94vh;
+  min-height: auto;
   overflow: hidden;
   background:
     radial-gradient(ellipse at 75% 30%, rgba(139, 47, 230, 0.22) 0%, transparent 55%),
@@ -1720,14 +1720,14 @@ footer {
   gap: 3rem;
   padding: 2.5rem 3rem 4rem;
   align-items: flex-start;
-  min-height: calc(94vh - 100px);
+  min-height: auto;
 }
 .hero__left { max-width: 740px; padding-top: 1.5rem; }
 
 .hero__title {
   font-weight: 800;
-  font-size: clamp(2.4rem, 5.2vw, 4.8rem);
-  line-height: 1.12;
+  font-size: clamp(2.2rem, 4.2vw, 3.8rem);
+  line-height: 1.15;
   letter-spacing: -0.025em;
   color: var(--ink);
   margin-bottom: 1.8rem;
@@ -1739,7 +1739,10 @@ footer {
 }
 .hero__line em {
   font-style: normal;
-  background: linear-gradient(135deg, var(--lavender) 0%, #c9a7e9 60%, var(--purple-soft) 100%);
+  color: var(--purple-soft);
+}
+.hero__line em .hero__char {
+  background: linear-gradient(135deg, #ffffff 0%, var(--lavender) 40%, var(--purple-soft) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;

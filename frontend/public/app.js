@@ -819,6 +819,12 @@ function randomHash() {
 function initGsapAnimations() {
   if (typeof gsap === "undefined") return;
 
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get("skipLoader") === "true" || urlParams.get("showBots") === "true") {
+    gsap.set("main .card, aside .card, .metric-card, .strategy-item, header", { autoAlpha: 1, x: 0, y: 0 });
+    return;
+  }
+
   const mm = gsap.matchMedia();
 
   mm.add("(prefers-reduced-motion: no-preference)", () => {
@@ -1206,6 +1212,21 @@ function initVoxrTemplate() {
   gsap.set(cta, { y: 30, opacity: 0, scale: 0.9 });
   gsap.set(sceneEls, { opacity: 0 });
   gsap.set(ringEls, { scale: 0.6, opacity: 0 });
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const skipLoader = urlParams.get("skipLoader") === "true";
+
+  if (skipLoader) {
+    if (loader) loader.style.display = "none";
+    gsap.set(magnetics, { y: 0, opacity: 1 });
+    gsap.set(titleChars, { yPercent: 0, opacity: 1 });
+    gsap.set(lines, { opacity: 1 });
+    gsap.set(fades, { y: 0, opacity: 1 });
+    gsap.set(chips, { x: 0, opacity: 1 });
+    gsap.set(cta, { y: 0, opacity: 1, scale: 1 });
+    gsap.set(sceneEls, { opacity: 1 });
+    return;
+  }
 
   // 3. JAPANESE KANJI "光" (HIKARI) LOADER TIMELINE
   const loaderTl = gsap.timeline({ onComplete: playScene });

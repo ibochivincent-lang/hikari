@@ -5,6 +5,20 @@
     (function() {
       const savedTheme = localStorage.getItem('theme') || 'dark';
       document.documentElement.setAttribute('data-theme', savedTheme);
+      const p = new URLSearchParams(window.location.search);
+      if (p.get('skipLoader') === 'true') {
+        document.write('<style>#loader { display: none !important; } .topnav, .topnav *, .hero, [data-fade], [data-chip], [data-cta], [data-title-line], [data-magnetic], .hero__char { opacity: 1 !important; visibility: visible !important; transform: none !important; }</style>');
+      }
+      if (p.get('showNav') === 'true') {
+        document.write('<style>#loader { display: none !important; } #navSlider { display: flex !important; } .nav-slider-deck { opacity: 1 !important; transform: none !important; }</style>');
+      }
+      if (p.get('showBots') === 'true') {
+        document.write('<style>#loader { display: none !important; } .topnav, .topnav *, .hero, [data-fade], [data-chip], [data-cta], [data-title-line], [data-magnetic], .hero__char, .main-grid, .card { opacity: 1 !important; visibility: visible !important; transform: none !important; } #viewNavChart { display: none !important; } #viewTradingBots { display: block !important; } #btnTabTradingBots { background: linear-gradient(135deg, rgba(139, 47, 230, 0.45) 0%, rgba(192, 132, 252, 0.25) 100%) !important; color: #fff !important; border: 1px solid rgba(192, 132, 252, 0.45) !important; } #btnTabNavChart { background: transparent !important; border: none !important; color: var(--text-muted) !important; }</style>');
+        window.addEventListener('DOMContentLoaded', () => {
+          const el = document.getElementById('chartSection');
+          if (el) el.scrollIntoView();
+        });
+      }
     })();
   </script>
 
@@ -231,8 +245,8 @@
 
         <h1 class="hero__title">
           <span class="hero__line" data-title-line>Next-Generation</span>
-          <span class="hero__line" data-title-line><em>Agentic Yield. 12.4% APY</em></span>
-          <span class="hero__line" data-title-line>Compounding Automatically.</span>
+          <span class="hero__line" data-title-line><em>Autonomous AI Yield.</em></span>
+          <span class="hero__line" data-title-line>Compounding at 12.4% APY.</span>
         </h1>
 
         <p class="hero__desc" data-fade>
