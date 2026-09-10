@@ -1,0 +1,69 @@
+# docker-compose.yml
+# Author: ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>
+# Complete container orchestration for Hikari Protocol
+
+version: "3.8"
+
+services:
+  # 1. Flagship Lido-style Web Dashboard & Telemetry Server
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hikari-dashboard
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - STELLAR_NETWORK=testnet
+      - RPC_URL=https://soroban-testnet.stellar.org
+      - HORIZON_URL=https://horizon-testnet.stellar.org
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/telemetry"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - hikari-net
+
+  # 2. Autonomous Multi-Agent Orchestration Daemon (24/7 Rebalancer)
+  agent-daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hikari-agent-daemon
+    restart: unless-stopped
+    command: ["node", "agents/dist/daemon.js"]
+    environment:
+      - NODE_ENV=production
+      - STELLAR_NETWORK=testnet
+      - RPC_URL=https://soroban-testnet.stellar.org
+      - HORIZON_URL=https://horizon-testnet.stellar.org
+      - REBALANCE_INTERVAL_SEC=30
+    depends_on:
+      - dashboard
+    networks:
+      - hikari-net
+
+  # 3. x402 Micropayment & Real-Time Volatility Gateway
+  x402-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hikari-x402-gateway
+    restart: unless-stopped
+    command: ["node", "services/x402-gateway/dist/index.js"]
+    ports:
+      - "3402:3402"
+    environment:
+      - NODE_ENV=production
+      - PORT=3402
+      - FACILITATOR_NETWORK=testnet
+    networks:
+      - hikari-net
+
+networks:
+  hikari-net:
+    driver: bridge

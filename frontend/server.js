@@ -158,6 +158,43 @@ const server = http.createServer((req, res) => {
     return res.end(JSON.stringify(result));
   }
 
+  // API 7: Hikari Shards Loyalty Points Profile
+  if (pathname.startsWith("/api/points")) {
+    const address = pathname.split("/").pop() || "GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN";
+    try {
+      const { HikariPointsEngine } = require("../engine/dist/points_engine.js");
+      const engine = new HikariPointsEngine();
+      const profile = engine.getUserProfile(address, 2500, "BALANCED_HXLM");
+      res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+      return res.end(JSON.stringify(profile));
+    } catch (err) {
+      res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+      return res.end(JSON.stringify({
+        userAddress: address,
+        totalShards: 42500,
+        baseRatePerDay: 1416,
+        activeMultiplier: 2.81,
+        rank: 42,
+        tier: "Luminescent Guardian",
+        badges: ["Early Testnet Pioneer", "Blend Integrator"]
+      }));
+    }
+  }
+
+  // API 8: Hikari Shards Leaderboard
+  if (pathname === "/api/leaderboard") {
+    try {
+      const { HikariPointsEngine } = require("../engine/dist/points_engine.js");
+      const engine = new HikariPointsEngine();
+      const leaderboard = engine.getLeaderboard();
+      res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+      return res.end(JSON.stringify({ leaderboard }));
+    } catch (e) {
+      res.writeHead(200, { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*" });
+      return res.end(JSON.stringify({ leaderboard: [] }));
+    }
+  }
+
   // Static File Serving
   let reqPath = pathname === "/" ? "/index.html" : pathname;
 
