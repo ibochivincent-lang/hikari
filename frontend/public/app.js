@@ -1200,6 +1200,11 @@ function initVoxrTemplate() {
 
   if (typeof gsap === "undefined") {
     if (loader) loader.style.display = "none";
+    document.querySelectorAll(".hero, [data-fade], [data-chip], [data-cta], [data-title-line], [data-magnetic], .hero__char, .main-grid, .card").forEach((el) => {
+      el.style.opacity = "1";
+      el.style.visibility = "visible";
+      el.style.transform = "none";
+    });
     return;
   }
 

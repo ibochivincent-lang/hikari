@@ -9,6 +9,9 @@
     "url": "https://github.com/ibochivincent-lang/hikari.git"
   },
   "scripts": {
+    "start": "node frontend/server.js",
+    "dev": "node frontend/server.js",
+    "serve": "node frontend/server.js",
     "dashboard": "node frontend/server.js",
     "daemon": "npm run daemon --prefix agents",
     "test:contracts": "cargo test --manifest-path contracts/Cargo.toml --workspace",
