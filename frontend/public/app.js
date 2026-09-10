@@ -1,11 +1,14 @@
-// Hikari Dashboard Interactive Controller
-// Author: ibochivincent-lang
-
 let state = {
   totalAssets: 124500,
   idleAssets: 28400,
   totalShares: 119390,
   activeTab: "deposit", // deposit or withdraw
+  wallet: {
+    connected: false,
+    address: null,
+    balanceXlm: 0,
+    sharesHXlm: 0,
+  },
   pendingProposal: {
     id: "hikari_prop_910",
     strategy: "Soroswap XLM-USDC AMM",
@@ -16,6 +19,10 @@ let state = {
 
 const VIRTUAL_SHARES = 1000;
 const VIRTUAL_ASSETS = 1;
+
+// Elements
+const btnConnectWallet = document.getElementById("btnConnectWallet");
+const networkBadge = document.getElementById("networkBadge");
 
 // Elements
 const tabDeposit = document.getElementById("tabDeposit");
@@ -43,6 +50,55 @@ function updateMetrics() {
   tvlDisplay.innerText = `${state.totalAssets.toLocaleString()} XLM`;
   navDisplay.innerText = `${nav.toFixed(4)} XLM`;
   reserveDisplay.innerText = `${state.idleAssets.toLocaleString()} XLM`;
+}
+
+// Wallet Connection
+btnConnectWallet.addEventListener("click", async () => {
+  if (state.wallet.connected) {
+    // Disconnect
+    state.wallet.connected = false;
+    state.wallet.address = null;
+    btnConnectWallet.innerText = "🔗 Connect Wallet";
+    btnConnectWallet.style.background = "";
+    addLog("[Wallet]", "Disconnected from wallet session.", "log-tag-warn");
+    return;
+  }
+
+  // Check if Freighter extension is available
+  try {
+    if (window.freighterApi && typeof window.freighterApi.isConnected === "function") {
+      const isConnected = await window.freighterApi.isConnected();
+      if (isConnected) {
+        const address = await window.freighterApi.getPublicKey();
+        setConnectedWallet(address, "Freighter (Extension)");
+        return;
+      }
+    }
+  } catch (err) {
+    console.warn("Freighter check error:", err);
+  }
+
+  // Fallback to Stellar Testnet Keypair demo wallet
+  const randomSuffix = Array.from({ length: 4 }, () =>
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
+  ).join("");
+  const demoAddress = `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLL${randomSuffix}`;
+  setConnectedWallet(demoAddress, "Stellar Testnet Account");
+});
+
+function setConnectedWallet(address, providerName) {
+  state.wallet.connected = true;
+  state.wallet.address = address;
+  state.wallet.balanceXlm = 10000;
+  state.wallet.sharesHXlm = 0;
+
+  const shortAddr = `${address.slice(0, 4)}...${address.slice(-4)}`;
+  btnConnectWallet.innerText = `🟢 ${shortAddr}`;
+  btnConnectWallet.style.background = "rgba(52, 211, 153, 0.2)";
+  btnConnectWallet.style.border = "1px solid #34d399";
+  btnConnectWallet.style.color = "#34d399";
+
+  addLog("[Wallet]", `Connected via ${providerName}: ${shortAddr} (Balance: 10,000 XLM)`, "log-tag-success");
 }
 
 // Tab Switching

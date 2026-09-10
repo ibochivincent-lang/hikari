@@ -8,6 +8,7 @@ members = [
     "withdrawal_queue",
     "policy_account",
     "mock_strategy",
+    "blend_adapter",
 ]
 
 [workspace.package]

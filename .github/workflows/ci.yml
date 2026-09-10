@@ -1,0 +1,69 @@
+name: Hikari Protocol CI
+
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+jobs:
+  contracts:
+    name: Soroban Smart Contracts (Rust)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust Toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          toolchain: stable
+          targets: wasm32v1-none
+
+      - name: Cache Cargo Dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            contracts/target/
+          key: ${{ runner.os }}-cargo-${{ hashFiles('contracts/Cargo.toml') }}
+
+      - name: Run Soroban Tests
+        working-directory: contracts
+        run: cargo test --workspace --verbose
+
+  engine-and-agents:
+    name: Policy Engine & Agents (TypeScript)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Test Policy Engine
+        working-directory: engine
+        run: |
+          npm ci
+          npm run build
+          npm test
+
+      - name: Test Multi-Agent Orchestrator
+        working-directory: agents
+        run: |
+          npm ci
+          npm run build
+          npm run simulate
+
+      - name: Test x402 Telemetry Service
+        working-directory: services/x402-gateway
+        run: |
+          npm ci
+          npm run build
+          npm test

@@ -29,4 +29,6 @@ Desktop.ini
 
 # Soroban build artifacts
 contracts/**/target/
+contracts/wasm/
 *.wasm
+scripts/testnet_keys.json
