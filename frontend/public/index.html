@@ -338,9 +338,42 @@
               </button>
             </div>
           </div>
+
+          <!-- x402 Agentic Micropayment Terminal -->
+          <div class="card" style="margin-top: 1rem; border-color: rgba(56, 189, 248, 0.25);">
+            <div class="card-header" style="margin-bottom: 0.5rem;">
+              <h3 style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+                <span>💳 x402 Agentic Micropayment Channel</span>
+              </h3>
+              <span class="badge-recommended" style="background: rgba(56, 189, 248, 0.15); color: var(--accent-cyan); border-color: rgba(56, 189, 248, 0.35);">
+                HTTP 402 Facilitator
+              </span>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 0.8rem;">
+              Automated machine-to-machine micropayments. Autonomous agents settle $0.001 USDC fees via Soroban SEP-41 token contracts to unlock premium volatility feeds and real-time oracle telemetry.
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.8rem; margin-bottom: 0.8rem; background: rgba(255,255,255,0.02); padding: 0.6rem; border-radius: 8px;">
+              <div>
+                <span style="color: var(--text-dim); font-size: 0.72rem;">Last Settlement Asset:</span>
+                <div style="font-weight: 600; color: #fff;">USDC (SEP-41 SAC)</div>
+              </div>
+              <div>
+                <span style="color: var(--text-dim); font-size: 0.72rem;">Target Oracle Endpoint:</span>
+                <div style="font-weight: 600; color: var(--accent-cyan); word-break: break-all;">/v1/volatility-feed</div>
+              </div>
+            </div>
+
+            <div id="x402ReceiptBox" style="font-size: 0.75rem; color: var(--text-dim); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.6rem;">
+              <span>Proof Hash: <a id="x402ProofLink" href="https://stellar.expert/explorer/testnet/tx/0xcdfef79b434886376729b9740ae12a93500e686676cc8894e2340dd22a6ec6d4" target="_blank" style="color: var(--accent-emerald); text-decoration: none;">0xcdfe...c6d4 ↗</a></span>
+              <button id="btnTestX402" class="btn-secondary" style="padding: 0.35rem 0.8rem; font-size: 0.75rem;">
+                ⚡ Query Oracle (x402)
+              </button>
+            </div>
+          </div>
         </div>
       </main>
-
 
       <!-- Right Column: User Vault Actions -->
       <aside>
@@ -352,13 +385,15 @@
             <span id="widgetBadge" style="font-size: 0.72rem; color: var(--accent-cyan);">SEP-41 Native</span>
           </div>
 
-          <!-- Lido-style 4 Tabs -->
-          <div class="lido-tabs">
+          <!-- Lido-style Tabs -->
+          <div class="lido-tabs" style="grid-template-columns: repeat(5, 1fr);">
             <button id="tabStake" class="lido-tab-btn active">Stake</button>
             <button id="tabRequest" class="lido-tab-btn">Request</button>
-            <button id="tabClaim" class="lido-tab-btn">Claim Tickets</button>
+            <button id="tabClaim" class="lido-tab-btn">Claim</button>
             <button id="tabBasket" class="lido-tab-btn">Basket</button>
+            <button id="tabBridge" class="lido-tab-btn">Bridge</button>
           </div>
+
 
           <!-- Panel 1: Stake & Request Form -->
           <div id="panelForm">
@@ -428,7 +463,37 @@
               <div class="legend-item"><span class="legend-dot" style="background: var(--accent-emerald);"></span><span>Liquid Buffer (15% • Instant)</span></div>
             </div>
           </div>
+
+          <!-- Panel 4: Cross-Chain Rail (Circle CCTP V2 & Axelar GMP) -->
+          <div id="panelBridge" style="display: none;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Bridge native USDC from EVM or Solana directly into Hikari Vault on Stellar via Circle CCTP V2 (Domain 27).
+            </div>
+            <div class="input-group">
+              <label class="input-label">Select Origin Chain</label>
+              <select id="bridgeOriginSelect" class="input-field" style="background: #111726; color: #fff; cursor: pointer;">
+                <option value="ethereum">Ethereum (Circle Domain 0)</option>
+                <option value="arbitrum" selected>Arbitrum (Circle Domain 3)</option>
+                <option value="solana">Solana (Circle Domain 5)</option>
+                <option value="base">Base (Circle Domain 6)</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-top: 0.8rem;">
+              <label class="input-label">USDC Deposit Amount</label>
+              <div class="input-container-lido">
+                <input id="bridgeAmountInput" class="input-field" type="number" placeholder="50.0" min="1" step="any">
+                <span style="position: absolute; right: 1rem; color: var(--text-muted); font-size: 0.85rem;">USDC</span>
+              </div>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin: 0.6rem 0; padding: 0.5rem; background: rgba(56, 189, 248, 0.05); border-radius: 8px; border: 1px solid rgba(56, 189, 248, 0.2);">
+              🌉 Rail: Native CCTP burn-and-mint via <strong>CctpForwarder</strong>. Zero slippage bridge, auto-deposited into Hikari Vault.
+            </div>
+            <button id="btnBridgeAction" class="btn-primary" style="margin-top: 0.4rem;">
+              🌉 Bridge & Stake to hXLM
+            </button>
+          </div>
         </div>
+
 
         <!-- Protocol Security & Deployed Contracts Status -->
         <div class="card">
