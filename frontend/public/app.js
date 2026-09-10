@@ -271,11 +271,11 @@ function setConnectedWallet(address, providerName) {
   } else {
     btnConnectWallet.innerText = `Connected: ${shortAddr}`;
   }
-  btnConnectWallet.style.background = "rgba(52, 211, 153, 0.2)";
+  btnConnectWallet.style.background = "rgba(139, 47, 230, 0.25)";
   btnConnectWallet.title = `Connected via ${providerName}: ${address}`;
 
-  btnConnectWallet.style.borderColor = "#34d399";
-  btnConnectWallet.style.color = "#34d399";
+  btnConnectWallet.style.borderColor = "rgba(192, 132, 252, 0.6)";
+  btnConnectWallet.style.color = "#ffffff";
 
   updateBalanceLabel();
   if (typeof window.fetchShardsProfile === "function") {
@@ -566,7 +566,7 @@ vaultForm.addEventListener("submit", (e) => {
 
   if (typeof gsap !== "undefined") {
     gsap.fromTo("#tvlDisplay", { scale: 1.15, color: "#c084fc" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
-    gsap.fromTo("#reserveDisplay", { scale: 1.12, color: "#34d399" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
+    gsap.fromTo("#reserveDisplay", { scale: 1.12, color: "#c084fc" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
   }
 });
 
@@ -652,9 +652,9 @@ async function applyTelemetry(data) {
     } else {
       if (circuitStateBadge) {
         circuitStateBadge.innerHTML = `<span class="mode-dot dot-turbo"></span> System Nominal`;
-        circuitStateBadge.style.background = "rgba(52, 211, 153, 0.1)";
-        circuitStateBadge.style.borderColor = "rgba(52, 211, 153, 0.3)";
-        circuitStateBadge.style.color = "var(--accent-emerald)";
+        circuitStateBadge.style.background = "rgba(192, 132, 252, 0.15)";
+        circuitStateBadge.style.borderColor = "rgba(192, 132, 252, 0.4)";
+        circuitStateBadge.style.color = "var(--purple-soft)";
       }
       setBunkerMode(false, 0);
     }
@@ -1114,19 +1114,31 @@ function initShardsSystem() {
 
 initShardsSystem();
 
-// TemplateMo 609 Theme Toggle Handler
+// Top Navigation Theme Toggle System
 function initThemeSystem() {
   const themeSwitch = document.getElementById("themeSwitch");
+  const themeToggleText = document.getElementById("themeToggleText");
   if (!themeSwitch) return;
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+    if (themeToggleText) {
+      themeToggleText.textContent = theme === "dark" ? "Dark" : "Light";
+    }
+    themeSwitch.setAttribute("data-theme-state", theme);
+    if (typeof yieldChartInstance !== "undefined" && yieldChartInstance && typeof yieldChartInstance.render === "function") {
+      yieldChartInstance.render();
+    }
+  }
+
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  applyTheme(savedTheme);
 
   themeSwitch.addEventListener("click", () => {
     const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-    if (yieldChartInstance && typeof yieldChartInstance.render === "function") {
-      yieldChartInstance.render();
-    }
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
   });
 }
 
@@ -1216,7 +1228,6 @@ function initVoxrTemplate() {
   gsap.set(chips, { x: 40, opacity: 0 });
   gsap.set(cta, { y: 30, opacity: 0, scale: 0.9 });
   gsap.set(sceneEls, { opacity: 0 });
-  gsap.set(ringEls, { scale: 0.6, opacity: 0 });
 
   const urlParams = new URLSearchParams(window.location.search);
   const skipLoader = urlParams.get("skipLoader") === "true";
@@ -1241,11 +1252,11 @@ function initVoxrTemplate() {
     gsap.fromTo(
       loaderKanji,
       { scale: 0.75, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.8, ease: "power2.out" }
+      { scale: 1, opacity: 1, duration: 0.6, ease: "power2.out" }
     );
     gsap.to(loaderKanji, {
-      scale: 1.05,
-      duration: 1.2,
+      scale: 1.08,
+      duration: 1.0,
       yoyo: true,
       repeat: -1,
       ease: "sine.inOut",
@@ -1255,39 +1266,44 @@ function initVoxrTemplate() {
   const p = { v: 0 };
   loaderTl.to(p, {
     v: 100,
-    duration: 1.8,
+    duration: 1.6,
     ease: "power1.inOut",
     onUpdate: () => {
-      if (loaderCounter) loaderCounter.textContent = Math.floor(p.v) + "%";
+      const val = Math.min(100, Math.floor(p.v));
+      if (loaderCounter) loaderCounter.textContent = val + "%";
       if (loaderLabel) {
-        if (p.v > 25 && loaderLabel.textContent.includes("HIKARI AI")) loaderLabel.textContent = "光 • CONNECTING SOROBAN";
-        if (p.v > 60 && loaderLabel.textContent.includes("CONNECTING")) loaderLabel.textContent = "光 • LOADING 12.4% YIELD ENGINE";
-        if (p.v > 90 && loaderLabel.textContent.includes("LOADING")) loaderLabel.textContent = "光 • HIKARI READY";
+        if (val < 28) loaderLabel.textContent = "光 • HIKARI AI YIELD";
+        else if (val < 62) loaderLabel.textContent = "光 • CONNECTING SOROBAN";
+        else if (val < 95) loaderLabel.textContent = "光 • 12.4% ALPHA ENGINE";
+        else loaderLabel.textContent = "光 • HIKARI READY (100%)";
       }
     },
   });
 
+  // Hold briefly on 100% so user clearly perceives the 100% completion
+  loaderTl.to({}, { duration: 0.25 });
+
   if (loaderKanji) {
     loaderTl.to(loaderKanji, {
-      scale: 1.5,
+      scale: 1.35,
       opacity: 0,
-      duration: 0.6,
+      duration: 0.45,
       ease: "power2.in",
-    }, "+=0.1");
+    });
   }
 
   loaderTl.to([loaderCounter, loaderLabel], {
     y: 10,
     opacity: 0,
-    duration: 0.3,
+    duration: 0.25,
     stagger: 0.04,
-  }, "-=0.4");
+  }, "-=0.25");
 
   loaderTl.to(loader, {
     opacity: 0,
     duration: 0.4,
     ease: "power2.inOut",
-  }, "-=0.2");
+  }, "-=0.1");
   loaderTl.set(loader, { display: "none" });
 
   // 4. MAIN SCENE ENTRANCE
@@ -1612,6 +1628,42 @@ function initVoxrTemplate() {
         );
       });
     });
+
+    // Interactive 3D tilt & bounce for Hero Yield Card (12.4% APY box)
+    const yieldCard = root.querySelector(".hero__yield-card");
+    if (yieldCard) {
+      yieldCard.addEventListener("mousemove", (e) => {
+        const r = yieldCard.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        gsap.to(yieldCard, {
+          rotationY: dx * 8,
+          rotationX: -dy * 8,
+          transformPerspective: 800,
+          duration: 0.25,
+          ease: "power2.out",
+        });
+      });
+
+      yieldCard.addEventListener("mouseleave", () => {
+        gsap.to(yieldCard, {
+          rotationX: 0,
+          rotationY: 0,
+          duration: 0.6,
+          ease: "elastic.out(1, 0.4)",
+        });
+      });
+
+      yieldCard.addEventListener("click", () => {
+        gsap.fromTo(
+          yieldCard,
+          { scale: 0.96 },
+          { scale: 1.02, duration: 0.45, ease: "elastic.out(1.2, 0.4)" }
+        );
+      });
+    }
   }
 }
 
@@ -1724,7 +1776,7 @@ function initNavSliderAndCalculator() {
         btnSimulateBotTrade.disabled = false;
         btnSimulateBotTrade.innerText = "Simulate Arbitrage Execution";
         botSimStatus.innerText = "Arbitrage executed: +42.80 XLM captured and routed to hXLM reserve!";
-        botSimStatus.style.color = "var(--accent-emerald)";
+        botSimStatus.style.color = "var(--purple-soft)";
         if (typeof addLog === "function") {
           addLog("[TradingBot]", "Jito MEV arb executed: Swapped 1,200 XLM on Phoenix -> Soroswap (+42.80 XLM profit).", "log-tag-success");
         }

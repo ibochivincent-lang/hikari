@@ -37,7 +37,7 @@
     }
   </script>
   <script>
-    // Failsafe: Ensure loader dismisses even if an external script stalls
+    // Failsafe: Ensure loader dismisses only if an unexpected stall occurs
     setTimeout(function() {
       var l = document.getElementById("loader");
       if (l && l.style.display !== "none") {
@@ -51,7 +51,7 @@
           reveal[i].style.transform = "none";
         }
       }
-    }, 2800);
+    }, 6000);
   </script>
 </head>
 <body>
@@ -101,6 +101,27 @@
           <span class="status-dot"></span>
           <span id="networkBadge">Stellar Testnet</span>
         </div>
+        <button id="themeSwitch" class="theme-toggle-pill" title="Toggle Theme (Dark / Light)" aria-label="Toggle Dark or Light Mode">
+          <span class="theme-pill-icon icon-moon">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </span>
+          <span class="theme-pill-icon icon-sun">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </span>
+          <span class="theme-pill-label" id="themeToggleText">Theme</span>
+        </button>
         <button id="btnOpenShardsModal" class="btn-shards-pill" title="View Hikari Shards and Leaderboard">
           <span id="headerShardsText">1.6M Shards</span>
           <span class="shards-multiplier-tag" id="headerMultiplierTag">2.25x</span>
@@ -1023,7 +1044,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
               <h3 style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
                 <span> Circuit Breaker & GateSeal Guard</span>
               </h3>
-              <span id="circuitStateBadge" class="mode-badge" style="background: rgba(52, 211, 153, 0.1); border-color: rgba(52, 211, 153, 0.3); color: var(--accent-emerald);">
+              <span id="circuitStateBadge" class="mode-badge" style="background: rgba(192, 132, 252, 0.15); border-color: rgba(192, 132, 252, 0.4); color: var(--purple-soft);">
                 <span class="mode-dot dot-turbo"></span> System Nominal
               </span>
             </div>
@@ -1159,7 +1180,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             <div id="ticketList" class="ticket-list">
               <!-- Dynamically rendered ticket items -->
             </div>
-            <button id="btnClaimAll" class="btn-primary" style="background: rgba(52, 211, 153, 0.2); border: 1px solid #34d399; color: #34d399;">
+            <button id="btnClaimAll" class="btn-primary" style="background: rgba(139, 47, 230, 0.2); border: 1px solid rgba(192, 132, 252, 0.4); color: var(--lavender);">
                Claim All Available XLM
             </button>
           </div>
@@ -1179,7 +1200,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
               <div class="legend-item"><span class="legend-dot" style="background: var(--purple-soft);"></span><span>Blend Pool (40% • 5.2% APY)</span></div>
               <div class="legend-item"><span class="legend-dot" style="background: var(--glass-pink);"></span><span>Phoenix CLAMM (30% • 6.4% APY)</span></div>
               <div class="legend-item"><span class="legend-dot" style="background: var(--accent-purple);"></span><span>Soroswap AMM (15% • 7.8% APR)</span></div>
-              <div class="legend-item"><span class="legend-dot" style="background: var(--accent-emerald);"></span><span>Liquid Buffer (15% • Instant)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background: var(--lavender);"></span><span>Liquid Buffer (15% • Instant)</span></div>
             </div>
           </div>
 
@@ -1230,7 +1251,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             </div>
             <div>
               <div style="color: var(--text-muted); font-size: 0.75rem;">hXLM Share Token (SEP-41):</div>
-              <a href="https://stellar.expert/explorer/testnet/contract/CA36LWOMIDPXFMVTQR6TODLSAO6QFNSYK6UBP5CS5MWGC2UHIDT23QLH" target="_blank" style="color: var(--accent-emerald); text-decoration: none; word-break: break-all;">
+              <a href="https://stellar.expert/explorer/testnet/contract/CA36LWOMIDPXFMVTQR6TODLSAO6QFNSYK6UBP5CS5MWGC2UHIDT23QLH" target="_blank" style="color: var(--lavender); text-decoration: none; word-break: break-all;">
                 CA36LWO...3QLH ↗
               </a>
             </div>
@@ -1281,7 +1302,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             </div>
             <div style="display: flex; justify-content: space-between;">
               <span style="color: var(--text-muted);">Performance Fee:</span>
-              <span style="color: var(--accent-emerald); font-weight: 600;">10.0% (High-Water Mark)</span>
+              <span style="color: var(--purple-soft); font-weight: 600;">10.0% (High-Water Mark)</span>
             </div>
             <div style="display: flex; justify-content: space-between;">
               <span style="color: var(--text-muted);">First-Loss Buffer:</span>
