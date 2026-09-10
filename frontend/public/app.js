@@ -1257,3 +1257,21 @@ function initShardsSystem() {
 }
 
 initShardsSystem();
+
+// TemplateMo 609 Theme Toggle Handler
+function initThemeSystem() {
+  const themeSwitch = document.getElementById("themeSwitch");
+  if (!themeSwitch) return;
+
+  themeSwitch.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme") || "dark";
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+    if (yieldChartInstance && typeof yieldChartInstance.render === "function") {
+      yieldChartInstance.render();
+    }
+  });
+}
+
+initThemeSystem();
