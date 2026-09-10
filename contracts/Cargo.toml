@@ -12,6 +12,7 @@ members = [
     "soroswap_adapter",
     "fee_controller",
     "phoenix_adapter",
+    "gate_seal",
 ]
 
 [workspace.package]

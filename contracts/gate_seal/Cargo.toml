@@ -1,0 +1,16 @@
+[package]
+name = "hikari-gate-seal"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["lib"]
+
+[dependencies]
+soroban-sdk = { workspace = true }
+hikari-interfaces = { path = "../interfaces" }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }

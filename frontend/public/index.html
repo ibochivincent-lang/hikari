@@ -26,6 +26,10 @@
         </div>
       </div>
       <div class="header-meta">
+        <div id="queueModeBadge" class="mode-badge">
+          <span class="mode-dot dot-turbo"></span>
+          <span id="queueModeText">Turbo Mode</span>
+        </div>
         <div class="wallet-badge">
           <span class="status-dot"></span>
           <span id="networkBadge">Stellar Testnet</span>
@@ -208,38 +212,87 @@
         <div class="card">
           <div class="card-header">
             <h2 class="card-title">
-              <span>💼 Vault Portal</span>
+              <span>💼 Liquid Staking Portal</span>
             </h2>
+            <span id="widgetBadge" style="font-size: 0.72rem; color: var(--accent-cyan);">SEP-41 Native</span>
           </div>
 
-          <div class="action-tabs">
-            <button id="tabDeposit" class="tab-btn active">Deposit</button>
-            <button id="tabWithdraw" class="tab-btn">Redeem</button>
+          <!-- Lido-style 4 Tabs -->
+          <div class="lido-tabs">
+            <button id="tabStake" class="lido-tab-btn active">Stake</button>
+            <button id="tabRequest" class="lido-tab-btn">Request</button>
+            <button id="tabClaim" class="lido-tab-btn">Claim Tickets</button>
+            <button id="tabBasket" class="lido-tab-btn">Basket</button>
           </div>
 
-          <form id="vaultForm">
-            <div class="input-group">
-              <label id="inputLabel" class="input-label" for="amountInput">Deposit XLM Amount</label>
-              <input id="amountInput" class="input-field" type="number" placeholder="e.g. 500" min="1" step="any" required>
-            </div>
+          <!-- Panel 1: Stake & Request Form -->
+          <div id="panelForm">
+            <form id="vaultForm">
+              <div class="input-group">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                  <label id="inputLabel" class="input-label" for="amountInput">Deposit XLM Amount</label>
+                  <span id="walletBalLabel" style="font-size: 0.75rem; color: var(--text-dim);">Balance: 0 XLM</span>
+                </div>
+                <div class="input-container-lido">
+                  <input id="amountInput" class="input-field" type="number" placeholder="0.0" min="0.1" step="any" required style="padding-right: 4rem;">
+                  <button type="button" id="btnMaxAmount" class="btn-max">MAX</button>
+                </div>
+                <div class="rate-indicator">
+                  <span>Exchange Rate:</span>
+                  <span id="rateDisplay" style="color: var(--text-main); font-weight: 600;">1 XLM ≈ 1.0428 hXLM</span>
+                </div>
+              </div>
 
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem; font-size: 0.85rem;">
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-                <span style="color: var(--text-muted);">Estimated hXLM Shares:</span>
-                <span id="estShares" style="font-weight: 600; color: #fff;">0.00 hXLM</span>
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem; font-size: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                  <span style="color: var(--text-muted);">You will receive:</span>
+                  <span id="estShares" style="font-weight: 600; color: #fff;">0.00 hXLM</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                  <span style="color: var(--text-muted);">Safety Buffer Mode:</span>
+                  <span style="color: var(--accent-emerald);">Virtual Shares Active</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Estimated Network Fee:</span>
+                  <span style="color: #fff;">~0.00001 XLM</span>
+                </div>
               </div>
-              <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
-                <span style="color: var(--text-muted);">Anti-Inflation Offset:</span>
-                <span style="color: var(--accent-emerald);">Virtual Shares Protected</span>
-              </div>
-              <div style="display: flex; justify-content: space-between;">
-                <span style="color: var(--text-muted);">Protocol Fee:</span>
-                <span style="color: #fff;">0.00%</span>
-              </div>
-            </div>
 
-            <button id="btnSubmitAction" type="submit" class="btn-primary">Deposit XLM</button>
-          </form>
+              <button id="btnSubmitAction" type="submit" class="btn-primary">Stake XLM</button>
+            </form>
+          </div>
+
+          <!-- Panel 2: Lido-style Withdrawal Claim Tickets -->
+          <div id="panelClaim" style="display: none;">
+            <div style="margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--text-muted);">
+              Withdrawal requests are processed in FIFO order through the on-chain queue.
+            </div>
+            <div id="ticketList" class="ticket-list">
+              <!-- Dynamically rendered ticket items -->
+            </div>
+            <button id="btnClaimAll" class="btn-primary" style="background: rgba(52, 211, 153, 0.2); border: 1px solid #34d399; color: #34d399;">
+              ⚡ Claim All Available XLM
+            </button>
+          </div>
+
+          <!-- Panel 3: Vault Basket & Allocation -->
+          <div id="panelBasket" style="display: none;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+              Protocol capital is autonomously balanced across 3 approved Soroban strategies:
+            </div>
+            <div class="basket-bar">
+              <div class="basket-seg-blend" title="Blend Lending: 40%"></div>
+              <div class="basket-seg-phoenix" title="Phoenix CLAMM: 30%"></div>
+              <div class="basket-seg-soroswap" title="Soroswap AMM: 15%"></div>
+              <div class="basket-seg-idle" title="Liquid Reserve: 15%"></div>
+            </div>
+            <div class="basket-legend">
+              <div class="legend-item"><span class="legend-dot" style="background: var(--accent-amber);"></span><span>Blend Pool (40% • 5.2% APY)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background: var(--accent-cyan);"></span><span>Phoenix CLAMM (30% • 6.4% APY)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background: var(--accent-purple);"></span><span>Soroswap AMM (15% • 7.8% APR)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background: var(--accent-emerald);"></span><span>Liquid Buffer (15% • Instant)</span></div>
+            </div>
+          </div>
         </div>
 
         <!-- Protocol Security & Deployed Contracts Status -->
@@ -284,6 +337,12 @@
               <div style="color: var(--text-muted); font-size: 0.75rem;">Phoenix CLAMM Adapter:</div>
               <a href="https://stellar.expert/explorer/testnet/contract/CAD345D2TCMIQEHSVVJMXOKMNGVVLW6YS7VBFSYXCRPALCOCDNA6O6L5" target="_blank" style="color: var(--accent-cyan); text-decoration: none; word-break: break-all;">
                 CAD345D...O6L5 ↗
+              </a>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">GateSeal Circuit Breaker:</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CAS5XIHKYBCCW7WTYDBGGLQ5P7OSQHEPVIUWCQ2W5ARMYXWUCQSEZYDJ" target="_blank" style="color: var(--accent-rose); text-decoration: none; word-break: break-all;">
+                CAS5XIH...ZYDJ ↗
               </a>
             </div>
           </div>
