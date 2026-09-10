@@ -27,7 +27,9 @@ async function verify() {
     vaultTierSelector: html.includes('vault-tier-selector'),
     optLobstr: html.includes('id="optLobstr"'),
     optXbull: html.includes('id="optXbull"'),
-    rationaleBox: html.includes('rationale-box')
+    rationaleBox: html.includes('rationale-box'),
+    btnOpenShardsModal: html.includes('id="btnOpenShardsModal"'),
+    shardsModal: html.includes('id="shardsModal"')
   };
 
   console.log('UI Verification Results:');
@@ -38,7 +40,7 @@ async function verify() {
     console.error('Some checks failed!');
     process.exit(1);
   }
-  console.log('✓ All 19 navigation, tier selector, mode toggle, wallet, and rationale elements verified successfully!');
+  console.log('✓ All 21 navigation, tier selector, mode toggle, wallet, rationale, and shards elements verified successfully!');
 }
 
 verify().catch(err => {

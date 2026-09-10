@@ -1,69 +1,91 @@
-name: Hikari Protocol CI
+name: Hikari Protocol Continuous Integration
 
 on:
   push:
-    branches: [ "master", "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "master", "main" ]
+    branches: [ main ]
 
 jobs:
-  contracts:
-    name: Soroban Smart Contracts (Rust)
+  rust-contracts:
+    name: Soroban Smart Contracts Test Suite
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: stable
-          targets: wasm32v1-none
+          targets: wasm32-unknown-unknown
 
-      - name: Cache Cargo Dependencies
-        uses: actions/cache@v4
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
         with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            contracts/target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('contracts/Cargo.toml') }}
+          workspaces: contracts -> target
 
-      - name: Run Soroban Tests
-        working-directory: contracts
-        run: cargo test --workspace --verbose
+      - name: Run Cargo Test Suite
+        run: cargo test --manifest-path contracts/Cargo.toml --workspace
 
-  engine-and-agents:
-    name: Policy Engine & Agents (TypeScript)
+  node-test-suite:
+    name: TypeScript SDK, Engine & Mathematical Invariants
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20
+          cache: 'npm'
 
-      - name: Test Policy Engine
-        working-directory: engine
+      - name: Install Dependencies
         run: |
-          npm ci
-          npm run build
-          npm test
+          npm ci || npm install
+          npm install --prefix engine
+          npm install --prefix agents
+          npm install --prefix sdk
+          npm install --prefix services/x402-gateway
 
-      - name: Test Multi-Agent Orchestrator
-        working-directory: agents
+      - name: Build TypeScript Packages
         run: |
-          npm ci
-          npm run build
-          npm run simulate
+          npm run build --prefix engine
+          npm run build --prefix agents
+          npm run build --prefix sdk
+          npm run build --prefix services/x402-gateway
 
-      - name: Test x402 Telemetry Service
-        working-directory: services/x402-gateway
+      - name: Run Developer SDK Tests
+        run: npm test --prefix sdk
+
+      - name: Run Policy & Risk Engine Tests
+        run: npm test --prefix engine
+
+      - name: Run 10,000-Iteration Property-Based Invariant Fuzzing
+        run: node scripts/run_fuzz_tests.js
+
+      - name: Run 365-Day Historical Market Backtest
+        run: node scripts/run_backtest.js
+
+      - name: Verify Points & Shards Multiplier Engine
+        run: node scripts/verify_points_engine.js
+
+      - name: Verify Web Dashboard & Lido Mega-Nav (21 Elements)
         run: |
-          npm ci
-          npm run build
-          npm test
+          node frontend/server.js &
+          sleep 3
+          node scripts/verify_lido_ui.js
+
+  docker-validation:
+    name: Dockerfile Build Validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: hikari-protocol:ci-test

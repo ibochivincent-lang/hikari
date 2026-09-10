@@ -266,6 +266,9 @@ function setConnectedWallet(address, providerName) {
   btnConnectWallet.style.color = "#34d399";
 
   updateBalanceLabel();
+  if (typeof window.fetchShardsProfile === "function") {
+    window.fetchShardsProfile(address);
+  }
 
   if (typeof gsap !== "undefined") {
     gsap.fromTo(btnConnectWallet, { scale: 0.88 }, { scale: 1, duration: 0.35, ease: "back.out(2)" });
@@ -1164,3 +1167,93 @@ function initDashboardViewModes() {
 
 initVaultTiers();
 initDashboardViewModes();
+
+// Hikari Shards Loyalty Program & Leaderboard Logic
+function initShardsSystem() {
+  const shardsModal = document.getElementById("shardsModal");
+  const btnCloseShardsModal = document.getElementById("btnCloseShardsModal");
+  const btnDoneShards = document.getElementById("btnDoneShards");
+  const btnOpenShardsModal = document.getElementById("btnOpenShardsModal");
+  const btnDrawerOpenShards = document.getElementById("btnDrawerOpenShards");
+  const headerShardsText = document.getElementById("headerShardsText");
+  const headerMultiplierTag = document.getElementById("headerMultiplierTag");
+  const modalUserShards = document.getElementById("modalUserShards");
+  const modalDailyRate = document.getElementById("modalDailyRate");
+  const modalMultiplier = document.getElementById("modalMultiplier");
+  const modalRank = document.getElementById("modalRank");
+  const modalRankTier = document.getElementById("modalRankTier");
+  const leaderboardList = document.getElementById("leaderboardList");
+
+  async function fetchShardsProfile(address) {
+    try {
+      const res = await fetch(`/api/points/${address || 'GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN'}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (headerShardsText) headerShardsText.innerText = `${(data.totalShards / 1000).toFixed(1)}k Shards`;
+        if (headerMultiplierTag) headerMultiplierTag.innerText = `${data.activeMultiplier}x`;
+        if (modalUserShards) modalUserShards.innerText = `${data.totalShards.toLocaleString()} ✨`;
+        if (modalDailyRate) modalDailyRate.innerText = `+${data.baseRatePerDay.toLocaleString()} / day`;
+        if (modalMultiplier) modalMultiplier.innerText = `${data.activeMultiplier}x`;
+        if (modalRank) modalRank.innerText = `#${data.rank}`;
+        if (modalRankTier) modalRankTier.innerText = data.tier;
+      }
+    } catch (e) {
+      console.warn("Shards fetch error:", e);
+    }
+  }
+
+  window.fetchShardsProfile = fetchShardsProfile;
+
+  async function fetchLeaderboard() {
+    try {
+      const res = await fetch("/api/leaderboard");
+      if (res.ok) {
+        const { leaderboard } = await res.json();
+        if (leaderboardList && leaderboard && leaderboard.length > 0) {
+          const medals = ["🥇", "🥈", "🥉", "🎖️", "🎖️"];
+          leaderboardList.innerHTML = leaderboard.map((item, idx) => `
+            <div class="shards-table-row">
+              <span style="font-weight: 700; color: ${idx === 0 ? '#fbbf24' : idx === 1 ? '#cbd5e1' : idx === 2 ? '#d97706' : 'var(--text-dim)'};">${medals[idx] || '#' + item.rank} #${item.rank}</span>
+              <span style="font-family: monospace;">${item.address}</span>
+              <span class="tier-pill" style="background: rgba(251,191,36,0.15); color: #fbbf24;">${item.tier}</span>
+              <span style="text-align: right; font-weight: 600;">${item.shards.toLocaleString()}</span>
+            </div>
+          `).join("");
+        }
+      }
+    } catch (e) {
+      console.warn("Leaderboard fetch error:", e);
+    }
+  }
+
+  const openShards = (e) => {
+    if (e) e.preventDefault();
+    if (shardsModal) shardsModal.style.display = "flex";
+    const drawer = document.getElementById("lidoMobileDrawer");
+    if (drawer) drawer.style.display = "none";
+    fetchLeaderboard();
+  };
+
+  if (btnOpenShardsModal) btnOpenShardsModal.addEventListener("click", openShards);
+  if (btnDrawerOpenShards) btnDrawerOpenShards.addEventListener("click", openShards);
+  if (btnCloseShardsModal) btnCloseShardsModal.addEventListener("click", () => shardsModal.style.display = "none");
+  if (btnDoneShards) btnDoneShards.addEventListener("click", () => shardsModal.style.display = "none");
+
+  // Dismiss on backdrop click or escape
+  if (shardsModal) {
+    shardsModal.addEventListener("click", (e) => {
+      if (e.target === shardsModal) shardsModal.style.display = "none";
+    });
+  }
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && shardsModal && shardsModal.style.display === "flex") {
+      shardsModal.style.display = "none";
+    }
+  });
+
+  // Initial fetch
+  fetchShardsProfile();
+}
+
+initShardsSystem();

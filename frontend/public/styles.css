@@ -1533,3 +1533,159 @@ footer {
   max-width: 520px;
   margin: 0 auto;
 }
+
+/* Hikari Shards & Loyalty Program Styles */
+.btn-shards-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  color: #fbbf24;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-shards-pill:hover {
+  background: rgba(251, 191, 36, 0.2);
+  border-color: #fbbf24;
+  transform: translateY(-1px);
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.25);
+}
+
+.shards-sparkle {
+  font-size: 0.95rem;
+  animation: sparkle-pulse 2s infinite ease-in-out;
+}
+
+@keyframes sparkle-pulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px #fbbf24); }
+  50% { transform: scale(1.18); filter: drop-shadow(0 0 6px #f59e0b); }
+}
+
+.shards-multiplier-tag {
+  background: rgba(251, 191, 36, 0.25);
+  color: #fff;
+  font-size: 0.68rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-weight: 800;
+}
+
+.shards-stats-banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 1rem;
+  margin-top: 0.5rem;
+}
+
+.shards-stat-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.shards-stat-label {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.shards-stat-val {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.shards-stat-val.highlight-cyan {
+  color: var(--accent-cyan);
+}
+
+.shards-stat-val.highlight-amber {
+  color: var(--accent-amber);
+}
+
+.shards-stat-sub {
+  font-size: 0.72rem;
+  color: var(--accent-emerald);
+}
+
+.shards-multiplier-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.shard-chip {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+.chip-tier {
+  background: rgba(56, 189, 248, 0.1);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: var(--accent-cyan);
+}
+
+.chip-duration {
+  background: rgba(129, 140, 248, 0.1);
+  border-color: rgba(129, 140, 248, 0.3);
+  color: var(--accent-purple);
+}
+
+.chip-eco {
+  background: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.3);
+  color: var(--accent-emerald);
+}
+
+.chip-ref {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.3);
+  color: var(--accent-amber);
+}
+
+.shards-leaderboard-table {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 0.8rem;
+}
+
+.shards-table-row {
+  display: grid;
+  grid-template-columns: 60px 1.5fr 1fr 1fr;
+  align-items: center;
+  padding: 0.55rem 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.shards-table-row:last-child {
+  border-bottom: none;
+}
+
+.shards-table-header {
+  background: rgba(255, 255, 255, 0.03);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
+}
