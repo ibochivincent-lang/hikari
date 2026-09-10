@@ -1888,9 +1888,170 @@ function initNavSliderAndCalculator() {
   }
 }
 
+// ============================================================================
+// LIDO MARKETING FLOW & MODAL INTERACTIONS
+// ============================================================================
+function initLidoMarketingInteractions() {
+  // Earn Cards Deposit Buttons
+  const btnDepositXlm = document.getElementById("btnDepositXlm");
+  const btnDepositUsd = document.getElementById("btnDepositUsd");
+  const btnDepositMulti = document.getElementById("btnDepositMulti");
+  const tabStake = document.getElementById("tabStake");
+  const tabBasket = document.getElementById("tabBasket");
+  const tabBridge = document.getElementById("tabBridge");
+  const amountInput = document.getElementById("amountInput");
+  const vaultPortalSection = document.getElementById("vaultPortalSection");
+
+  if (btnDepositXlm) {
+    btnDepositXlm.addEventListener("click", () => {
+      if (tabStake) tabStake.click();
+      if (vaultPortalSection) {
+        vaultPortalSection.scrollIntoView({ behavior: "smooth" });
+        if (amountInput) {
+          setTimeout(() => amountInput.focus(), 600);
+        }
+      }
+    });
+  }
+
+  if (btnDepositUsd) {
+    btnDepositUsd.addEventListener("click", () => {
+      if (tabBasket) tabBasket.click();
+      if (vaultPortalSection) {
+        vaultPortalSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  if (btnDepositMulti) {
+    btnDepositMulti.addEventListener("click", () => {
+      if (tabBridge) tabBridge.click();
+      if (vaultPortalSection) {
+        vaultPortalSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  }
+
+  // Modals
+  const nodeOperatorsModal = document.getElementById("nodeOperatorsModal");
+  const ecosystemModal = document.getElementById("ecosystemModal");
+  const scorecardModal = document.getElementById("scorecardModal");
+  const invariantsModal = document.getElementById("invariantsModal");
+
+  const btnEcosystemExplore = document.getElementById("btnEcosystemExplore");
+  if (btnEcosystemExplore && ecosystemModal) {
+    btnEcosystemExplore.addEventListener("click", () => {
+      ecosystemModal.style.display = "flex";
+    });
+  }
+
+  const btnLearnMoreVaults = document.getElementById("btnLearnMoreVaults");
+  if (btnLearnMoreVaults && invariantsModal) {
+    btnLearnMoreVaults.addEventListener("click", () => {
+      invariantsModal.style.display = "flex";
+    });
+  }
+
+  const btnLinkAllAudits = document.getElementById("btnLinkAllAudits");
+  if (btnLinkAllAudits && invariantsModal) {
+    btnLinkAllAudits.addEventListener("click", () => {
+      invariantsModal.style.display = "flex";
+    });
+  }
+
+  const btnWeb3socLearn = document.getElementById("btnWeb3socLearn");
+  if (btnWeb3socLearn && scorecardModal) {
+    btnWeb3socLearn.addEventListener("click", () => {
+      scorecardModal.style.display = "flex";
+    });
+  }
+
+  const btnNodeOperatorsModal = document.getElementById("btnNodeOperatorsModal");
+  if (btnNodeOperatorsModal && nodeOperatorsModal) {
+    btnNodeOperatorsModal.addEventListener("click", () => {
+      nodeOperatorsModal.style.display = "flex";
+    });
+  }
+
+  const btnGovernanceProcess = document.getElementById("btnGovernanceProcess");
+  if (btnGovernanceProcess && scorecardModal) {
+    btnGovernanceProcess.addEventListener("click", () => {
+      scorecardModal.style.display = "flex";
+    });
+  }
+
+  const btnScorecardModal = document.getElementById("btnScorecardModal");
+  if (btnScorecardModal && scorecardModal) {
+    btnScorecardModal.addEventListener("click", () => {
+      scorecardModal.style.display = "flex";
+    });
+  }
+
+  // Close modals
+  const btnCloseNodeOpsModal = document.getElementById("btnCloseNodeOpsModal");
+  const btnDoneNodeOps = document.getElementById("btnDoneNodeOps");
+  [btnCloseNodeOpsModal, btnDoneNodeOps].forEach(btn => {
+    if (btn && nodeOperatorsModal) {
+      btn.addEventListener("click", () => { nodeOperatorsModal.style.display = "none"; });
+    }
+  });
+
+  const btnCloseEcoModal = document.getElementById("btnCloseEcoModal");
+  const btnDoneEco = document.getElementById("btnDoneEco");
+  [btnCloseEcoModal, btnDoneEco].forEach(btn => {
+    if (btn && ecosystemModal) {
+      btn.addEventListener("click", () => { ecosystemModal.style.display = "none"; });
+    }
+  });
+
+  const btnCloseScorecardModal = document.getElementById("btnCloseScorecardModal");
+  const btnDoneScorecard = document.getElementById("btnDoneScorecard");
+  [btnCloseScorecardModal, btnDoneScorecard].forEach(btn => {
+    if (btn && scorecardModal) {
+      btn.addEventListener("click", () => { scorecardModal.style.display = "none"; });
+    }
+  });
+
+  // Footer Links
+  const faqModal = document.getElementById("faqModal");
+  const sdkModal = document.getElementById("sdkModal");
+  const shardsModal = document.getElementById("shardsModal");
+  const btnFooterFaq = document.getElementById("btnFooterFaq");
+  const btnFooterSdk = document.getElementById("btnFooterSdk");
+  const btnFooterInvariants = document.getElementById("btnFooterInvariants");
+  const btnFooterShards = document.getElementById("btnFooterShards");
+
+  if (btnFooterFaq && faqModal) {
+    btnFooterFaq.addEventListener("click", () => { faqModal.style.display = "flex"; });
+  }
+  if (btnFooterSdk && sdkModal) {
+    btnFooterSdk.addEventListener("click", () => { sdkModal.style.display = "flex"; });
+  }
+  if (btnFooterInvariants && invariantsModal) {
+    btnFooterInvariants.addEventListener("click", () => { invariantsModal.style.display = "flex"; });
+  }
+  if (btnFooterShards && shardsModal) {
+    btnFooterShards.addEventListener("click", () => { shardsModal.style.display = "flex"; });
+  }
+
+  // Node Operator Tabs
+  const nodeTabBtns = document.querySelectorAll(".node-tab-btn");
+  nodeTabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      nodeTabBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+}
+
 // Call on load
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initNavSliderAndCalculator);
+  document.addEventListener("DOMContentLoaded", () => {
+    initNavSliderAndCalculator();
+    initLidoMarketingInteractions();
+  });
 } else {
   initNavSliderAndCalculator();
+  initLidoMarketingInteractions();
 }
+

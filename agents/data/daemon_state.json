@@ -1,6 +1,6 @@
 {
   "status": "ONLINE",
-  "lastCycleTimestamp": 1789061501414,
+  "lastCycleTimestamp": 1789077270287,
   "totalCycles": 1,
   "activeStrategies": [
     {
@@ -26,11 +26,11 @@
     "totalCapturedStroops": "783000000",
     "vaultBoostStroops": "626400000",
     "lastBundle": {
-      "bundleId": "bundle_1789061501408",
-      "txHash": "fd11c07060283a1bf4b8cfa0760443ff117ecbd4f2a5cf336af4d2e98c955d1e",
-      "timestamp": 1789061501409,
+      "bundleId": "bundle_1789077270283",
+      "txHash": "28736745eb4e24cd601fb35c8c8149d4c3a380279e59341e4d5f01dee5c1761e",
+      "timestamp": 1789077270284,
       "opportunity": {
-        "id": "mev_1789061501407_djmrb",
+        "id": "mev_1789077270283_j86t2",
         "pair": "XLM/USDC",
         "buyVenue": "PhoenixCLAMM",
         "sellVenue": "SoroswapAMM",
@@ -51,11 +51,11 @@
     "isGateSealed": false,
     "isBunkerMode": false,
     "haircutBps": 0,
-    "drawdownBps": 138
+    "drawdownBps": 98
   },
   "recentLogs": [
-    "[2026-09-10T17:31:41.409Z]   ✓ Bundle confirmed! Tx: fd11c07060283a1b... | +62.6400 XLM streamed to Vault",
-    "[2026-09-10T17:31:41.407Z] ⚡ [MEV ENGINE] Arbitrage detected: Buy on PhoenixCLAMM, Sell on SoroswapAMM (Spread: 87 bps)",
-    "[2026-09-10T17:31:41.401Z] --- [CYCLE #1] Autonomous Rebalance & MEV Scan ---"
+    "[2026-09-10T21:54:30.284Z]   ✓ Bundle confirmed! Tx: 28736745eb4e24cd... | +62.6400 XLM streamed to Vault",
+    "[2026-09-10T21:54:30.283Z] ⚡ [MEV ENGINE] Arbitrage detected: Buy on PhoenixCLAMM, Sell on SoroswapAMM (Spread: 87 bps)",
+    "[2026-09-10T21:54:30.276Z] --- [CYCLE #1] Autonomous Rebalance & MEV Scan ---"
   ]
 }
