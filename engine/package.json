@@ -1,0 +1,19 @@
+{
+  "name": "hikari-engine",
+  "version": "0.1.0",
+  "description": "Deterministic Risk & Policy Engine for Hikari Protocol",
+  "author": "ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test dist/tests/*.test.js"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^13.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}

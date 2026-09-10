@@ -1,0 +1,20 @@
+{
+  "name": "hikari-agents",
+  "version": "0.1.0",
+  "description": "Multi-Agent AI Orchestration Layer for Hikari Protocol",
+  "author": "ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "simulate": "node dist/orchestrator.js"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^13.1.0",
+    "hikari-engine": "file:../engine"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}

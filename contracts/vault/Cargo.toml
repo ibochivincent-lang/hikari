@@ -1,0 +1,21 @@
+[package]
+name = "hikari-vault"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["lib"]
+
+[dependencies]
+soroban-sdk = { workspace = true }
+hikari-interfaces = { path = "../interfaces" }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
+hikari-token = { path = "../token" }
+hikari-mock-strategy = { path = "../mock_strategy" }
+hikari-strategy-registry = { path = "../strategy_registry" }
+hikari-withdrawal-queue = { path = "../withdrawal_queue" }
+hikari-policy-account = { path = "../policy_account" }

@@ -1,0 +1,30 @@
+[workspace]
+resolver = "2"
+members = [
+    "interfaces",
+    "vault",
+    "token",
+    "strategy_registry",
+    "withdrawal_queue",
+    "policy_account",
+    "mock_strategy",
+]
+
+[workspace.package]
+version = "0.1.0"
+authors = ["ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>"]
+edition = "2021"
+license = "MIT"
+
+[workspace.dependencies]
+soroban-sdk = "27"
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+debug = 0
+strip = "symbols"
+debug-assertions = false
+panic = "abort"
+codegen-units = 1
+lto = true

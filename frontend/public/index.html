@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hikari Protocol | Stellar AI Liquid-Yield & Agentic Finance</title>
+  <meta name="description" content="Stellar-native liquid yield protocol powered by autonomous AI agents and deterministic policy guardrails.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo-icon">光</div>
+        <div>
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <h1 class="brand-title">Hikari Protocol</h1>
+            <span class="brand-badge">Protocol 27 • Soroban</span>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-dim);">Stellar AI Liquid-Yield & Agentic Finance</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <div class="wallet-badge">
+          <span class="status-dot"></span>
+          <span>Stellar Testnet: Active</span>
+        </div>
+        <div class="wallet-badge">
+          <span>hXLM (SEP-41)</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Human Approval Alert (conditionally displayed by JS) -->
+    <div id="approvalBanner" class="approval-banner">
+      <div class="approval-info">
+        <h4>⚡ Operator Approval Required (Policy Gate)</h4>
+        <p id="approvalDetails">Proposal hikari_prop_910 exceeds threshold. Agent requested allocation of 25,000 XLM.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <button id="btnApprove" class="btn-approve">Approve Execution</button>
+        <button id="btnReject" class="btn-approve" style="background: rgba(244,63,94,0.2); color: #f43f5e; border: 1px solid #f43f5e;">Reject</button>
+      </div>
+    </div>
+
+    <!-- Core Protocol Metrics -->
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Value Locked (TVL)</div>
+        <div id="tvlDisplay" class="metric-value">124,500 XLM</div>
+        <div class="metric-sub">≈ $15,562.50 USD</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Net Asset Value (NAV / Share)</div>
+        <div id="navDisplay" class="metric-value">1.0428 XLM</div>
+        <div class="metric-sub">+4.28% cumulative yield</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Net Blended APY</div>
+        <div class="metric-value" style="color: var(--accent-emerald);">6.94%</div>
+        <div class="metric-sub">Dynamic AI-optimized</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Vault Reserve Buffer</div>
+        <div id="reserveDisplay" class="metric-value">28,400 XLM</div>
+        <div class="metric-sub">22.8% liquid reserve (Target: ≥15%)</div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <div class="main-grid">
+      <!-- Left Column: Strategy Registry & AI Console -->
+      <main>
+        <!-- Strategy Registry -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span>🏛️ Approved Strategy Adapters</span>
+            </h2>
+            <span style="font-size: 0.8rem; color: var(--accent-cyan);">3 Active Adapters</span>
+          </div>
+
+          <div class="strategy-list">
+            <div class="strategy-item">
+              <div>
+                <div class="strategy-name">Soroswap XLM-USDC AMM</div>
+                <div class="strategy-protocol">DEX Liquidity Provisioning</div>
+              </div>
+              <div>
+                <div class="strategy-apy">7.80% APY</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Fee APR</div>
+              </div>
+              <div>
+                <div class="strategy-cap">Allocated: 45,000 XLM</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Cap: 100,000 XLM</div>
+              </div>
+              <div>
+                <span class="strategy-status status-active">Active</span>
+              </div>
+            </div>
+
+            <div class="strategy-item">
+              <div>
+                <div class="strategy-name">Blend Protocol XLM Lending</div>
+                <div class="strategy-protocol">Collateralized Money Market</div>
+              </div>
+              <div>
+                <div class="strategy-apy">5.20% APY</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Variable Supply</div>
+              </div>
+              <div>
+                <div class="strategy-cap">Allocated: 32,500 XLM</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Cap: 75,000 XLM</div>
+              </div>
+              <div>
+                <span class="strategy-status status-active">Active</span>
+              </div>
+            </div>
+
+            <div class="strategy-item">
+              <div>
+                <div class="strategy-name">Phoenix Concentrated XLM</div>
+                <div class="strategy-protocol">Narrow-Band CLAMM</div>
+              </div>
+              <div>
+                <div class="strategy-apy">6.40% APY</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Fee APR</div>
+              </div>
+              <div>
+                <div class="strategy-cap">Allocated: 18,600 XLM</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Cap: 50,000 XLM</div>
+              </div>
+              <div>
+                <span class="strategy-status status-active">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time AI Agent Console -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span>🤖 Multi-Agent Orchestrator & Audit Stream</span>
+            </h2>
+            <button id="btnRunAgent" class="tab-btn active" style="flex: none; padding: 0.4rem 0.9rem; font-size: 0.8rem;">
+              ▶ Trigger Cycle
+            </button>
+          </div>
+          <div id="agentConsole" class="console-box">
+            <div class="log-line">
+              <span class="log-time">[11:22:15]</span>
+              <span class="log-tag-agent">[PaymentAgent]</span>
+              <span>Settled 0.001 USDC via x402 for volatility oracle feed.</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:16]</span>
+              <span class="log-tag-agent">[MarketAgent]</span>
+              <span>Observed XLM @ $0.125 | Blend APY: 5.2% | Soroswap Fee APR: 7.8%.</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:17]</span>
+              <span class="log-tag-agent">[YieldAgent]</span>
+              <span>Ranked 3 strategies. Top: Soroswap XLM-USDC (Risk Score: 6.00).</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:18]</span>
+              <span class="log-tag-policy">[PolicyEngine]</span>
+              <span>Verified proposal against 7 deterministic rules. Limits passed.</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:19]</span>
+              <span class="log-tag-success">[AuditChain]</span>
+              <span>Hash verified: 9075ca44fd83cab34abfd0250d193950228a78e75eb8b742debef33594f89cf4</span>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Column: User Vault Actions -->
+      <aside>
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span>💼 Vault Portal</span>
+            </h2>
+          </div>
+
+          <div class="action-tabs">
+            <button id="tabDeposit" class="tab-btn active">Deposit</button>
+            <button id="tabWithdraw" class="tab-btn">Redeem</button>
+          </div>
+
+          <form id="vaultForm">
+            <div class="input-group">
+              <label id="inputLabel" class="input-label" for="amountInput">Deposit XLM Amount</label>
+              <input id="amountInput" class="input-field" type="number" placeholder="e.g. 500" min="1" step="any" required>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem; font-size: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                <span style="color: var(--text-muted);">Estimated hXLM Shares:</span>
+                <span id="estShares" style="font-weight: 600; color: #fff;">0.00 hXLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                <span style="color: var(--text-muted);">Anti-Inflation Offset:</span>
+                <span style="color: var(--accent-emerald);">Virtual Shares Protected</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--text-muted);">Protocol Fee:</span>
+                <span style="color: #fff;">0.00%</span>
+              </div>
+            </div>
+
+            <button id="btnSubmitAction" type="submit" class="btn-primary">Deposit XLM</button>
+          </form>
+        </div>
+
+        <!-- Protocol Security Status -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span>🛡️ Security Controls</span>
+            </h2>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.85rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Emergency Guardian:</span>
+              <span style="color: var(--accent-emerald); font-weight: 600;">Active (Arm State)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">On-Chain Policy Account:</span>
+              <span style="color: var(--accent-cyan); font-weight: 600;">Enforcing Limits</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Withdrawal Cooldown:</span>
+              <span style="color: #fff;">50 Ledgers (~4.1 min)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Storage TTL Extension:</span>
+              <span style="color: #fff;">Auto-Renewing</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div>Hikari Protocol • Built natively for Stellar & Soroban</div>
+      <div>Sole Contributor: <strong style="color: #fff;">ibochivincent-lang</strong></div>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
