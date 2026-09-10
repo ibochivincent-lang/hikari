@@ -71,30 +71,51 @@ Hikari/
 
 ---
 
-## 🚀 Getting Started
+## ⚡ Protocol Highlights
 
-### Prerequisites
-- **Rust**: $\ge$ 1.84 with `wasm32v1-none` target
-- **Stellar CLI**: $\ge$ 27.0
-- **Node.js**: $\ge$ 20.0
-- **npm**: $\ge$ 10.0
+- **Lido-Grade Liquid Staking & Withdrawal Queue**:
+  - **4-Tab Portal**: Stake, Request, Claim Tickets, and Vault Basket.
+  - **Turbo Mode**: Instant queue throughput and standard cooldowns under normal market conditions.
+  - **Bunker Mode**: Activates during market shocks or depeg events to apply emergency haircuts and prevent bank-runs on idle liquid reserves.
+  - **GateSeal Circuit Breaker**: One-time panic button contract (`CAS5XIH...ZYDJ`) freezing allocations for 120,960 ledgers with automatic self-unseal.
+- **Jito-Inspired MEV Backrun Capture**:
+  - Cross-DEX arbitrage backrun engine between **Phoenix CLAMM** and **Soroswap AMM**.
+  - 80% of net arbitrage profit is automatically streamed into the Hikari Vault to boost `hXLM` APY.
+- **x402 Micropayments**:
+  - HTTP 402 paid data feeds sponsoring machine-to-machine AI risk and volatility telemetry.
 
-### Smart Contract Testing
+---
+
+## 🚀 Quickstart & Commands
+
 ```bash
-cd contracts
-cargo test
-```
+# 1. Run all Soroban smart contract tests (18 tests)
+npm run test:contracts
 
-### Policy Engine Testing
-```bash
-cd engine
-npm test
+# 2. Run deterministic risk & policy engine tests (8 tests)
+npm run test:engine
+
+# 3. Run x402 paid machine telemetry service tests
+npm run test:x402
+
+# 4. Audit live contracts and NAV directly on Stellar Testnet
+npm run verify:testnet
+
+# 5. Run live on-chain deposit and rebalance cycle against Testnet
+npm run test:testnet
+
+# 6. Run autonomous agent daemon (continuous loop or on-demand)
+npm run daemon
+
+# 7. Launch web dashboard with live telemetry and GSAP animations
+npm run dashboard
 ```
 
 ---
 
 ## 👤 Author & Maintainer
 
-- **Author**: ibochivincent-lang
-- **Email**: ibochivincent-lang@users.noreply.github.com
-- **Repository**: https://github.com/ibochivincent-lang/hikari.git
+- **Author**: `ibochivincent-lang`
+- **Email**: `ibochivincent-lang@users.noreply.github.com`
+- **Repository**: [https://github.com/ibochivincent-lang/hikari](https://github.com/ibochivincent-lang/hikari)
+

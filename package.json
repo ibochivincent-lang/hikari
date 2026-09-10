@@ -10,10 +10,14 @@
   },
   "scripts": {
     "dashboard": "node frontend/server.js",
+    "daemon": "npm run daemon --prefix agents",
     "test:contracts": "cargo test --manifest-path contracts/Cargo.toml --workspace",
     "test:engine": "npm test --prefix engine",
     "test:agents": "npm run simulate --prefix agents",
+    "test:x402": "npm test --prefix services/x402-gateway",
     "test:testnet": "node scripts/test_live_cycle.js",
+    "verify:testnet": "node scripts/deploy_testnet.js --verify",
     "build:wasm": "powershell -ExecutionPolicy Bypass -File scripts/build_wasm.ps1"
+
   }
 }
