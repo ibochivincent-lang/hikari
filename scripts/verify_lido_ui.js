@@ -20,7 +20,14 @@ async function verify() {
     sdkModal: html.includes('id="sdkModal"'),
     invariantsModal: html.includes('id="invariantsModal"'),
     faqModal: html.includes('id="faqModal"'),
-    mobileDrawer: html.includes('id="lidoMobileDrawer"')
+    mobileDrawer: html.includes('id="lidoMobileDrawer"'),
+    modeSwitchBar: html.includes('mode-switch-bar'),
+    btnSimpleMode: html.includes('id="btnSimpleMode"'),
+    btnProMode: html.includes('id="btnProMode"'),
+    vaultTierSelector: html.includes('vault-tier-selector'),
+    optLobstr: html.includes('id="optLobstr"'),
+    optXbull: html.includes('id="optXbull"'),
+    rationaleBox: html.includes('rationale-box')
   };
 
   console.log('UI Verification Results:');
@@ -31,7 +38,7 @@ async function verify() {
     console.error('Some checks failed!');
     process.exit(1);
   }
-  console.log('✓ All 12 Lido navigation menu elements and modals verified successfully!');
+  console.log('✓ All 19 navigation, tier selector, mode toggle, wallet, and rationale elements verified successfully!');
 }
 
 verify().catch(err => {

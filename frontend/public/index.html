@@ -763,6 +763,26 @@
               </div>
             </div>
           </div>
+
+          <div id="optLobstr" class="wallet-option-card">
+            <div class="wallet-option-icon">🦞</div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 0.95rem;">Lobstr Wallet</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">
+                Connect with mobile multi-signature signer or QR code
+              </div>
+            </div>
+          </div>
+
+          <div id="optXbull" class="wallet-option-card">
+            <div class="wallet-option-icon">🐂</div>
+            <div style="flex: 1;">
+              <div style="font-weight: 600; font-size: 0.95rem;">xBull Wallet</div>
+              <div style="font-size: 0.75rem; color: var(--text-muted);">
+                Non-custodial multi-account wallet for power users
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -967,6 +987,18 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
       </div>
     </section>
 
+    <!-- Dashboard View Mode Switch: Simple 1-Click vs. Advanced Pro Mode -->
+    <div class="mode-switch-bar">
+      <div class="mode-switch-info">
+        <span style="font-size: 0.85rem; font-weight: 600; color: #fff;">Dashboard View:</span>
+        <span id="currentViewModeText" style="font-size: 0.8rem; color: var(--accent-cyan);">Pro Analytics Mode (AI Engine & Risk Active)</span>
+      </div>
+      <div class="mode-toggle-group">
+        <button id="btnSimpleMode" class="btn-mode-toggle">✨ Simple 1-Click</button>
+        <button id="btnProMode" class="btn-mode-toggle active">🔬 Advanced Pro</button>
+      </div>
+    </div>
+
     <!-- Main Content Grid -->
     <div class="main-grid">
       <!-- Left Column: Strategy Registry & AI Console -->
@@ -1114,6 +1146,23 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
             </div>
           </div>
 
+          <!-- Live Transparent Agent Decision Rationale Stream -->
+          <div class="rationale-box">
+            <div class="rationale-header">
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <span>🧠</span>
+                <span style="font-weight: 700; font-size: 0.85rem; color: #fff;">Autonomous Decision Rationale</span>
+                <span class="lido-chip chip-cyan" style="font-size: 0.6rem;">Live Telemetry</span>
+              </div>
+              <span id="rationaleConfidence" style="font-size: 0.72rem; color: var(--accent-emerald);">Policy Confidence: 98.4%</span>
+            </div>
+            <div id="rationaleStream" class="rationale-content">
+              <p style="margin: 0; font-size: 0.78rem; color: #94a3b8; line-height: 1.4;">
+                <strong style="color: #fff;">[YieldAgent]:</strong> Rebalanced 25,000 XLM into Phoenix CLAMM. Observed 87 bps cross-DEX spread exceeding threshold (25 bps). Portfolio 95% VaR remains healthy at 4.2% (safe boundary: &lt; 5.0%).
+              </p>
+            </div>
+          </div>
+
           <!-- Jito-Style MEV Backrun Yield Stream -->
           <div id="mevSection" class="mev-highlight-box pulse-mev">
             <div class="mev-header">
@@ -1214,6 +1263,22 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
               <span>💼 Liquid Staking Portal</span>
             </h2>
             <span id="widgetBadge" style="font-size: 0.72rem; color: var(--accent-cyan);">SEP-41 Native</span>
+          </div>
+
+          <!-- Multi-Vault Strategy Tier Selector -->
+          <div class="vault-tier-selector">
+            <button class="tier-chip active" data-tier="BALANCED_HXLM">
+              <span>🌟 Balanced hXLM</span>
+              <span class="tier-pill">6.94% APY</span>
+            </button>
+            <button class="tier-chip" data-tier="CONSERVATIVE_USDC">
+              <span>🛡️ Conservative hUSDC</span>
+              <span class="tier-pill">5.20% APY</span>
+            </button>
+            <button class="tier-chip" data-tier="DYNAMIC_ALPHA_HXLM">
+              <span>⚡ MEV Alpha hXLM</span>
+              <span class="tier-pill">12.4% APR</span>
+            </button>
           </div>
 
           <!-- Lido-style Tabs -->

@@ -19,8 +19,9 @@
     "test:stress": "node scripts/simulate_stress_test.js",
     "test:testnet": "node scripts/test_live_cycle.js",
     "verify:testnet": "node scripts/deploy_testnet.js --verify",
+    "test:fuzz": "node scripts/run_fuzz_tests.js",
+    "test:backtest": "node scripts/run_backtest.js",
+    "report:transparency": "node scripts/generate_transparency_report.js",
     "build:wasm": "powershell -ExecutionPolicy Bypass -File scripts/build_wasm.ps1"
-
-
   }
 }

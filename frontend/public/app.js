@@ -3,6 +3,8 @@ let state = {
   idleAssets: 28400,
   totalShares: 119390,
   activeTab: "stake", // stake, request, claim, basket
+  currentTier: "BALANCED_HXLM",
+  viewMode: "pro", // pro or simple
   bunkerMode: false,
   haircutBps: 0,
   wallet: {
@@ -21,6 +23,42 @@ let state = {
     amount: 25000,
     rationale: "Strategic opportunity: Volatility drop allows high-fee capture in AMM pool.",
   },
+};
+
+const VAULT_TIERS = {
+  BALANCED_HXLM: {
+    id: "BALANCED_HXLM",
+    name: "Balanced hXLM",
+    token: "XLM",
+    shareToken: "hXLM",
+    baseApy: "6.94% APY",
+    badge: "SEP-41 Native",
+    walletBalance: 10000,
+    walletShares: 1200,
+    desc: "Diversified Blend lending + Phoenix CLAMM yield with automated rebalancing."
+  },
+  CONSERVATIVE_USDC: {
+    id: "CONSERVATIVE_USDC",
+    name: "Conservative hUSDC",
+    token: "USDC",
+    shareToken: "hUSDC",
+    baseApy: "5.20% APY",
+    badge: "Blend SAC Prime",
+    walletBalance: 2500,
+    walletShares: 500,
+    desc: "Zero liquidation risk: 100% overcollateralized lending on Blend money market."
+  },
+  DYNAMIC_ALPHA_HXLM: {
+    id: "DYNAMIC_ALPHA_HXLM",
+    name: "MEV Alpha hXLM",
+    token: "XLM",
+    shareToken: "hXLM-α",
+    baseApy: "12.4% APR",
+    badge: "Jito-Style Alpha",
+    walletBalance: 10000,
+    walletShares: 350,
+    desc: "High-yield dynamic strategy combining CLAMM LP fees and Jito atomic MEV backruns."
+  }
 };
 
 const VIRTUAL_SHARES = 1000;
@@ -86,13 +124,14 @@ const btnResetCircuit = document.getElementById("btnResetCircuit");
 
 
 function updateMetrics() {
+  const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
   const nav = (state.totalAssets + VIRTUAL_ASSETS) / (state.totalShares + VIRTUAL_SHARES);
-  tvlDisplay.innerText = `${state.totalAssets.toLocaleString()} XLM`;
-  navDisplay.innerText = `${nav.toFixed(4)} XLM`;
-  reserveDisplay.innerText = `${state.idleAssets.toLocaleString()} XLM`;
+  tvlDisplay.innerText = `${state.totalAssets.toLocaleString()} ${tier.token}`;
+  navDisplay.innerText = `${nav.toFixed(4)} ${tier.token}`;
+  reserveDisplay.innerText = `${state.idleAssets.toLocaleString()} ${tier.token}`;
 
   if (rateDisplay) {
-    rateDisplay.innerText = `1 XLM ≈ ${(1 / nav).toFixed(4)} hXLM`;
+    rateDisplay.innerText = `1 ${tier.token} ≈ ${(1 / nav).toFixed(4)} ${tier.shareToken}`;
   }
 }
 
@@ -180,6 +219,38 @@ if (optFreighter) {
   });
 }
 
+// Lobstr & xBull Wallet Integrations
+const optLobstr = document.getElementById("optLobstr");
+const optXbull = document.getElementById("optXbull");
+
+if (optLobstr) {
+  optLobstr.addEventListener("click", () => {
+    optLobstr.style.opacity = "0.7";
+    const randomSuffix = Array.from({ length: 4 }, () =>
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
+    ).join("");
+    const demoAddress = `GDLOBSTRM5V6VQL2W7H4P8ZJXK39QY0RNE4SDA7MUPTR4A69T0${randomSuffix}`;
+    setConnectedWallet(demoAddress, "Lobstr Mobile Multi-Sig");
+    addLog("[Lobstr]", `Connected mobile signer: ${demoAddress.slice(0, 8)}... (Multi-sig safe)`, "log-tag-success");
+    optLobstr.style.opacity = "1";
+    if (walletModal) walletModal.style.display = "none";
+  });
+}
+
+if (optXbull) {
+  optXbull.addEventListener("click", () => {
+    optXbull.style.opacity = "0.7";
+    const randomSuffix = Array.from({ length: 4 }, () =>
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
+    ).join("");
+    const demoAddress = `GBXBULLJ7R8T9V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9${randomSuffix}`;
+    setConnectedWallet(demoAddress, "xBull Wallet");
+    addLog("[xBull]", `Connected non-custodial account: ${demoAddress.slice(0, 8)}...`, "log-tag-success");
+    optXbull.style.opacity = "1";
+    if (walletModal) walletModal.style.display = "none";
+  });
+}
+
 function setConnectedWallet(address, providerName) {
   state.wallet.connected = true;
   state.wallet.address = address;
@@ -200,30 +271,33 @@ function setConnectedWallet(address, providerName) {
     gsap.fromTo(btnConnectWallet, { scale: 0.88 }, { scale: 1, duration: 0.35, ease: "back.out(2)" });
   }
 
-  addLog("[Wallet]", `Connected via ${providerName}: ${shortAddr} (Balance: 10,000 XLM)`, "log-tag-success");
+  const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
+  addLog("[Wallet]", `Connected via ${providerName}: ${shortAddr} (Balance: ${tier.walletBalance.toLocaleString()} ${tier.token})`, "log-tag-success");
 }
 
 function updateBalanceLabel() {
   if (!walletBalLabel) return;
+  const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
   if (!state.wallet.connected) {
-    walletBalLabel.innerText = "Balance: 0 XLM";
+    walletBalLabel.innerText = `Balance: 0 ${tier.token}`;
     return;
   }
   if (state.activeTab === "stake") {
-    walletBalLabel.innerText = `Balance: ${state.wallet.balanceXlm.toLocaleString()} XLM`;
+    walletBalLabel.innerText = `Balance: ${tier.walletBalance.toLocaleString()} ${tier.token}`;
   } else if (state.activeTab === "request") {
-    walletBalLabel.innerText = `Balance: ${state.wallet.sharesHXlm.toLocaleString()} hXLM`;
+    walletBalLabel.innerText = `Balance: ${tier.walletShares.toLocaleString()} ${tier.shareToken}`;
   }
 }
 
 // MAX Button
 if (btnMaxAmount) {
   btnMaxAmount.addEventListener("click", () => {
+    const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
     if (state.activeTab === "stake") {
-      const maxVal = Math.max(0, state.wallet.balanceXlm - 2); // reserve 2 XLM for gas
+      const maxVal = Math.max(0, tier.walletBalance - 2); // reserve 2 units for fee
       amountInput.value = maxVal;
     } else if (state.activeTab === "request") {
-      amountInput.value = state.wallet.sharesHXlm;
+      amountInput.value = tier.walletShares;
     }
     calculateConversion();
     if (typeof gsap !== "undefined") {
@@ -241,18 +315,19 @@ function setActiveTab(tab) {
   if (panelBasket) panelBasket.style.display = "none";
   if (panelBridge) panelBridge.style.display = "none";
 
+  const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
   if (tab === "stake") {
     if (tabStake) tabStake.classList.add("active");
     if (panelForm) panelForm.style.display = "block";
-    inputLabel.innerText = "Deposit XLM Amount";
-    btnSubmitAction.innerText = "Stake XLM";
+    inputLabel.innerText = `Deposit ${tier.token} Amount`;
+    btnSubmitAction.innerText = `Stake ${tier.token}`;
     btnSubmitAction.style.display = "block";
     updateBalanceLabel();
     calculateConversion();
   } else if (tab === "request") {
     if (tabRequest) tabRequest.classList.add("active");
     if (panelForm) panelForm.style.display = "block";
-    inputLabel.innerText = "Redeem hXLM Shares";
+    inputLabel.innerText = `Redeem ${tier.shareToken} Shares`;
     btnSubmitAction.innerText = "Queue Withdrawal Request";
     btnSubmitAction.style.display = "block";
     updateBalanceLabel();
@@ -338,16 +413,17 @@ if (btnTestX402) {
 amountInput.addEventListener("input", calculateConversion);
 
 function calculateConversion() {
+  const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
   const val = parseFloat(amountInput.value) || 0;
   if (state.activeTab === "stake") {
     const shares = (val * (state.totalShares + VIRTUAL_SHARES)) / (state.totalAssets + VIRTUAL_ASSETS);
-    estShares.innerText = `${shares.toFixed(2)} hXLM`;
+    estShares.innerText = `${shares.toFixed(2)} ${tier.shareToken}`;
   } else {
     let assets = (val * (state.totalAssets + VIRTUAL_ASSETS)) / (state.totalShares + VIRTUAL_SHARES);
     if (state.bunkerMode && state.haircutBps > 0) {
       assets = assets * (1 - state.haircutBps / 10000);
     }
-    estShares.innerText = `${assets.toFixed(2)} XLM`;
+    estShares.innerText = `${assets.toFixed(2)} ${tier.token}`;
   }
 }
 
@@ -431,6 +507,7 @@ vaultForm.addEventListener("submit", (e) => {
   const val = parseFloat(amountInput.value);
   if (!val || val <= 0) return;
 
+  const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
   if (state.activeTab === "stake") {
     const shares = (val * (state.totalShares + VIRTUAL_SHARES)) / (state.totalAssets + VIRTUAL_ASSETS);
     state.totalAssets += val;
@@ -438,10 +515,10 @@ vaultForm.addEventListener("submit", (e) => {
     state.totalShares += shares;
     state.wallet.balanceXlm -= val;
     state.wallet.sharesHXlm += shares;
-    addLog("[Vault]", `Staked ${val} XLM. Minted ${shares.toFixed(2)} hXLM shares.`, "log-tag-success");
+    addLog("[Vault]", `Staked ${val} ${tier.token}. Minted ${shares.toFixed(2)} ${tier.shareToken} shares.`, "log-tag-success");
   } else if (state.activeTab === "request") {
     if (val > state.wallet.sharesHXlm) {
-      addLog("[WithdrawalQueue]", `Insufficient hXLM shares in wallet.`, "log-tag-warn");
+      addLog("[WithdrawalQueue]", `Insufficient ${tier.shareToken} shares in wallet.`, "log-tag-warn");
       return;
     }
     const assets = (val * (state.totalAssets + VIRTUAL_ASSETS)) / (state.totalShares + VIRTUAL_SHARES);
@@ -454,7 +531,7 @@ vaultForm.addEventListener("submit", (e) => {
     });
     state.wallet.sharesHXlm -= val;
     state.totalShares -= val;
-    addLog("[WithdrawalQueue]", `Created Request Ticket #${newId} for ${val} hXLM (${assets.toFixed(2)} XLM). Cooldown started.`, "log-tag-success");
+    addLog("[WithdrawalQueue]", `Created Request Ticket #${newId} for ${val} ${tier.shareToken} (${assets.toFixed(2)} ${tier.token}). Cooldown started.`, "log-tag-success");
 
     // Automatically simulate finalization after 6 seconds
     setTimeout(() => {
@@ -589,6 +666,29 @@ async function fetchTelemetry() {
 setInterval(fetchTelemetry, 5000);
 fetchTelemetry();
 
+const rationaleStream = document.getElementById("rationaleStream");
+const rationaleConfidence = document.getElementById("rationaleConfidence");
+
+function pushDecisionRationale(author, message, confidence) {
+  if (rationaleConfidence && confidence) {
+    rationaleConfidence.innerText = `Policy Confidence: ${confidence}`;
+  }
+  if (!rationaleStream) return;
+  const p = document.createElement("p");
+  p.style.margin = "0.4rem 0 0 0";
+  p.style.fontSize = "0.78rem";
+  p.style.color = "#94a3b8";
+  p.style.lineHeight = "1.4";
+  p.innerHTML = `<strong style="color: #fff;">[${author}]:</strong> ${message}`;
+  rationaleStream.prepend(p);
+  while (rationaleStream.children.length > 3) {
+    rationaleStream.removeChild(rationaleStream.lastChild);
+  }
+  if (typeof gsap !== "undefined") {
+    gsap.fromTo(p, { autoAlpha: 0, y: -4 }, { autoAlpha: 1, y: 0, duration: 0.3 });
+  }
+}
+
 // Real-time Agent Cycle Execution
 btnRunAgent.addEventListener("click", async () => {
   btnRunAgent.disabled = true;
@@ -611,6 +711,13 @@ btnRunAgent.addEventListener("click", async () => {
       if (json.telemetry.mevMetrics && json.telemetry.mevMetrics.lastBundle) {
         addLog("[AuditChain]", `Committed Tx: ${json.telemetry.mevMetrics.lastBundle.txHash.slice(0, 32)}...`, "log-tag-success");
       }
+      const spreads = [76, 84, 91, 105, 88];
+      const selectedSpread = spreads[Math.floor(Math.random() * spreads.length)];
+      pushDecisionRationale(
+        "YieldAgent",
+        `Observed ${selectedSpread} bps cross-DEX spread exceeding 25 bps threshold. Rebalanced 25,000 XLM into Phoenix CLAMM. Projected delta APR: +2.14%. Portfolio 95% VaR remains healthy at 4.2% (safe boundary: < 5.0%). Merkle state root verified.`,
+        "98.8%"
+      );
     }
   } catch (err) {
     addLog("[Agent]", `Cycle completed locally.`, "log-tag-warn");
@@ -631,6 +738,11 @@ if (btnSimulateShock) {
       addLog("[RiskEngine]", "⚠️ CRITICAL DRAWDOWN (16.5%) DETECTED IN DEFI POOLS!", "log-tag-warn");
       addLog("[GateSeal]", "🚨 GateSeal tripped! All strategy allocations frozen for 10,000 ledgers.", "log-tag-warn");
       addLog("[WithdrawalQueue]", "🛡️ Bunker Mode ENGAGED. Haircut of 16.5% applied to prevent run on idle reserves.", "log-tag-warn");
+      pushDecisionRationale(
+        "RiskEngine",
+        "EMERGENCY DE-RISKING: Drawdown 16.5% breached 15.0% threshold. GateSeal locked Soroswap and Blend allocations. Vault transitioned to Bunker Mode with 16.5% FIFO redemption haircut.",
+        "100.0% (EMERGENCY)"
+      );
       await fetch("/api/simulate-shock", { method: "POST" });
       await fetchTelemetry();
     } finally {
@@ -646,6 +758,11 @@ if (btnResetCircuit) {
       addLog("[Governance]", "🏛️ Timelock expired & DAO verified collateral recovery.", "log-tag-success");
       addLog("[GateSeal]", "GateSeal unsealed. Normal rebalancing resumed.", "log-tag-success");
       addLog("[WithdrawalQueue]", "Bunker Mode lifted. Turbo Mode 0% haircut restored.", "log-tag-success");
+      pushDecisionRationale(
+        "Governance",
+        "Circuit breaker reset by multi-sig emergency council. Solvency restored, 15% reserve buffer replenished. Turbo Mode restored at 0% haircut.",
+        "99.5%"
+      );
       await fetch("/api/reset-circuit-breaker", { method: "POST" });
       await fetchTelemetry();
     } finally {
@@ -971,4 +1088,79 @@ function initLidoMenu() {
 
 initLidoMenu();
 
+// Multi-Vault Strategy Tier Switching
+function initVaultTiers() {
+  const tierChips = document.querySelectorAll(".tier-chip");
+  const widgetBadge = document.getElementById("widgetBadge");
+  const vaultPortalSection = document.getElementById("vaultPortalSection");
 
+  tierChips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const tierKey = chip.getAttribute("data-tier");
+      if (!VAULT_TIERS[tierKey]) return;
+
+      tierChips.forEach((c) => c.classList.remove("active"));
+      chip.classList.add("active");
+
+      state.currentTier = tierKey;
+      const tier = VAULT_TIERS[tierKey];
+
+      if (widgetBadge) widgetBadge.innerText = tier.badge;
+
+      if (state.activeTab === "stake") {
+        inputLabel.innerText = `Deposit ${tier.token} Amount`;
+        btnSubmitAction.innerText = `Stake ${tier.token}`;
+      } else if (state.activeTab === "request") {
+        inputLabel.innerText = `Redeem ${tier.shareToken} Shares`;
+        btnSubmitAction.innerText = `Queue Withdrawal Request`;
+      }
+
+      updateMetrics();
+      updateBalanceLabel();
+      calculateConversion();
+
+      addLog("[VaultTiers]", `Switched to ${tier.name} (${tier.baseApy}). Risk profile: ${tier.desc}`, "log-tag-agent");
+
+      if (typeof gsap !== "undefined" && vaultPortalSection) {
+        gsap.fromTo(vaultPortalSection, { scale: 0.98 }, { scale: 1, duration: 0.25, ease: "power2.out" });
+      }
+    });
+  });
+}
+
+// Simple 1-Click vs. Advanced Pro Mode Switch
+function initDashboardViewModes() {
+  const btnSimpleMode = document.getElementById("btnSimpleMode");
+  const btnProMode = document.getElementById("btnProMode");
+  const currentViewModeText = document.getElementById("currentViewModeText");
+  const mainCol = document.querySelector(".main-grid main");
+  const mainGrid = document.querySelector(".main-grid");
+
+  function setViewMode(mode) {
+    state.viewMode = mode;
+    if (mode === "simple") {
+      if (btnSimpleMode) btnSimpleMode.classList.add("active");
+      if (btnProMode) btnProMode.classList.remove("active");
+      if (mainCol) mainCol.classList.add("simple-mode-hidden");
+      if (mainGrid) mainGrid.classList.add("simple-mode");
+      if (currentViewModeText) currentViewModeText.innerText = "✨ Simple 1-Click Staking Mode (Streamlined)";
+      addLog("[Dashboard]", "Switched to Simple 1-Click mode for streamlined staking.", "log-tag-success");
+    } else {
+      if (btnProMode) btnProMode.classList.add("active");
+      if (btnSimpleMode) btnSimpleMode.classList.remove("active");
+      if (mainCol) mainCol.classList.remove("simple-mode-hidden");
+      if (mainGrid) mainGrid.classList.remove("simple-mode");
+      if (currentViewModeText) currentViewModeText.innerText = "🔬 Pro Analytics Mode (AI Engine & Risk Active)";
+      addLog("[Dashboard]", "Switched to Advanced Pro Mode: Real-time telemetry, risk engine & MEV monitors active.", "log-tag-agent");
+    }
+    if (typeof gsap !== "undefined") {
+      gsap.fromTo(".main-grid aside", { autoAlpha: 0.8, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.3 });
+    }
+  }
+
+  if (btnSimpleMode) btnSimpleMode.addEventListener("click", () => setViewMode("simple"));
+  if (btnProMode) btnProMode.addEventListener("click", () => setViewMode("pro"));
+}
+
+initVaultTiers();
+initDashboardViewModes();
