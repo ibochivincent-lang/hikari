@@ -156,8 +156,15 @@ btnConnectWallet.addEventListener("click", () => {
   if (state.wallet.connected) {
     state.wallet.connected = false;
     state.wallet.address = null;
-    btnConnectWallet.innerText = "🔗 Connect Wallet";
+    const btnConnectWalletText = document.getElementById("btnConnectWalletText");
+    if (btnConnectWalletText) {
+      btnConnectWalletText.innerText = "Connect Wallet";
+    } else {
+      btnConnectWallet.innerText = "🔗 Connect Wallet";
+    }
     btnConnectWallet.style.background = "";
+    btnConnectWallet.style.borderColor = "";
+    btnConnectWallet.style.color = "";
     if (walletBalLabel) walletBalLabel.innerText = "Balance: 0 XLM";
     addLog("[Wallet]", "Disconnected from wallet session.", "log-tag-warn");
     return;
@@ -258,11 +265,16 @@ function setConnectedWallet(address, providerName) {
   state.wallet.sharesHXlm = 1200;
 
   const shortAddr = `${address.slice(0, 4)}...${address.slice(-4)}`;
-  btnConnectWallet.innerText = `🟢 ${shortAddr}`;
+  const btnConnectWalletText = document.getElementById("btnConnectWalletText");
+  if (btnConnectWalletText) {
+    btnConnectWalletText.innerText = `🟢 ${shortAddr}`;
+  } else {
+    btnConnectWallet.innerText = `🟢 ${shortAddr}`;
+  }
   btnConnectWallet.style.background = "rgba(52, 211, 153, 0.2)";
   btnConnectWallet.title = `Connected via ${providerName}: ${address}`;
 
-  btnConnectWallet.style.border = "1px solid #34d399";
+  btnConnectWallet.style.borderColor = "#34d399";
   btnConnectWallet.style.color = "#34d399";
 
   updateBalanceLabel();
@@ -1275,3 +1287,525 @@ function initThemeSystem() {
 }
 
 initThemeSystem();
+
+// =========================================================
+// VOXR AI TEMPLATE ENGINE: LOADER, CURSOR, GLOW, HERO, 3D SCENE
+// =========================================================
+function initVoxrTemplate() {
+  const root = document.getElementById("voxr");
+  if (!root) return;
+
+  // 1. SPLIT TITLE: wrap text nodes' characters into char spans
+  const titleLines = root.querySelectorAll("[data-title-line]");
+  titleLines.forEach((line) => {
+    const frag = document.createDocumentFragment();
+    line.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        [...node.textContent].forEach((ch) => {
+          const span = document.createElement("span");
+          span.className = "hero__char";
+          if (ch === " ") {
+            span.classList.add("is-space");
+            span.innerHTML = "&nbsp;";
+          } else {
+            span.textContent = ch;
+          }
+          frag.appendChild(span);
+        });
+      } else if (node.nodeType === Node.ELEMENT_NODE) {
+        const emText = node.textContent;
+        node.textContent = "";
+        [...emText].forEach((ch) => {
+          const span = document.createElement("span");
+          span.className = "hero__char";
+          if (ch === " ") {
+            span.classList.add("is-space");
+            span.innerHTML = "&nbsp;";
+          } else {
+            span.textContent = ch;
+          }
+          node.appendChild(span);
+        });
+        frag.appendChild(node);
+      }
+    });
+    line.textContent = "";
+    line.appendChild(frag);
+  });
+
+  // 2. BUILD LOADER RINGS & EQUALIZER BARS
+  const ringsHost = document.getElementById("loader-rings");
+  const RING_COUNT = 4;
+  if (ringsHost && ringsHost.children.length === 0) {
+    for (let i = 0; i < RING_COUNT; i++) {
+      ringsHost.appendChild(document.createElement("span"));
+    }
+  }
+  const ringEls = ringsHost ? ringsHost.querySelectorAll("span") : [];
+
+  const barsHost = document.getElementById("loader-bars");
+  const BAR_COUNT = 16;
+  if (barsHost && barsHost.children.length === 0) {
+    for (let i = 0; i < BAR_COUNT; i++) {
+      barsHost.appendChild(document.createElement("span"));
+    }
+  }
+  const barEls = barsHost ? barsHost.querySelectorAll("span") : [];
+
+  // References
+  const loader = document.getElementById("loader");
+  const loaderOrb = document.getElementById("loader-orb");
+  const loaderCheck = document.getElementById("loader-check");
+  const loaderCounter = document.getElementById("loader-counter");
+  const loaderLabel = document.getElementById("loader-label");
+
+  const cursorDot = document.getElementById("cursor-dot");
+  const cursorRing = document.getElementById("cursor-ring");
+
+  const glow = document.getElementById("glow");
+  const magnetics = document.querySelectorAll("[data-magnetic]");
+  const titleChars = root.querySelectorAll(".hero__char");
+  const lines = root.querySelectorAll("[data-title-line]");
+  const fades = root.querySelectorAll("[data-fade]");
+  const chips = root.querySelectorAll("[data-chip]");
+  const cta = root.querySelector("[data-cta]");
+  const sceneEls = root.querySelectorAll("[data-scene]");
+
+  if (typeof gsap === "undefined") {
+    if (loader) loader.style.display = "none";
+    return;
+  }
+
+  // Initial States
+  gsap.set(magnetics, { y: -15, opacity: 0 });
+  gsap.set(titleChars, { yPercent: 110, opacity: 0 });
+  gsap.set(lines, { opacity: 1 });
+  gsap.set(fades, { y: 20, opacity: 0 });
+  gsap.set(chips, { x: 40, opacity: 0 });
+  gsap.set(cta, { y: 30, opacity: 0, scale: 0.9 });
+  gsap.set(sceneEls, { opacity: 0 });
+  gsap.set(ringEls, { scale: 0.6, opacity: 0 });
+
+  // 3. LOADER TIMELINE
+  const loaderTl = gsap.timeline({ onComplete: playScene });
+
+  const ringTweens = [];
+  ringEls.forEach((r, i) => {
+    const t = gsap.fromTo(
+      r,
+      { scale: 0.8, opacity: 0.7 },
+      {
+        scale: 2.8,
+        opacity: 0,
+        duration: 2,
+        repeat: -1,
+        ease: "power1.out",
+        delay: i * 0.5,
+      }
+    );
+    ringTweens.push(t);
+  });
+
+  gsap.to(loaderOrb, {
+    scale: 1.1,
+    duration: 0.8,
+    yoyo: true,
+    repeat: -1,
+    ease: "sine.inOut",
+  });
+
+  barEls.forEach((bar, i) => {
+    gsap.to(bar, {
+      height: () => gsap.utils.random(8, 38),
+      duration: () => gsap.utils.random(0.25, 0.5),
+      yoyo: true,
+      repeat: -1,
+      ease: "sine.inOut",
+      delay: i * 0.04,
+    });
+  });
+
+  const p = { v: 0 };
+  loaderTl.to(p, {
+    v: 100,
+    duration: 2.2,
+    ease: "power1.inOut",
+    onUpdate: () => {
+      if (loaderCounter) loaderCounter.textContent = Math.floor(p.v) + "%";
+      if (loaderLabel) {
+        if (p.v > 25 && loaderLabel.textContent === "INITIALIZING AI") loaderLabel.textContent = "CONNECTING SOROBAN";
+        if (p.v > 55 && loaderLabel.textContent === "CONNECTING SOROBAN") loaderLabel.textContent = "LOADING RISK ENGINE";
+        if (p.v > 90 && loaderLabel.textContent === "LOADING RISK ENGINE") loaderLabel.textContent = "HIKARI READY";
+      }
+    },
+  });
+
+  loaderTl.to(loaderCheck, {
+    opacity: 1,
+    duration: 0.3,
+    ease: "back.out(2)",
+  }, "+=0.1");
+  loaderTl.from(loaderCheck, {
+    scale: 0,
+    rotation: -45,
+    duration: 0.5,
+    ease: "back.out(2.5)",
+  }, "<");
+
+  loaderTl.to(ringEls, {
+    scale: 6,
+    opacity: 0,
+    duration: 0.8,
+    ease: "power2.out",
+    onStart: () => ringTweens.forEach((t) => t.pause()),
+  }, "+=0.2");
+  loaderTl.to(loaderOrb, {
+    scale: 2.5,
+    opacity: 0,
+    duration: 0.7,
+    ease: "power3.in",
+  }, "-=0.5");
+  loaderTl.to([loaderCounter, loaderLabel, barsHost], {
+    y: 10,
+    opacity: 0,
+    duration: 0.3,
+    stagger: 0.04,
+  }, "-=0.6");
+  loaderTl.to(loader, {
+    opacity: 0,
+    duration: 0.4,
+    ease: "power2.inOut",
+  }, "-=0.2");
+  loaderTl.set(loader, { display: "none" });
+
+  // 4. MAIN SCENE ENTRANCE
+  function playScene() {
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+    tl.to(magnetics, {
+      y: 0,
+      opacity: 1,
+      duration: 0.6,
+      stagger: 0.05,
+    }, 0);
+
+    tl.to(titleChars, {
+      yPercent: 0,
+      opacity: 1,
+      duration: 1.1,
+      stagger: 0.018,
+      ease: "expo.out",
+    }, 0.3);
+
+    tl.to(fades, {
+      y: 0,
+      opacity: 1,
+      duration: 0.7,
+      stagger: 0.15,
+    }, 0.9);
+
+    tl.to(cta, {
+      y: 0,
+      opacity: 1,
+      scale: 1,
+      duration: 0.8,
+      ease: "back.out(1.6)",
+    }, 1.1);
+
+    tl.to(chips, {
+      x: 0,
+      opacity: 1,
+      duration: 0.7,
+      stagger: 0.1,
+      ease: "power4.out",
+    }, 0.8);
+
+    tl.to(sceneEls, {
+      opacity: 1,
+      duration: 1.2,
+      stagger: 0.08,
+      ease: "power2.out",
+    }, 1);
+
+    tl.call(startContinuous, null, 1.8);
+    tl.call(enableInteractions, null, 1.8);
+  }
+
+  // 5. CONTINUOUS FLOATING & LIGHT SWEEP
+  function startContinuous() {
+    root.querySelectorAll(".scene__orb").forEach((orb, i) => {
+      gsap.to(orb, {
+        y: `-=${12 + i * 3}`,
+        duration: 2 + i * 0.4,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+        delay: i * 0.15,
+      });
+    });
+
+    const check = root.querySelector(".scene__check");
+    if (check) {
+      gsap.to(check, {
+        y: "-=15",
+        rotation: 3,
+        duration: 3,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+      });
+    }
+
+    chips.forEach((chip, i) => {
+      gsap.to(chip, {
+        y: "-=6",
+        duration: 2.2 + i * 0.3,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+        delay: i * 0.2,
+      });
+    });
+
+    const light = root.querySelector(".scene__light");
+    if (light) {
+      gsap.to(light, {
+        x: 60,
+        opacity: 0.6,
+        duration: 3,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut",
+      });
+    }
+  }
+
+  // 6. INTERACTIONS: Cursor, Ambient Glow, Proximity, Magnetic, Parallax, Particle burst
+  function enableInteractions() {
+    // Custom cursor lerping
+    if (cursorDot && cursorRing) {
+      let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      let rx = mx, ry = my;
+      window.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+      });
+      gsap.ticker.add(() => {
+        rx += (mx - rx) * 0.18;
+        ry += (my - ry) * 0.18;
+        gsap.set(cursorDot, { x: mx, y: my });
+        gsap.set(cursorRing, { x: rx, y: ry });
+      });
+
+      const hovers = document.querySelectorAll(
+        "a, button, [data-magnetic], [data-chip], .scene__orb, .hero__char, .lido-nav-trigger"
+      );
+      hovers.forEach((el) => {
+        el.addEventListener("mouseenter", () => cursorRing.classList.add("is-hover"));
+        el.addEventListener("mouseleave", () => cursorRing.classList.remove("is-hover"));
+      });
+    }
+
+    // Ambient glow follow
+    if (glow) {
+      let gx = 0, gy = 0, gcx = 0, gcy = 0;
+      root.addEventListener("mousemove", (e) => {
+        const r = root.getBoundingClientRect();
+        gx = e.clientX - r.left;
+        gy = e.clientY - r.top;
+      });
+      gsap.ticker.add(() => {
+        gcx += (gx - gcx) * 0.04;
+        gcy += (gy - gcy) * 0.04;
+        gsap.set(glow, { x: gcx - window.innerWidth / 2, y: gcy - window.innerHeight / 2 });
+      });
+    }
+
+    // Magnetic elements
+    magnetics.forEach((el) => {
+      const strength = el.classList.contains("cta-big")
+        ? 0.3
+        : el.classList.contains("topnav__login")
+        ? 0.3
+        : 0.22;
+      el.addEventListener("mousemove", (e) => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        gsap.to(el, {
+          x: (e.clientX - cx) * strength,
+          y: (e.clientY - cy) * strength,
+          duration: 0.4,
+          ease: "power3.out",
+        });
+      });
+      el.addEventListener("mouseleave", () => {
+        gsap.to(el, { x: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.4)" });
+      });
+    });
+
+    // Title character proximity
+    const hero = document.getElementById("hero");
+    if (hero) {
+      let tmx = -9999, tmy = -9999;
+      hero.addEventListener("mousemove", (e) => {
+        tmx = e.clientX;
+        tmy = e.clientY;
+      });
+      hero.addEventListener("mouseleave", () => {
+        tmx = -9999;
+        tmy = -9999;
+        titleChars.forEach((c) => gsap.to(c, { y: 0, duration: 0.5, ease: "power3.out" }));
+      });
+      gsap.ticker.add(() => {
+        if (tmx < 0) return;
+        titleChars.forEach((c) => {
+          const r = c.getBoundingClientRect();
+          if (r.width === 0) return;
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const dx = tmx - cx, dy = tmy - cy;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 150) gsap.set(c, { y: -(1 - dist / 150) * 16 });
+          else gsap.set(c, { y: 0 });
+        });
+      });
+    }
+
+    // Chips hover pop & icon wiggle
+    chips.forEach((chip) => {
+      chip.addEventListener("mouseenter", () => {
+        gsap.to(chip, {
+          scale: 1.04,
+          boxShadow: "0 10px 30px rgba(139, 47, 230, 0.35)",
+          duration: 0.3,
+          ease: "back.out(2)",
+        });
+        const icon = chip.querySelector(".chip__icon");
+        if (icon) {
+          gsap.fromTo(
+            icon,
+            { rotation: -15 },
+            {
+              rotation: 15,
+              duration: 0.1,
+              yoyo: true,
+              repeat: 3,
+              ease: "sine.inOut",
+              onComplete: () => gsap.to(icon, { rotation: 0, duration: 0.3 }),
+            }
+          );
+        }
+      });
+      chip.addEventListener("mouseleave", () => {
+        gsap.to(chip, {
+          scale: 1,
+          boxShadow: "none",
+          duration: 0.4,
+          ease: "elastic.out(1, 0.4)",
+        });
+      });
+    });
+
+    // CTA particle burst
+    if (cta) {
+      cta.addEventListener("click", (e) => {
+        gsap.fromTo(
+          cta,
+          { scale: 1 },
+          { scale: 0.95, duration: 0.1, yoyo: true, repeat: 1, ease: "sine.inOut" }
+        );
+        const rect = cta.getBoundingClientRect();
+        const cx = rect.left + rect.width - 19;
+        const cy = rect.top + rect.height / 2;
+        for (let i = 0; i < 8; i++) {
+          const dot = document.createElement("span");
+          dot.style.position = "fixed";
+          dot.style.left = cx + "px";
+          dot.style.top = cy + "px";
+          dot.style.width = "5px";
+          dot.style.height = "5px";
+          dot.style.background = "#c084fc";
+          dot.style.borderRadius = "50%";
+          dot.style.pointerEvents = "none";
+          dot.style.zIndex = "99999";
+          dot.style.transform = "translate(-50%, -50%)";
+          dot.style.boxShadow = "0 0 10px #c084fc";
+          document.body.appendChild(dot);
+          const a = (i / 8) * Math.PI * 2;
+          gsap.fromTo(
+            dot,
+            { x: 0, y: 0, opacity: 1 },
+            {
+              x: Math.cos(a) * 60,
+              y: Math.sin(a) * 60,
+              opacity: 0,
+              scale: 1.8,
+              duration: 0.65,
+              ease: "power2.out",
+              onComplete: () => dot.remove(),
+            }
+          );
+        }
+      });
+    }
+
+    // Scene orbs mouse parallax + click bounce
+    const orbs = root.querySelectorAll(".scene__orb");
+    let sx = 0, sy = 0, scx = 0, scy = 0;
+    root.addEventListener("mousemove", (e) => {
+      const r = root.getBoundingClientRect();
+      sx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+      sy = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    });
+    root.addEventListener("mouseleave", () => {
+      sx = 0;
+      sy = 0;
+    });
+
+    gsap.ticker.add(() => {
+      scx += (sx - scx) * 0.05;
+      scy += (sy - scy) * 0.05;
+      orbs.forEach((orb, i) => {
+        const depth = 0.4 + i * 0.15;
+        gsap.set(orb, {
+          x: scx * 25 * depth,
+          y: scy * 18 * depth,
+        });
+      });
+      const check = root.querySelector(".scene__check");
+      if (check) {
+        gsap.set(check, {
+          rotationY: scx * 8,
+          rotationX: -scy * 6,
+          transformPerspective: 1000,
+          transformOrigin: "center",
+        });
+      }
+    });
+
+    orbs.forEach((orb) => {
+      orb.style.pointerEvents = "auto";
+      orb.addEventListener("mouseenter", () => {
+        gsap.to(orb, { scale: 1.15, duration: 0.3, ease: "back.out(2)" });
+      });
+      orb.addEventListener("mouseleave", () => {
+        gsap.to(orb, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.4)" });
+      });
+      orb.addEventListener("click", () => {
+        gsap.fromTo(
+          orb,
+          { x: 0 },
+          { x: (Math.random() - 0.5) * 80, duration: 0.3, yoyo: true, repeat: 1, ease: "power2.out" }
+        );
+      });
+    });
+  }
+}
+
+// Auto-run when DOM is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initVoxrTemplate);
+} else {
+  initVoxrTemplate();
+}

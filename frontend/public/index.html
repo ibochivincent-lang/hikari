@@ -19,8 +19,35 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
 <body>
-  <!-- Lido-Style Sticky Header & Mega Navigation -->
-  <header class="lido-header" id="mainHeader">
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- ========== LOADER — Pulsing AI orb ========== -->
+  <div class="loader" id="loader">
+    <div class="loader__stage">
+      <div class="loader__rings" id="loader-rings"></div>
+      <div class="loader__orb" id="loader-orb">
+        <div class="loader__orb-inner"></div>
+        <div class="loader__orb-core"></div>
+        <svg class="loader__check" id="loader-check" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3">
+          <path d="M5 12l5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="loader__bars" id="loader-bars"></div>
+    </div>
+    <div class="loader__meta">
+      <span class="loader__label" id="loader-label">INITIALIZING AI</span>
+      <span class="loader__counter" id="loader-counter">0%</span>
+    </div>
+  </div>
+
+  <section class="voxr" id="voxr">
+    <!-- Ambient radial glow that follows cursor -->
+    <div class="voxr__glow" id="glow"></div>
+
+    <!-- Lido-Style Sticky Header & Mega Navigation -->
+    <header class="lido-header" id="mainHeader">
     <div class="lido-header-inner">
       <!-- Brand Logo -->
       <a href="#" class="brand-link" aria-label="Hikari Protocol Home">
@@ -656,8 +683,13 @@
           <span id="headerShardsText">1.6M Shards</span>
           <span class="shards-multiplier-tag" id="headerMultiplierTag">2.25x</span>
         </button>
-        <button id="btnConnectWallet" class="btn-primary" style="padding: 0.5rem 1.1rem; font-size: 0.85rem; width: auto;">
-          🔗 Connect Wallet
+        <button id="btnConnectWallet" class="topnav__login" data-magnetic title="Connect Biometric Passkey, Freighter, Lobstr, or xBull">
+          <span id="btnConnectWalletText">Connect Wallet</span>
+          <span class="topnav__login-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
         </button>
 
         <!-- Mobile Hamburger Button -->
@@ -744,6 +776,83 @@
       </div>
     </div>
   </header>
+
+    <!-- ========== HERO ========== -->
+    <div class="hero" id="hero">
+      <!-- Left column -->
+      <div class="hero__left">
+        <h1 class="hero__title" aria-label="Stop Chasing Leads. Start Closing Them.">
+          <span class="hero__line" data-title-line>Stop Chasing</span>
+          <span class="hero__line" data-title-line><em>Leads.</em> Start</span>
+          <span class="hero__line" data-title-line><em>Closing Them.</em></span>
+        </h1>
+
+        <p class="hero__desc" data-fade>
+          AI-powered outbound calling that works leads at scale, qualifies
+          intent in real-time, and either transfers hot prospects to your
+          closers instantly or books meetings directly on their calendar.
+        </p>
+
+        <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <a href="#vaultPortalSection" class="cta-big" data-magnetic data-cta id="btnHeroStake">
+            <span class="cta-big__label">Try it now</span>
+            <span class="cta-big__arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </a>
+          <button id="btnHeroDemo" class="btn-secondary" data-magnetic style="border-radius: 999px; padding: 0.85rem 1.6rem; font-weight: 600; cursor: pointer;">
+            ⚡ Simulate Agent Cycle
+          </button>
+        </div>
+      </div>
+
+      <!-- Right column: feature chips -->
+      <div class="hero__chips">
+        <span class="chip" data-chip>
+          <span class="chip__icon">
+            <svg viewBox="0 0 24 24" fill="#c084fc"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4z"/></svg>
+          </span>
+          <span>Your smart scheduling assistant</span>
+        </span>
+        <span class="chip" data-chip>
+          <span class="chip__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="3">
+              <path d="M4 12l5 5 11-13" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>Qualified appointment only</span>
+        </span>
+        <span class="chip" data-chip>
+          <span class="chip__icon">
+            <svg viewBox="0 0 24 24" fill="#c084fc">
+              <path d="M5 13l3-8 5 3 2-5 4 7-3 6-5-2-2 5z"/>
+            </svg>
+          </span>
+          <span>Increases efficiency by 80%</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- ========== 3D SCENE (bottom) ========== -->
+    <div class="scene" id="scene">
+      <div class="scene__platform" data-scene></div>
+      <div class="scene__light" data-scene></div>
+      <div class="scene__check" data-scene>
+        <div class="scene__check-face">
+          <svg viewBox="0 0 48 48" fill="none" stroke="#ec4cff" stroke-width="4">
+            <path d="M10 24l10 10 18-22" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="scene__orb scene__orb--1" data-scene></div>
+      <div class="scene__orb scene__orb--2" data-scene></div>
+      <div class="scene__orb scene__orb--3" data-scene></div>
+      <div class="scene__orb scene__orb--4" data-scene></div>
+      <div class="scene__orb scene__orb--5" data-scene></div>
+    </div>
+  </section>
 
   <div class="container">
 
@@ -1038,27 +1147,6 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
       </div>
     </div>
 
-    <!-- Landing Hero Section -->
-    <section class="hero-section">
-
-      <div class="hero-badge">
-        <span>✨ Stellar Protocol 27 • Autonomous Liquid-Yield Engine</span>
-      </div>
-      <h2 class="hero-title">
-        Next-Generation <span class="gradient-text">Agentic Finance</span> on Stellar
-      </h2>
-      <p class="hero-description">
-        Hikari orchestrates multi-agent intelligence with deterministic Soroban policy guardrails. Deposit XLM to mint yield-bearing <strong>hXLM</strong>, optimized continuously across AMM and lending markets.
-      </p>
-      <div class="hero-actions">
-        <a href="#vaultForm" class="btn-primary" style="text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; width: auto; padding: 0.75rem 1.6rem;">
-          🚀 Launch Vault Portal
-        </a>
-        <button id="btnHeroDemo" class="btn-secondary">
-          ⚡ Simulate Agent Cycle
-        </button>
-      </div>
-    </section>
 
     <!-- Human Approval Alert (conditionally displayed by JS) -->
     <div id="approvalBanner" class="approval-banner">
