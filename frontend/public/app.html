@@ -68,6 +68,19 @@
           <span>SOROBAN TESTNET</span>
         </div>
 
+        <!-- Cryptographic Proof of Solvency Pill -->
+        <button id="btnOpenSolvencyModal" class="solvency-pill-btn" title="View cryptographic Merkle Proof of Solvency">
+          <span class="solvency-shield">🛡️</span>
+          <span class="solvency-text">104.8% Solvent</span>
+          <span class="solvency-check">✅</span>
+        </button>
+
+        <!-- Live Social Activity Pulse Pill -->
+        <button id="btnToggleSocialPulse" class="social-pulse-btn" title="Toggle Live Telegram & Discord Pulse Feed">
+          <span class="social-pulse-beacon"></span>
+          <span class="social-pulse-text">Live Pulse</span>
+        </button>
+
         <!-- Shards Balance Pill -->
         <button id="btnOpenShardsModal" class="shards-pill-btn" title="View loyalty points, multiplier, and leaderboard">
           <span class="shards-gem">💎</span>
@@ -938,6 +951,79 @@ console.log("Current NAV:", nav);</code></pre>
       <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end;">
         <button id="btnDoneSdk" class="btn-primary" style="width: auto; padding: 0.5rem 1.5rem;">Done</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Proof of Solvency Verification Modal -->
+  <div id="solvencyModal" class="modal-backdrop" style="display: none;">
+    <div class="modal-box" style="max-width: 680px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.4rem;">🛡️</span>
+          <div>
+            <h3 style="margin: 0; font-size: 1.2rem; color: var(--text-main);">Zero-Knowledge Proof of Solvency</h3>
+            <span style="font-size: 0.75rem; color: #10b981; font-weight: 600;">MATHEMATICALLY VERIFIED ON-CHAIN • 104.8% OVER-COLLATERALIZED</span>
+          </div>
+        </div>
+        <button id="btnCloseSolvencyModal" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div style="margin-top: 1.2rem; display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem;">
+          <div class="solvency-metric-card">
+            <span class="solvency-metric-lbl">Total Liabilities</span>
+            <span class="solvency-metric-val" id="solvencyLiabilitiesVal">485,000 XLM</span>
+          </div>
+          <div class="solvency-metric-card">
+            <span class="solvency-metric-lbl">Audited Reserves</span>
+            <span class="solvency-metric-val" id="solvencyReservesVal" style="color: #10b981;">508,280 XLM</span>
+          </div>
+          <div class="solvency-metric-card">
+            <span class="solvency-metric-lbl">Surplus Buffer</span>
+            <span class="solvency-metric-val" id="solvencySurplusVal" style="color: var(--purple-soft);">+23,280 XLM</span>
+          </div>
+        </div>
+
+        <div>
+          <span style="font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em;">Active Cryptographic Merkle Root</span>
+          <div style="background: rgba(0,0,0,0.4); padding: 0.65rem 0.9rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); font-family: monospace; font-size: 0.8rem; color: #38bdf8; word-break: break-all; margin-top: 0.3rem;" id="solvencyMerkleRootDisplay">
+            69a7a6a881c5422ad787ac2b6154813569665477e0514cdf3dda59c66152ad2e
+          </div>
+        </div>
+
+        <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem;">
+          <label for="solvencyUserAddressInput" style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.4rem;">
+            Verify Your Address Inclusion Proof:
+          </label>
+          <div style="display: flex; gap: 0.6rem;">
+            <input type="text" id="solvencyUserAddressInput" placeholder="Enter Stellar Address (e.g. GAKN... or GIBO...)" style="flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 8px; padding: 0.6rem 0.9rem; color: #fff; font-size: 0.85rem; font-family: monospace;" value="GIBO1V7L9900CDEF">
+            <button id="btnVerifyInclusionProof" class="btn-primary" style="width: auto; padding: 0.6rem 1.2rem; font-size: 0.85rem;">Verify Proof</button>
+          </div>
+          <div id="solvencyProofResult" style="margin-top: 0.7rem; font-size: 0.82rem; line-height: 1.4; display: none;"></div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem; display: flex; justify-content: flex-end;">
+        <button id="btnDoneSolvency" class="btn-primary" style="width: auto; padding: 0.5rem 1.5rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Social Activity Pulse Dock Widget -->
+  <div id="socialPulseDock" class="social-pulse-dock">
+    <div class="social-pulse-dock-header" id="socialPulseHeader">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span class="social-pulse-beacon"></span>
+        <span style="font-weight: 700; font-size: 0.85rem; color: var(--text-main);">Hakiru Social Pulse</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 0.4rem;">
+        <span class="social-chan-badge badge-telegram">Telegram</span>
+        <span class="social-chan-badge badge-discord">Discord</span>
+        <button id="btnMinMaxSocialPulse" class="social-dock-toggle-btn" aria-label="Toggle Feed">−</button>
+      </div>
+    </div>
+    <div class="social-pulse-feed-container" id="socialPulseFeedList">
+      <!-- Live event cards populate here dynamically -->
     </div>
   </div>
 

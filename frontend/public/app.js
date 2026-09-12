@@ -2173,16 +2173,144 @@ function initAppPageVaultRouting() {
   });
 }
 
+function initHakiruSocialAndSolvency() {
+  // 1. Solvency Modal Wiring
+  const btnOpenSolvency = document.getElementById("btnOpenSolvencyModal");
+  const solvencyModal = document.getElementById("solvencyModal");
+  const btnCloseSolvency = document.getElementById("btnCloseSolvencyModal");
+  const btnDoneSolvency = document.getElementById("btnDoneSolvency");
+  const btnVerifyInclusion = document.getElementById("btnVerifyInclusionProof");
+  const inputAddress = document.getElementById("solvencyUserAddressInput");
+  const resultDiv = document.getElementById("solvencyProofResult");
+
+  if (btnOpenSolvency && solvencyModal) {
+    btnOpenSolvency.addEventListener("click", () => {
+      solvencyModal.style.display = "flex";
+      loadSolvencyReport();
+    });
+  }
+
+  [btnCloseSolvency, btnDoneSolvency].forEach((b) => {
+    if (b && solvencyModal) {
+      b.addEventListener("click", () => {
+        solvencyModal.style.display = "none";
+      });
+    }
+  });
+
+  async function loadSolvencyReport() {
+    try {
+      const res = await fetch("/api/v1/solvency/proof");
+      if (res.ok) {
+        const data = await res.json();
+        const rootDisp = document.getElementById("solvencyMerkleRootDisplay");
+        if (rootDisp && data.report) {
+          rootDisp.innerText = data.report.merkleRoot;
+        }
+      }
+    } catch (e) {
+      console.warn("Could not fetch solvency report", e);
+    }
+  }
+
+  if (btnVerifyInclusion && inputAddress && resultDiv) {
+    btnVerifyInclusion.addEventListener("click", async () => {
+      const addr = inputAddress.value.trim();
+      if (!addr) return;
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = '<span style="color: var(--text-dim);">Computing cryptographic Merkle inclusion verification...</span>';
+      try {
+        const res = await fetch(`/api/v1/solvency/proof?address=${encodeURIComponent(addr)}`);
+        const data = await res.json();
+        if (data.userProof && data.userProof.isVerified) {
+          resultDiv.innerHTML = `
+            <div style="background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 8px; padding: 0.6rem 0.8rem; color: #10b981;">
+              <strong>✅ 100% Cryptographically Verified!</strong><br>
+              Account <code>${addr}</code> holding <strong>${data.userProof.shares} shares</strong> (${data.userProof.underlyingValueXlm.toLocaleString()} XLM) matches Merkle Leaf <code>${data.userProof.leafHash.slice(0, 16)}...</code>.
+            </div>`;
+        } else {
+          resultDiv.innerHTML = `
+            <div style="background: rgba(239, 68, 68, 0.12); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 0.6rem 0.8rem; color: #ef4444;">
+              ⚠️ Address not yet indexed in this snapshot. (Try sample account <code>GIBO1V7L9900CDEF</code> or <code>GAKN7F4E5678WXYZ</code>).
+            </div>`;
+        }
+      } catch (e) {
+        resultDiv.innerHTML = `<span style="color: #ef4444;">Verification error: ${e.message}</span>`;
+      }
+    });
+  }
+
+  // 2. Live Social Pulse Dock Widget Wiring
+  const btnToggleSocialPulse = document.getElementById("btnToggleSocialPulse");
+  const socialPulseDock = document.getElementById("socialPulseDock");
+  const btnMinMaxSocialPulse = document.getElementById("btnMinMaxSocialPulse");
+  const feedList = document.getElementById("socialPulseFeedList");
+
+  if (btnToggleSocialPulse && socialPulseDock) {
+    btnToggleSocialPulse.addEventListener("click", () => {
+      const isVisible = socialPulseDock.classList.contains("active");
+      if (isVisible) {
+        socialPulseDock.classList.remove("active");
+      } else {
+        socialPulseDock.classList.add("active");
+        loadSocialFeed();
+      }
+    });
+  }
+
+  if (btnMinMaxSocialPulse && socialPulseDock) {
+    btnMinMaxSocialPulse.addEventListener("click", () => {
+      socialPulseDock.classList.toggle("minimized");
+      btnMinMaxSocialPulse.innerText = socialPulseDock.classList.contains("minimized") ? "+" : "−";
+    });
+  }
+
+  async function loadSocialFeed() {
+    if (!feedList) return;
+    try {
+      const res = await fetch("/api/v1/social/feed");
+      if (!res.ok) return;
+      const data = await res.json();
+      if (!data.feed || data.feed.length === 0) return;
+
+      feedList.innerHTML = data.feed
+        .map(
+          (item) => `
+        <div class="social-feed-item">
+          <div class="social-feed-item-header">
+            <span class="social-feed-title">${item.title}</span>
+            <span class="social-feed-time">${new Date(item.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+          </div>
+          <p class="social-feed-desc">${item.description}</p>
+        </div>
+      `
+        )
+        .join("");
+    } catch (e) {
+      console.warn("Could not fetch social feed", e);
+    }
+  }
+
+  setInterval(() => {
+    if (socialPulseDock && socialPulseDock.classList.contains("active")) {
+      loadSocialFeed();
+    }
+  }, 30000);
+}
+
 // Call on load
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     initNavSliderAndCalculator();
     initMarketingInteractions();
     initAppPageVaultRouting();
+    initHakiruSocialAndSolvency();
   });
 } else {
   initNavSliderAndCalculator();
   initMarketingInteractions();
   initAppPageVaultRouting();
+  initHakiruSocialAndSolvency();
 }
+
 

@@ -10,6 +10,8 @@ export interface HikariContractsConfig {
   withdrawalQueueId: string;
   policyAccountId: string;
   gateSealId: string;
+  factoryId?: string;
+  sentinelId?: string;
   blendAdapterId?: string;
   phoenixAdapterId?: string;
 }
@@ -52,4 +54,42 @@ export interface MevYieldSnapshot {
   totalVaultBoostStroops: bigint;
   lastSpreadBps: number;
   venues: string;
+}
+
+export interface FactoryInfo {
+  admin: string;
+  treasury: string;
+  sentinel: string;
+  totalVaults: number;
+  version: string;
+}
+
+export interface SentinelStatus {
+  isPaused: boolean;
+  maxDrawdownBps: number;
+  guardian: string;
+  lastAlertTimestamp?: string;
+}
+
+export interface SocialTelemetryInfo {
+  telegramStatus: string;
+  discordStatus: string;
+  twitterStatus: string;
+  latestHarvestApy: string;
+  totalCompoundedXlm: number;
+  reserveRatioPercent: number;
+}
+
+export interface SolvencyProofInfo {
+  merkleRoot: string;
+  verifiedLedger: number;
+  reserveRatioPercent: number;
+  isFullySolvent: boolean;
+}
+
+export interface FeeSponsoredTxPayload {
+  originalXdr: string;
+  sponsorAccount: string;
+  feeStroops: number;
+  sponsoredEnvelopeXdr: string;
 }

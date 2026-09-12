@@ -1,5 +1,5 @@
 #![no_std]
-use soroban_sdk::{contractclient, contracterror, contracttype, Address, Env, String, Symbol};
+use soroban_sdk::{contractclient, contracterror, contracttype, Address, BytesN, Env, String, Symbol, Vec};
 
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -23,6 +23,66 @@ pub enum Error {
     InvalidState = 16,
     RequestNotFound = 17,
     AlreadyFinalized = 18,
+    ThresholdExceeded = 19,
+    InvalidWasmHash = 20,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct VaultDeploymentConfig {
+    pub asset: Address,
+    pub token_wasm_hash: BytesN<32>,
+    pub vault_wasm_hash: BytesN<32>,
+    pub name: String,
+    pub symbol: Symbol,
+    pub management_fee_bps: u32,
+    pub performance_fee_bps: u32,
+    pub treasury: Address,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct VaultRecord {
+    pub vault_address: Address,
+    pub token_address: Address,
+    pub asset_address: Address,
+    pub created_at_ledger: u32,
+    pub active: bool,
+}
+
+#[contracttype]
+#[derive(Clone, Debug, Eq, PartialEq)]
+pub struct BasketAssetWeight {
+    pub asset: Address,
+    pub target_weight_bps: u32,
+    pub current_balance: i128,
+}
+
+#[contractclient(name = "FactoryClient")]
+pub trait FactoryTrait {
+    fn initialize(env: Env, admin: Address, treasury: Address, sentinel: Address) -> Result<(), Error>;
+    fn register_wasm(env: Env, caller: Address, name: Symbol, wasm_hash: BytesN<32>) -> Result<(), Error>;
+    fn create_vault(env: Env, caller: Address, config: VaultDeploymentConfig) -> Result<Address, Error>;
+    fn get_vault(env: Env, index: u32) -> Result<VaultRecord, Error>;
+    fn total_vaults(env: Env) -> u32;
+    fn set_sentinel(env: Env, caller: Address, new_sentinel: Address) -> Result<(), Error>;
+}
+
+#[contractclient(name = "SentinelClient")]
+pub trait SentinelTrait {
+    fn initialize(env: Env, admin: Address, max_drawdown_bps: u32) -> Result<(), Error>;
+    fn check_and_trigger(env: Env, vault: Address, current_drawdown_bps: u32) -> Result<bool, Error>;
+    fn emergency_pause_all(env: Env, caller: Address) -> Result<(), Error>;
+    fn is_paused(env: Env) -> bool;
+    fn set_guardian(env: Env, caller: Address, guardian: Address) -> Result<(), Error>;
+}
+
+#[contractclient(name = "MultiAssetBasketClient")]
+pub trait MultiAssetBasketTrait {
+    fn get_basket_weights(env: Env) -> Vec<BasketAssetWeight>;
+    fn compute_basket_nav(env: Env) -> i128;
+    fn deposit_basket(env: Env, from: Address, amounts: Vec<i128>) -> Result<i128, Error>;
+    fn redeem_basket(env: Env, to: Address, shares: i128) -> Result<Vec<i128>, Error>;
 }
 
 #[contracttype]

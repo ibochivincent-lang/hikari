@@ -13,6 +13,8 @@ members = [
     "fee_controller",
     "phoenix_adapter",
     "gate_seal",
+    "factory",
+    "sentinel",
 ]
 
 [workspace.package]

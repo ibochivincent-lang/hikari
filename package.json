@@ -25,6 +25,13 @@
     "test:fuzz": "node scripts/run_fuzz_tests.js",
     "test:backtest": "node scripts/run_backtest.js",
     "report:transparency": "node scripts/generate_transparency_report.js",
-    "build:wasm": "powershell -ExecutionPolicy Bypass -File scripts/build_wasm.ps1"
+    "build:wasm": "powershell -ExecutionPolicy Bypass -File scripts/build_wasm.ps1",
+    "bot:telegram": "node services/social-bot/dist/bot-telegram.js",
+    "bot:discord": "node services/social-bot/dist/bot-discord.js",
+    "bot:x": "node services/social-bot/dist/bot-x-broadcaster.js",
+    "build:services": "node engine/node_modules/typescript/bin/tsc -p services/social-bot/tsconfig.json && node engine/node_modules/typescript/bin/tsc -p services/automation/tsconfig.json",
+    "keeper:harvest": "node services/automation/dist/harvest-keeper.js",
+    "solvency:proof": "node services/automation/dist/merkle-solvency.js",
+    "test:hakiru": "node scripts/verify_hakiru_full_suite.js"
   }
 }

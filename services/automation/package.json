@@ -1,0 +1,21 @@
+{
+  "name": "@hakiru/automation",
+  "version": "0.1.0",
+  "description": "Hakiru Protocol: Autonomous Harvest Keepers, Telemetry Indexers & ZK Solvency Engine",
+  "author": "ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "keeper": "node dist/harvest-keeper.js",
+    "indexer": "node dist/telemetry-indexer.js",
+    "solvency": "node dist/merkle-solvency.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  }
+}
