@@ -5007,13 +5007,23 @@ footer {
     grid-template-columns: 1fr;
   }
   .app-topbar {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: stretch;
-  }
-  .app-topbar-left, .app-topbar-right {
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 0.75rem;
+  }
+  .app-topbar-left {
+    flex: 1;
+    justify-content: flex-start;
+  }
+  .app-topbar-right {
+    flex: 1;
+    justify-content: flex-end;
+  }
+  .app-topbar-center {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: center;
+    padding-top: 0.25rem;
   }
   .vault-context-banner {
     flex-direction: column;
@@ -5055,7 +5065,7 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.65rem 1rem;
+  padding: 0.65rem 1.25rem;
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
   border-radius: 18px;
@@ -5064,25 +5074,82 @@ footer {
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
   box-sizing: border-box;
+  position: relative;
 }
 
 .app-topbar-left {
+  flex: 1;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.75rem;
+}
+
+.app-topbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
 .app-topbar-right {
+  flex: 1;
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  flex-shrink: 0;
+  justify-content: flex-end;
+  gap: 0.55rem;
 }
 
 .btn-connect-wallet {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.48rem 1.15rem;
+  background: linear-gradient(135deg, #00a3ff 0%, #0088dd 100%);
+  border: 1px solid rgba(0, 163, 255, 0.4);
+  border-radius: 9999px;
+  color: #ffffff;
+  font-family: 'Outfit', var(--font-sans), sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
   white-space: nowrap;
   flex-shrink: 0;
+  box-shadow: 0 2px 14px rgba(0, 163, 255, 0.35);
+  transition: all 0.2s ease;
+}
+
+.btn-connect-wallet:hover {
+  background: linear-gradient(135deg, #00b0ff 0%, #0095f0 100%);
+  box-shadow: 0 4px 20px rgba(0, 163, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-connect-wallet .wallet-btn-icon {
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.2;
+  flex-shrink: 0;
+}
+
+.btn-connect-wallet .arrow-glyph {
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.btn-connect-wallet:hover .arrow-glyph {
+  transform: translateX(2px);
+}
+
+.hikari-btn-primary .wallet-btn-icon,
+.hakiru-btn-primary .wallet-btn-icon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2.2;
+  flex-shrink: 0;
+  margin-right: 4px;
 }
 
 .app-topbar .solvency-pill-btn span:not(.solvency-shield),
@@ -5596,11 +5663,13 @@ footer {
 .app-tabs-nav {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 0.35rem;
+  background: rgba(10, 5, 22, 0.7);
+  border: 1px solid rgba(192, 132, 252, 0.22);
   border-radius: 9999px;
   padding: 0.25rem 0.4rem;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .app-tab-btn {
@@ -5622,14 +5691,14 @@ footer {
 
 .app-tab-btn:hover {
   color: var(--text-main);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(139, 47, 230, 0.15);
 }
 
 .app-tab-btn.active {
   color: #ffffff;
   background: #00a3ff;
   font-weight: 600;
-  box-shadow: 0 2px 12px rgba(0, 163, 255, 0.4);
+  box-shadow: 0 2px 14px rgba(0, 163, 255, 0.45);
 }
 
 .tab-badge-new {
@@ -5667,13 +5736,18 @@ footer {
 
 /* Main Card */
 .hakiru-card {
-  background: rgba(18, 24, 38, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 9, 36, 0.82);
+  border: 1px solid rgba(192, 132, 252, 0.22);
   border-radius: 24px;
   padding: 1.8rem;
   backdrop-filter: blur(20px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 20px rgba(139, 47, 230, 0.08);
   margin-bottom: 1.25rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hakiru-card:hover {
+  border-color: rgba(192, 132, 252, 0.35);
 }
 
 .hakiru-card-header {
@@ -5699,8 +5773,8 @@ footer {
 /* Subtabs (Wrap/Unwrap, Request/Claim) */
 .hakiru-subtabs-row {
   display: flex;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(10, 5, 22, 0.65);
+  border: 1px solid rgba(192, 132, 252, 0.18);
   border-radius: 12px;
   padding: 0.25rem;
   margin-bottom: 1.25rem;
@@ -5710,7 +5784,7 @@ footer {
 .hakiru-subtab-btn {
   flex: 1;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   color: var(--text-muted);
   font-size: 0.85rem;
   font-weight: 600;
@@ -5721,24 +5795,25 @@ footer {
 }
 
 .hakiru-subtab-btn.active {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(139, 47, 230, 0.25);
+  border: 1px solid rgba(192, 132, 252, 0.35);
   color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Input Container */
 .hakiru-input-container {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 5, 22, 0.75);
+  border: 1px solid rgba(192, 132, 252, 0.2);
   border-radius: 16px;
   padding: 1rem 1.25rem;
   margin-bottom: 1.25rem;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .hakiru-input-container:focus-within {
   border-color: #00a3ff;
-  box-shadow: 0 0 0 1px #00a3ff;
+  box-shadow: 0 0 16px rgba(0, 163, 255, 0.25);
 }
 
 .hakiru-input-header {
@@ -6104,8 +6179,8 @@ footer {
 }
 
 .hakiru-faq-item {
-  background: rgba(18, 24, 38, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 9, 36, 0.7);
+  border: 1px solid rgba(192, 132, 252, 0.18);
   border-radius: 14px;
   overflow: hidden;
   transition: border-color 0.2s ease;
@@ -6162,8 +6237,8 @@ footer {
 }
 
 .hakiru-choice-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 5, 22, 0.65);
+  border: 1px solid rgba(192, 132, 252, 0.18);
   border-radius: 14px;
   padding: 1rem;
   cursor: pointer;
@@ -6171,12 +6246,12 @@ footer {
 }
 
 .hakiru-choice-card:hover {
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(192, 132, 252, 0.35);
 }
 
 .hakiru-choice-card.active {
   border-color: #00a3ff;
-  background: rgba(0, 163, 255, 0.08);
+  background: rgba(0, 163, 255, 0.1);
   box-shadow: 0 0 0 1px #00a3ff;
 }
 
@@ -6194,8 +6269,8 @@ footer {
 
 /* Earn Vault Cards (Matching Video 00:17) */
 .hakiru-earn-card {
-  background: rgba(18, 24, 38, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 9, 36, 0.82);
+  border: 1px solid rgba(192, 132, 252, 0.22);
   border-radius: 20px;
   padding: 1.5rem;
   margin-bottom: 1.25rem;
@@ -6206,6 +6281,12 @@ footer {
   backdrop-filter: blur(20px);
   position: relative;
   overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 15px rgba(139, 47, 230, 0.08);
+  transition: border-color 0.25s ease;
+}
+
+.hakiru-earn-card:hover {
+  border-color: rgba(192, 132, 252, 0.38);
 }
 
 .hakiru-earn-card-left {
@@ -6422,13 +6503,18 @@ footer {
 }
 
 .hikari-card {
-  background: rgba(18, 24, 38, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 9, 36, 0.82);
+  border: 1px solid rgba(192, 132, 252, 0.22);
   border-radius: 24px;
   padding: 1.8rem;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 20px rgba(139, 47, 230, 0.08);
   backdrop-filter: blur(20px);
   margin-bottom: 1.5rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hikari-card:hover {
+  border-color: rgba(192, 132, 252, 0.35);
 }
 
 .hikari-card-header {
@@ -6451,11 +6537,17 @@ footer {
 }
 
 .hikari-input-container {
-  background: rgba(13, 17, 28, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 5, 22, 0.75);
+  border: 1px solid rgba(192, 132, 252, 0.2);
   border-radius: 16px;
   padding: 1rem 1.1rem;
   margin-bottom: 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hikari-input-container:focus-within {
+  border-color: #00a3ff;
+  box-shadow: 0 0 16px rgba(0, 163, 255, 0.25);
 }
 
 .hikari-input-header {
@@ -6511,8 +6603,8 @@ footer {
 }
 
 .hikari-btn-max {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(139, 47, 230, 0.12);
+  border: 1px solid rgba(192, 132, 252, 0.3);
   border-radius: 8px;
   color: #00a3ff;
   font-size: 0.75rem;
@@ -6523,7 +6615,7 @@ footer {
 }
 
 .hikari-btn-max:hover {
-  background: rgba(0, 163, 255, 0.15);
+  background: rgba(0, 163, 255, 0.18);
   border-color: #00a3ff;
 }
 
@@ -6553,8 +6645,8 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.12) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: linear-gradient(135deg, rgba(139, 47, 230, 0.15) 0%, rgba(18, 9, 36, 0.7) 100%);
+  border: 1px solid rgba(192, 132, 252, 0.25);
   border-radius: 16px;
   padding: 0.9rem 1.2rem;
   text-decoration: none;
@@ -6563,7 +6655,7 @@ footer {
 }
 
 .hikari-promo-card:hover {
-  border-color: rgba(139, 92, 246, 0.45);
+  border-color: rgba(192, 132, 252, 0.45);
   transform: translateY(-1px);
 }
 
@@ -6588,7 +6680,7 @@ footer {
 }
 
 .hikari-details-table {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(192, 132, 252, 0.18);
   padding-top: 1rem;
   display: flex;
   flex-direction: column;
@@ -6622,13 +6714,13 @@ footer {
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  background: rgba(15, 20, 35, 0.9);
+  background: rgba(18, 9, 36, 0.88);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(192, 132, 252, 0.28);
   border-radius: 40px;
   padding: 8px 6px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(139, 47, 230, 0.15);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -6683,8 +6775,8 @@ footer {
   height: 34px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  color: var(--text-muted);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6702,8 +6794,8 @@ footer {
 /* Sub-tabs row */
 .hikari-subtabs-row {
   display: flex;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(10, 5, 22, 0.65);
+  border: 1px solid rgba(192, 132, 252, 0.18);
   border-radius: 12px;
   padding: 4px;
   margin-bottom: 1.25rem;
@@ -6713,7 +6805,7 @@ footer {
 .hikari-subtab-btn {
   flex: 1;
   background: transparent;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 8px;
   padding: 0.55rem;
   font-size: 0.85rem;
@@ -6725,21 +6817,27 @@ footer {
 }
 
 .hikari-subtab-btn.active {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(139, 47, 230, 0.25);
+  border: 1px solid rgba(192, 132, 252, 0.35);
   color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .hikari-select-input {
   width: 100%;
-  background: rgba(13, 17, 28, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 5, 22, 0.85);
+  border: 1px solid rgba(192, 132, 252, 0.22);
   border-radius: 12px;
   padding: 0.7rem 1rem;
   color: #ffffff;
   font-size: 0.85rem;
   outline: none;
   cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.hikari-select-input:focus {
+  border-color: #00a3ff;
 }
 
 /* 3D Isometric Vault Graphics */
@@ -6794,11 +6892,18 @@ footer {
 
 /* Multichain Converter Card */
 .hikari-multichain-card {
-  background: rgba(18, 24, 38, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 9, 36, 0.82);
+  border: 1px solid rgba(192, 132, 252, 0.22);
   border-radius: 20px;
   padding: 1.5rem;
   margin-bottom: 1.25rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 15px rgba(139, 47, 230, 0.08);
+  transition: border-color 0.25s ease;
+}
+
+.hikari-multichain-card:hover {
+  border-color: rgba(192, 132, 252, 0.38);
 }
 
 .hikari-chain-selector {
@@ -6812,8 +6917,8 @@ footer {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(139, 47, 230, 0.08);
+  border: 1px solid rgba(192, 132, 252, 0.2);
   border-radius: 999px;
   padding: 0.4rem 0.8rem;
   font-size: 0.78rem;
@@ -6824,24 +6929,30 @@ footer {
 
 .hikari-chain-pill:hover,
 .hikari-chain-pill.active {
-  background: rgba(0, 163, 255, 0.12);
+  background: rgba(0, 163, 255, 0.15);
   border-color: #00a3ff;
   color: #ffffff;
 }
 
-/* Light Theme Overrides (Matching Video 00:31 - 00:34) */
+/* Light Theme Overrides (Harmonized with index.html tokens) */
+[data-theme="light"] .app-topbar {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: #e5def5;
+  box-shadow: 0 4px 20px rgba(139, 47, 230, 0.08);
+}
+
 [data-theme="light"] .app-tabs-nav {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.08);
+  background: #f3eefc;
+  border-color: #e5def5;
 }
 
 [data-theme="light"] .app-tab-btn {
-  color: #475569;
+  color: #5e5470;
 }
 
 [data-theme="light"] .app-tab-btn:hover {
-  color: #0f172a;
-  background: rgba(0, 0, 0, 0.04);
+  color: #140d24;
+  background: rgba(139, 47, 230, 0.08);
 }
 
 [data-theme="light"] .app-tab-btn.active {
@@ -6859,8 +6970,8 @@ footer {
 [data-theme="light"] .hikari-faq-item,
 [data-theme="light"] .hikari-multichain-card {
   background: #ffffff;
-  border-color: #e2e8f0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border-color: #e5def5;
+  box-shadow: 0 10px 30px rgba(139, 47, 230, 0.06);
 }
 
 [data-theme="light"] .hakiru-card-title,
@@ -6879,7 +6990,7 @@ footer {
 [data-theme="light"] .hikari-earn-metric-val,
 [data-theme="light"] .hakiru-number-input,
 [data-theme="light"] .hikari-number-input {
-  color: #0f172a;
+  color: #140d24;
 }
 
 [data-theme="light"] .hakiru-card-subtitle,
@@ -6892,65 +7003,66 @@ footer {
 [data-theme="light"] .hikari-faq-answer,
 [data-theme="light"] .hakiru-detail-lbl,
 [data-theme="light"] .hikari-detail-lbl {
-  color: #64748b;
+  color: #5e5470;
 }
 
 [data-theme="light"] .hakiru-input-container,
 [data-theme="light"] .hikari-input-container {
-  background: #f8fafc;
-  border-color: #e2e8f0;
+  background: #fbf9ff;
+  border-color: #e5def5;
 }
 
 [data-theme="light"] .hakiru-subtabs-row,
 [data-theme="light"] .hikari-subtabs-row {
-  background: #f1f5f9;
-  border-color: #e2e8f0;
+  background: #f3eefc;
+  border-color: #e5def5;
 }
 
 [data-theme="light"] .hakiru-subtab-btn.active,
 [data-theme="light"] .hikari-subtab-btn.active {
   background: #ffffff;
-  color: #0f172a;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  color: #140d24;
+  border-color: #e5def5;
+  box-shadow: 0 2px 6px rgba(139, 47, 230, 0.08);
 }
 
 [data-theme="light"] .hikari-vertical-social-dock {
-  background: rgba(255, 255, 255, 0.95);
-  border-color: #cbd5e1;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #e5def5;
+  box-shadow: 0 10px 30px rgba(139, 47, 230, 0.12);
 }
 
 [data-theme="light"] .hikari-dock-channel-link {
-  background: #f1f5f9;
-  border-color: #e2e8f0;
-  color: #475569;
+  background: #f3eefc;
+  border-color: #e5def5;
+  color: #5e5470;
 }
 
 [data-theme="light"] .hakiru-wallet-modal-content,
 [data-theme="light"] .hikari-wallet-modal-content {
   background: #ffffff;
-  border-color: #e2e8f0;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
-  color: #0f172a;
+  border-color: #e5def5;
+  box-shadow: 0 25px 60px rgba(139, 47, 230, 0.15);
+  color: #140d24;
 }
 
 [data-theme="light"] .hakiru-wallet-modal-content h3,
 [data-theme="light"] .hikari-wallet-modal-content h3 {
-  color: #0f172a !important;
+  color: #140d24 !important;
 }
 
 [data-theme="light"] .hakiru-wallet-btn,
 [data-theme="light"] .hikari-wallet-btn {
-  background: #f8fafc;
-  border-color: #e2e8f0;
-  color: #0f172a;
+  background: #fbf9ff;
+  border-color: #e5def5;
+  color: #140d24;
 }
 
 [data-theme="light"] .hakiru-choice-card,
 [data-theme="light"] .hikari-choice-card {
-  background: #f8fafc;
-  border-color: #e2e8f0;
-  color: #0f172a;
+  background: #fbf9ff;
+  border-color: #e5def5;
+  color: #140d24;
 }
 
 [data-theme="light"] .hakiru-choice-card.active,
@@ -6961,44 +7073,44 @@ footer {
 
 [data-theme="light"] .hakiru-choice-title,
 [data-theme="light"] .hikari-choice-title {
-  color: #0f172a;
+  color: #140d24;
 }
 
 [data-theme="light"] .hakiru-choice-meta,
 [data-theme="light"] .hikari-choice-meta {
-  color: #64748b;
+  color: #5e5470;
 }
 
 [data-theme="light"] .hakiru-details-table,
 [data-theme="light"] .hikari-details-table {
-  border-color: #e2e8f0;
+  border-color: #e5def5;
 }
 
 [data-theme="light"] .hakiru-detail-val,
 [data-theme="light"] .hikari-detail-val {
-  color: #0f172a;
+  color: #140d24;
 }
 
 [data-theme="light"] .hakiru-promo-card,
 [data-theme="light"] .hikari-promo-card {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-  border-color: #bae6fd;
+  background: linear-gradient(135deg, rgba(139, 47, 230, 0.06) 0%, #fbf9ff 100%);
+  border-color: #e5def5;
 }
 
 [data-theme="light"] .hakiru-promo-title,
 [data-theme="light"] .hikari-promo-title {
-  color: #0369a1;
+  color: #8b2fe6;
 }
 
 [data-theme="light"] .hakiru-promo-sub,
 [data-theme="light"] .hikari-promo-sub {
-  color: #0284c7;
+  color: #5e5470;
 }
 
 [data-theme="light"] .hikari-select-input {
-  background: #f8fafc;
-  border-color: #e2e8f0;
-  color: #0f172a;
+  background: #fbf9ff;
+  border-color: #e5def5;
+  color: #140d24;
 }
 
 

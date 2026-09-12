@@ -2720,7 +2720,7 @@ function initHakiru5TabApp() {
       if (btnActionDirectBankText) btnActionDirectBankText.textContent = "Withdraw to Bank";
     } else {
       if (btnConnectWallet) {
-        btnConnectWallet.innerHTML = `<span>Connect wallet</span> <span class="arrow-glyph">→</span>`;
+        btnConnectWallet.innerHTML = `<svg class="wallet-btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><circle cx="18" cy="14" r="1" fill="currentColor"></circle></svg> <span class="btn-connect-text">Connect wallet</span> <span class="arrow-glyph">→</span>`;
       }
       if (btnActionStakeText) btnActionStakeText.textContent = "Connect wallet";
       if (btnActionWrapText) btnActionWrapText.textContent = "Connect wallet";
