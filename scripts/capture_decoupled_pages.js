@@ -49,19 +49,19 @@ async function capture() {
         await send('Page.enable');
         await new Promise(r => setTimeout(r, 1200));
 
-        // 1. Capture Landing Page Footer Transition (showing clean ending after DAO Governance)
-        console.log('1. Capturing Landing Page Footer Transition...');
+        // 1a. Capture Landing Page Topnav and Hero
+        console.log('1a. Capturing Landing Page Topnav and Hero...');
         await send('Runtime.evaluate', {
           expression: `
             (() => {
-              window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+              window.scrollTo({ top: 0, behavior: 'instant' });
             })()
           `
         });
-        await new Promise(r => setTimeout(r, 1500));
-        const shotLandingFooter = await send('Page.captureScreenshot', { format: 'png' });
-        fs.writeFileSync(path.join(artifactDir, 'screenshot_landing_footer.png'), Buffer.from(shotLandingFooter.result.data, 'base64'));
-        console.log('Saved screenshot_landing_footer.png');
+        await new Promise(r => setTimeout(r, 1200));
+        const shotLandingHero = await send('Page.captureScreenshot', { format: 'png' });
+        fs.writeFileSync(path.join(artifactDir, 'screenshot_landing_hero.png'), Buffer.from(shotLandingHero.result.data, 'base64'));
+        console.log('Saved screenshot_landing_hero.png');
 
         // 1b. Capture Landing Earn Cards
         console.log('1b. Capturing Landing Earn Cards...');
@@ -73,10 +73,54 @@ async function capture() {
             })()
           `
         });
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 1200));
         const shotLandingEarn = await send('Page.captureScreenshot', { format: 'png' });
         fs.writeFileSync(path.join(artifactDir, 'screenshot_landing_earn.png'), Buffer.from(shotLandingEarn.result.data, 'base64'));
         console.log('Saved screenshot_landing_earn.png');
+
+        // 1c. Capture Uncompromised Security Section
+        console.log('1c. Capturing Uncompromised Security Section...');
+        await send('Runtime.evaluate', {
+          expression: `
+            (() => {
+              const el = document.getElementById('securityShowcase');
+              if (el) el.scrollIntoView({ block: 'start', behavior: 'instant' });
+            })()
+          `
+        });
+        await new Promise(r => setTimeout(r, 1200));
+        const shotLandingSecurity = await send('Page.captureScreenshot', { format: 'png' });
+        fs.writeFileSync(path.join(artifactDir, 'screenshot_landing_security.png'), Buffer.from(shotLandingSecurity.result.data, 'base64'));
+        console.log('Saved screenshot_landing_security.png');
+
+        // 1c2. Capture Node Operators Coming Soon Section
+        console.log('1c2. Capturing Node Operators Coming Soon Section...');
+        await send('Runtime.evaluate', {
+          expression: `
+            (() => {
+              const el = document.querySelector('.nodes-gov-container');
+              if (el) el.scrollIntoView({ block: 'start', behavior: 'instant' });
+            })()
+          `
+        });
+        await new Promise(r => setTimeout(r, 1200));
+        const shotLandingNodes = await send('Page.captureScreenshot', { format: 'png' });
+        fs.writeFileSync(path.join(artifactDir, 'screenshot_landing_nodes.png'), Buffer.from(shotLandingNodes.result.data, 'base64'));
+        console.log('Saved screenshot_landing_nodes.png');
+
+        // 1d. Capture Landing Page Footer Transition
+        console.log('1d. Capturing Landing Page Footer Transition...');
+        await send('Runtime.evaluate', {
+          expression: `
+            (() => {
+              window.scrollTo({ top: document.body.scrollHeight, behavior: 'instant' });
+            })()
+          `
+        });
+        await new Promise(r => setTimeout(r, 1200));
+        const shotLandingFooter = await send('Page.captureScreenshot', { format: 'png' });
+        fs.writeFileSync(path.join(artifactDir, 'screenshot_landing_footer.png'), Buffer.from(shotLandingFooter.result.data, 'base64'));
+        console.log('Saved screenshot_landing_footer.png');
 
         // 2. Navigate to app.html?vault=xlm
         console.log('2. Navigating to app.html?vault=xlm...');

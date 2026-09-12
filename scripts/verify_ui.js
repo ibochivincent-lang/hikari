@@ -11,13 +11,19 @@ async function verify() {
 
   const landingChecks = {
     hikariHeader: htmlLanding.includes('hikari-header') || htmlLanding.includes('topnav'),
-    hikariNav: htmlLanding.includes('hikari-nav') || htmlLanding.includes('topnav__nav'),
-    productsMenu: htmlLanding.includes('data-menu="products"'),
-    institutionalMenu: htmlLanding.includes('data-menu="institutional"'),
-    nodeOperatorsMenu: htmlLanding.includes('data-menu="node-operators"'),
-    governanceMenu: htmlLanding.includes('data-menu="governance"'),
-    buildersMenu: htmlLanding.includes('data-menu="builders"'),
-    communityMenu: htmlLanding.includes('data-menu="community"'),
+    exploreProtocolBtn: htmlLanding.includes('id="btnOpenNavSlider"'),
+    stellarTestnetBadge: htmlLanding.includes('Stellar Testnet'),
+    launchAppTopNav: htmlLanding.includes('id="btnLaunchAppNav"'),
+    topNavLinksRemoved: !htmlLanding.includes('data-menu="products"') && !htmlLanding.includes('data-menu="institutional"') && !htmlLanding.includes('data-menu="node-operators"') && !htmlLanding.includes('data-menu="governance"'),
+    testnetTvlEarnXlm: htmlLanding.includes('485K XLM') && htmlLanding.includes('Testnet TVL'),
+    testnetTvlEarnUsd: htmlLanding.includes('$42.5K'),
+    testnetTvlEarnMulti: htmlLanding.includes('$18.4K'),
+    noFourMillionClaims: !htmlLanding.includes('Over $4M') && !htmlLanding.includes('$4M invested'),
+    noBugBountyPill: !htmlLanding.includes('pill-bounty') && !htmlLanding.includes('Bug Bounty'),
+    safeHarborPill: htmlLanding.includes('pill-harbor') && htmlLanding.includes('Safe Harbor'),
+    stellarAuditCard: htmlLanding.includes('stellar-audit-card') && htmlLanding.includes('Stellar Soroban Formal Security Audits'),
+    comingSoonBadges: htmlLanding.includes('sec-badge-coming-soon') && htmlLanding.includes('sec-badge-coming-soon-pill'),
+    noWeb3socBanner: !htmlLanding.includes('sec-web3soc-banner') && !htmlLanding.includes('Web3SOC'),
     sdkModal: htmlLanding.includes('id="sdkModal"'),
     invariantsModal: htmlLanding.includes('id="invariantsModal"'),
     faqModal: htmlLanding.includes('id="faqModal"'),
@@ -27,7 +33,6 @@ async function verify() {
     depositXlmLink: htmlLanding.includes('href="app.html?vault=xlm"'),
     depositUsdLink: htmlLanding.includes('href="app.html?vault=usd"'),
     depositMultiLink: htmlLanding.includes('href="app.html?vault=multichain"'),
-    launchAppTopNav: htmlLanding.includes('id="btnLaunchAppNav"'),
     // Verification that live protocol grid is completely removed from landing page
     noLiveProtocolGridOnLanding: !htmlLanding.includes('class="metrics-grid"') && !htmlLanding.includes('id="chartSection"') && !htmlLanding.includes('id="vaultPortalSection"')
   };

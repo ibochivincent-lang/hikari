@@ -4123,45 +4123,116 @@ footer {
   margin-bottom: 1.2rem;
 }
 
-.sec-auditors-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1.2rem;
-  margin-bottom: 1.5rem;
+.sec-badge-coming-soon {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--purple-soft, #c084fc);
+  text-transform: none;
+  letter-spacing: normal;
+  margin-left: 0.35rem;
 }
 
-.auditor-logo-box {
+.sec-badge-coming-soon-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(192, 132, 252, 0.12);
+  color: #d8b4fe;
+  border: 1px solid rgba(192, 132, 252, 0.3);
+}
+
+.stellar-audit-card {
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 12px;
-  height: 60px;
+  border: 1px solid rgba(192, 132, 252, 0.2);
+  border-radius: 16px;
+  padding: 1.6rem 1.8rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stellar-audit-card:hover {
+  border-color: rgba(192, 132, 252, 0.4);
+  box-shadow: 0 10px 30px rgba(139, 47, 230, 0.15);
+}
+
+.stellar-audit-badge-row {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0.5rem 0.8rem;
-  transition: all 0.25s ease;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  flex-wrap: wrap;
 }
 
-.auditor-logo-box:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(192, 132, 252, 0.3);
-  transform: translateY(-2px);
+.stellar-audit-pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+  animation: stellarPulse 2s infinite ease-in-out;
 }
 
-.auditor-name {
-  font-size: 0.88rem;
+@keyframes stellarPulse {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.25);
+    opacity: 1;
+    box-shadow: 0 0 16px #38bdf8;
+  }
+}
+
+.stellar-audit-badge-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
   color: var(--text-main);
-  opacity: 0.9;
+  letter-spacing: -0.01em;
 }
 
-.auditor-name.bold { font-weight: 700; }
-.auditor-name.mono { font-family: monospace; font-size: 0.82rem; }
-.auditor-name.tracking { letter-spacing: 0.08em; font-weight: 700; font-size: 0.78rem; }
-.auditor-name.lower { text-transform: lowercase; }
-.auditor-name.lower small { display: block; font-size: 0.6rem; opacity: 0.7; }
-.auditor-name.hex { font-weight: 800; letter-spacing: 0.1em; }
-.auditor-name.sigma { font-family: monospace; font-size: 0.82rem; }
-.auditor-name.cantina { font-weight: 800; letter-spacing: 0.12em; }
+.stellar-audit-summary {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 1.2rem;
+  max-width: 900px;
+}
+
+.stellar-audit-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.stellar-audit-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-main);
+  transition: all 0.2s ease;
+}
+
+.stellar-audit-tag:hover {
+  background: rgba(192, 132, 252, 0.1);
+  border-color: rgba(192, 132, 252, 0.3);
+}
 
 .sec-audits-link {
   display: inline-flex;
@@ -4176,59 +4247,6 @@ footer {
 
 .sec-audits-link:hover {
   color: #ffffff;
-  text-decoration: underline;
-}
-
-.sec-divider-line {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.08);
-  margin: 2rem 0;
-}
-
-.sec-web3soc-banner {
-  display: flex;
-  align-items: center;
-  gap: 1.6rem;
-}
-
-.web3soc-seal {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #f97316 0%, #c2410c 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-}
-
-.web3soc-center {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  font-size: 1.7rem;
-  color: #ffffff;
-}
-
-.web3soc-title {
-  font-family: 'Outfit', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-main);
-  margin-bottom: 0.3rem;
-}
-
-.grade-a-highlight {
-  color: #10b981;
-}
-
-.web3soc-desc {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-}
-
-.web3soc-link {
-  color: var(--purple-soft);
   text-decoration: underline;
 }
 
@@ -4886,17 +4904,22 @@ footer {
   color: #140d24;
 }
 
-[data-theme="light"] .auditor-logo-box {
+[data-theme="light"] .sec-badge-coming-soon-pill {
+  background: rgba(139, 47, 230, 0.08);
+  color: #7e22ce;
+  border-color: rgba(139, 47, 230, 0.2);
+}
+
+[data-theme="light"] .stellar-audit-card {
   background: #fbf9ff;
   border-color: #e5def5;
+  box-shadow: 0 6px 20px rgba(90, 40, 160, 0.05);
 }
 
-[data-theme="light"] .auditor-name {
+[data-theme="light"] .stellar-audit-tag {
+  background: #ffffff;
+  border-color: #e5def5;
   color: #140d24;
-}
-
-[data-theme="light"] .sec-divider-line {
-  background: #e5def5;
 }
 
 [data-theme="light"] .node-tab-btn {
@@ -4960,9 +4983,6 @@ footer {
   .hx-sticky-box {
     position: static;
   }
-  .sec-auditors-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
   .sec-cards-pair {
     grid-template-columns: 1fr;
   }
@@ -4979,9 +4999,6 @@ footer {
 }
 
 @media (max-width: 640px) {
-  .sec-auditors-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .footer-grid {
     grid-template-columns: 1fr;
   }
