@@ -1077,18 +1077,14 @@ function initShardsSystem() {
 
 initShardsSystem();
 
-// Top Navigation Theme Toggle System
+// Top Navigation Theme Toggle System (Symbols Only: Moon/Sun)
 function initThemeSystem() {
   const themeSwitch = document.getElementById("themeSwitch") || document.getElementById("themeToggleBtn");
-  const themeToggleText = document.getElementById("themeToggleText") || document.querySelector(".theme-pill-text");
   if (!themeSwitch) return;
 
   function applyTheme(theme) {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
-    if (themeToggleText) {
-      themeToggleText.textContent = theme === "dark" ? "Dark" : "Light";
-    }
     themeSwitch.setAttribute("data-theme-state", theme);
 
     // Update moon/sun icon visibility on app.html if present
@@ -1935,7 +1931,130 @@ function initMarketingInteractions() {
       btn.classList.add("active");
     });
   });
+
+  // Social Media AI Agent Alert Simulation Buttons
+  const btnSimHighestApy = document.getElementById("btnSimHighestApy");
+  const btnSimTradeEntry = document.getElementById("btnSimTradeEntry");
+  const btnSimDirectionalBias = document.getElementById("btnSimDirectionalBias");
+
+  function triggerLandingToast(msg, bg = "#10b981") {
+    let t = document.getElementById("hikariToast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "hikariToast";
+      t.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:" + bg + ";color:#fff;padding:0.75rem 1.4rem;border-radius:9999px;font-size:0.85rem;font-weight:600;z-index:99999;box-shadow:0 10px 25px rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.2);transition:all 0.3s cubic-bezier(0.16,1,0.3,1);";
+      document.body.appendChild(t);
+    }
+    t.style.background = bg;
+    t.innerHTML = msg;
+    t.style.opacity = "1";
+    t.style.transform = "translateX(-50%) translateY(0)";
+    setTimeout(() => {
+      t.style.opacity = "0";
+      t.style.transform = "translateX(-50%) translateY(10px)";
+    }, 4500);
+  }
+
+  if (btnSimHighestApy) {
+    btnSimHighestApy.addEventListener("click", () => {
+      triggerLandingToast("⚡ <strong>[Highest APY Alert]</strong> Phoenix CLAMM rebalanced • <strong>14.2% APY</strong> unlocked on XLM-USDC! Sent via Telegram & Discord.", "#8b2fe6");
+    });
+  }
+
+  if (btnSimTradeEntry) {
+    btnSimTradeEntry.addEventListener("click", () => {
+      triggerLandingToast("📈 <strong>[Trade Entry Signal]</strong> Long entry filled at $0.1248 XLM • <strong>78.4% Upside Probability</strong> target $0.1340! Sent to @HikariAlphaBot.", "#059669");
+    });
+  }
+
+  if (btnSimDirectionalBias) {
+    btnSimDirectionalBias.addEventListener("click", () => {
+      triggerLandingToast("🔮 <strong>[Futures Direction Signal]</strong> High probability upward breakout confirmed (78.4% Bullish / 21.6% Downside Risk).", "#7c3aed");
+    });
+  }
 }
+
+// =========================================================
+// AI Futures Directional Probability & Predictive Momentum
+// =========================================================
+function initFuturesDirectionSystem() {
+  const btnTfShortTerm = document.getElementById("btnTfShortTerm");
+  const btnTfLongTerm = document.getElementById("btnTfLongTerm");
+  const meterUpsidePct = document.getElementById("meterUpsidePct");
+  const meterUpsideBar = document.getElementById("meterUpsideBar");
+  const meterUpsideList = document.getElementById("meterUpsideList");
+  const meterDownsidePct = document.getElementById("meterDownsidePct");
+  const meterDownsideBar = document.getElementById("meterDownsideBar");
+  const meterDownsideList = document.getElementById("meterDownsideList");
+  const targetUpsideVal = document.getElementById("targetUpsideVal");
+  const targetDownsideVal = document.getElementById("targetDownsideVal");
+  const targetRrVal = document.getElementById("targetRrVal");
+  const targetActionVal = document.getElementById("targetActionVal");
+  const futuresTelemetryText = document.getElementById("futuresTelemetryText");
+
+  if (!btnTfShortTerm || !btnTfLongTerm) return;
+
+  btnTfShortTerm.addEventListener("click", () => {
+    btnTfShortTerm.classList.add("active");
+    btnTfLongTerm.classList.remove("active");
+    if (meterUpsidePct) meterUpsidePct.textContent = "78.4%";
+    if (meterUpsideBar) meterUpsideBar.style.width = "78.4%";
+    if (meterDownsidePct) meterDownsidePct.textContent = "21.6%";
+    if (meterDownsideBar) meterDownsideBar.style.width = "21.6%";
+    if (targetUpsideVal) targetUpsideVal.textContent = "$0.1340 (+7.2%)";
+    if (targetDownsideVal) targetDownsideVal.textContent = "$0.1190 (-4.8%)";
+    if (targetRrVal) targetRrVal.textContent = "3.4 : 1 (High Alpha)";
+    if (targetActionVal) targetActionVal.textContent = "Accumulate & LP Deploy";
+    if (meterUpsideList) {
+      meterUpsideList.innerHTML = `
+        <li><strong>Bullish Momentum Divergence:</strong> 4H RSI reset to 48.2 with expanding MACD histogram.</li>
+        <li><strong>Net Exchange Outflows:</strong> +1,420,000 XLM withdrawn to self-custody wallets in 24h.</li>
+        <li><strong>Soroban Orderbook Skew:</strong> Bid-to-ask liquidity depth ratio standing at 2.8:1 in favor of bulls.</li>
+      `;
+    }
+    if (meterDownsideList) {
+      meterDownsideList.innerHTML = `
+        <li><strong>Institutional Support Invariant:</strong> Strong buy wall firmly established at $0.1190.</li>
+        <li><strong>Minimal Cascade Risk:</strong> Low leveraged liquidation exposure on decentralized perps.</li>
+        <li><strong>Downside Volatility Squeeze:</strong> Selling volume dropping 42% on downward test wicks.</li>
+      `;
+    }
+    if (futuresTelemetryText) {
+      futuresTelemetryText.innerHTML = "<strong>Neural Bot Dispatch:</strong> Intraday futures scanner confirms bullish momentum breakout. Auto-allocating reserve capacity into Phoenix CLAMM tight bands for amplified trading fee captures.";
+    }
+  });
+
+  btnTfLongTerm.addEventListener("click", () => {
+    btnTfLongTerm.classList.add("active");
+    btnTfShortTerm.classList.remove("active");
+    if (meterUpsidePct) meterUpsidePct.textContent = "84.1%";
+    if (meterUpsideBar) meterUpsideBar.style.width = "84.1%";
+    if (meterDownsidePct) meterDownsidePct.textContent = "15.9%";
+    if (meterDownsideBar) meterDownsideBar.style.width = "15.9%";
+    if (targetUpsideVal) targetUpsideVal.textContent = "$0.1520 (+21.6%)";
+    if (targetDownsideVal) targetDownsideVal.textContent = "$0.1120 (-10.4%)";
+    if (targetRrVal) targetRrVal.textContent = "4.2 : 1 (Macro Alpha)";
+    if (targetActionVal) targetActionVal.textContent = "Compound Staked Reserves";
+    if (meterUpsideList) {
+      meterUpsideList.innerHTML = `
+        <li><strong>Macro Weekly Continuation:</strong> Multi-week golden cross formed on XLM 200 EMA.</li>
+        <li><strong>Stellar Protocol 27 Adoption:</strong> Surge in smart contract transactions and lockups.</li>
+        <li><strong>Institutional Yield Demand:</strong> Treasury allocations seeking 12%+ non-inflationary yields.</li>
+      `;
+    }
+    if (meterDownsideList) {
+      meterDownsideList.innerHTML = `
+        <li><strong>Macro Floor Liquidity:</strong> Multi-year structural demand floor at $0.1120.</li>
+        <li><strong>Over-Collateralized Backing:</strong> 104.8% Merkle solvency verified by Zero-Knowledge proof.</li>
+        <li><strong>GateSeal Protection:</strong> Dynamic timelock and circuit breakers mitigate downside tail risk.</li>
+      `;
+    }
+    if (futuresTelemetryText) {
+      futuresTelemetryText.innerHTML = "<strong>Neural Bot Dispatch:</strong> Macro weekly trend structure maintains high-timeframe accumulation corridor. Protocol safety buffer verified at 104.8% solvency across all collateral tiers.";
+    }
+  });
+}
+
 
 // =========================================================
 // Contextual Vault Deep-Linking & Switcher for DApp Page
@@ -1946,12 +2065,12 @@ const VAULT_CONFIGS = {
     pillId: "pillVaultXlm",
     tierKey: "BALANCED_HXLM",
     tab: "stake",
-    badgeText: "XLM LIQUID STAKING VAULT • STELLAR SOROBAN PROTOCOL 27",
-    title: "EarnXLM — High-Yield Liquid Staking Vault",
-    sub: "Allocating native XLM and SEP-41 hXLM across Blend money markets, Phoenix CLAMM yield pools, and Soroban MEV backruns with zero lockup.",
-    tvl: "$196.7M",
-    apy: "12.4%",
-    strategy: "Blend + Phoenix + MEV"
+    badgeText: "AI INFRASTRUCTURE & PREDICTIVE TRADING BOTS • STELLAR PROTOCOL 27",
+    title: "Earn XLM with Autonomous AI Infrastructure & Predictive Futures Bots",
+    sub: "Accumulating native XLM through algorithmic momentum breakouts, futures directional probability indicators, and Soroban atomic MEV backrunning—combining predictive execution with active protocol alpha distinct from passive staking.",
+    tvl: "+1.42M XLM",
+    apy: "14.8%",
+    strategy: "Futures Bias + MEV + Delta"
   },
   usd: {
     key: "usd",
@@ -2909,6 +3028,7 @@ if (document.readyState === "loading") {
     initAppPageVaultRouting();
     initHakiruSocialAndSolvency();
     initHakiru5TabApp();
+    initFuturesDirectionSystem();
   });
 } else {
   initNavSliderAndCalculator();
@@ -2916,7 +3036,9 @@ if (document.readyState === "loading") {
   initAppPageVaultRouting();
   initHakiruSocialAndSolvency();
   initHakiru5TabApp();
+  initFuturesDirectionSystem();
 }
+
 
 
 

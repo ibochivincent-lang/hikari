@@ -270,31 +270,121 @@
 
     <!-- Collapsible Pro Deck Container -->
     <div id="proDeckContainer" style="display: none;">
-      <!-- Contextual Vault Hero Banner -->
+      <!-- Contextual Vault Hero Banner: AI Infrastructure & Predictive Bots -->
     <div class="vault-context-banner" id="vaultContextBanner">
       <div class="vault-context-content">
         <div class="vault-context-badge" id="vaultContextBadge">
           <span class="status-dot"></span>
-          <span id="vaultContextBadgeText">XLM LIQUID STAKING VAULT • STELLAR SOROBAN PROTOCOL 27</span>
+          <span id="vaultContextBadgeText">AI INFRASTRUCTURE & PREDICTIVE TRADING BOTS • STELLAR PROTOCOL 27</span>
         </div>
-        <h1 class="vault-context-title" id="vaultContextTitle">EarnXLM — High-Yield Liquid Staking Vault</h1>
-        <p class="vault-context-sub" id="vaultContextSub">Allocating native XLM and SEP-41 hXLM across Blend money markets, Phoenix CLAMM yield pools, and Soroban MEV backruns with zero lockup.</p>
+        <h1 class="vault-context-title" id="vaultContextTitle">Earn XLM with Autonomous AI Infrastructure &amp; Predictive Futures Bots</h1>
+        <p class="vault-context-sub" id="vaultContextSub">Accumulating native XLM through algorithmic momentum breakouts, futures directional probability indicators, and Soroban atomic MEV backrunning—combining predictive execution with active protocol alpha distinct from passive staking.</p>
       </div>
       <div class="vault-context-stats">
         <div class="vault-stat-item">
-          <span class="vstat-lbl">Vault TVL</span>
-          <span class="vstat-val" id="vaultStatTvl">$196.7M</span>
+          <span class="vstat-lbl">Active Bot Inflows</span>
+          <span class="vstat-val" id="vaultStatTvl">+1.42M XLM</span>
         </div>
         <div class="vault-stat-item">
-          <span class="vstat-lbl">Dynamic APY</span>
-          <span class="vstat-val vstat-highlight" id="vaultStatApy">12.4%</span>
+          <span class="vstat-lbl">Directional Alpha APY</span>
+          <span class="vstat-val vstat-highlight" id="vaultStatApy">14.8%</span>
         </div>
         <div class="vault-stat-item">
-          <span class="vstat-lbl">Allocation Strategies</span>
-          <span class="vstat-val" id="vaultStatStrategy">Blend + Phoenix + MEV</span>
+          <span class="vstat-lbl">Execution Model</span>
+          <span class="vstat-val" id="vaultStatStrategy">Futures Bias + MEV + Delta</span>
         </div>
       </div>
     </div>
+
+    <!-- AI Futures Directional Probability & Predictive Momentum Indicator -->
+    <div class="pro-futures-card" id="futuresDirectionSection">
+      <div class="pro-futures-header">
+        <div>
+          <div class="pro-futures-badge">
+            <span class="social-ping-dot"></span>
+            <span>AI FUTURES DIRECTIONAL INTELLIGENCE</span>
+          </div>
+          <h2 class="pro-futures-title">XLM Directional Probability &amp; Predictive Momentum Indicator</h2>
+          <p class="pro-futures-desc">
+            Autonomous neural bots continuously calculate high-probability breakout vectors and downside risk floors across short-term and long-term horizons, alerting you to optimal entries and protecting vault capital.
+          </p>
+        </div>
+        <div class="futures-tf-switcher">
+          <button type="button" class="tf-pill-btn active" id="btnTfShortTerm" data-tf="short">Short-Term (1H / 4H)</button>
+          <button type="button" class="tf-pill-btn" id="btnTfLongTerm" data-tf="long">Long-Term (1D / 1W)</button>
+        </div>
+      </div>
+
+      <!-- Dual Directional Probability Meter -->
+      <div class="futures-meter-container">
+        <!-- High Probability of Going UP -->
+        <div class="futures-meter-box meter-box-up">
+          <div class="meter-top-row">
+            <span class="meter-label">
+              <span style="font-size: 1.1rem;">📈</span>
+              <span>HIGH PROBABILITY OF XLM MOVING UP</span>
+            </span>
+            <span class="meter-pct pct-up" id="meterUpsidePct">78.4%</span>
+          </div>
+          <div class="meter-bar-track">
+            <div class="meter-bar-fill-up" id="meterUpsideBar" style="width: 78.4%;"></div>
+          </div>
+          <ul class="meter-evidence-list" id="meterUpsideList">
+            <li><strong>Bullish Momentum Divergence:</strong> 4H RSI reset to 48.2 with expanding MACD histogram.</li>
+            <li><strong>Net Exchange Outflows:</strong> +1,420,000 XLM withdrawn to self-custody wallets in 24h.</li>
+            <li><strong>Soroban Orderbook Skew:</strong> Bid-to-ask liquidity depth ratio standing at 2.8:1 in favor of bulls.</li>
+          </ul>
+        </div>
+
+        <!-- Low Probability of Going DOWN -->
+        <div class="futures-meter-box meter-box-down">
+          <div class="meter-top-row">
+            <span class="meter-label">
+              <span style="font-size: 1.1rem;">🛡️</span>
+              <span>LOW PROBABILITY OF XLM MOVING DOWN</span>
+            </span>
+            <span class="meter-pct pct-down" id="meterDownsidePct">21.6%</span>
+          </div>
+          <div class="meter-bar-track">
+            <div class="meter-bar-fill-down" id="meterDownsideBar" style="width: 21.6%;"></div>
+          </div>
+          <ul class="meter-evidence-list" id="meterDownsideList">
+            <li><strong>Institutional Support Invariant:</strong> Strong buy wall firmly established at $0.1190.</li>
+            <li><strong>Minimal Cascade Risk:</strong> Low leveraged liquidation exposure on decentralized perps.</li>
+            <li><strong>Downside Volatility Squeeze:</strong> Selling volume dropping 42% on downward test wicks.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Futures Targets & Telemetry Grid -->
+      <div class="futures-targets-grid">
+        <div class="target-card-item">
+          <span class="target-lbl">Projected Target (Upside)</span>
+          <span class="target-val target-val-highlight" id="targetUpsideVal">$0.1340 (+7.2%)</span>
+        </div>
+        <div class="target-card-item">
+          <span class="target-lbl">Support Floor (Downside)</span>
+          <span class="target-val" id="targetDownsideVal" style="color: #f43f5e;">$0.1190 (-4.8%)</span>
+        </div>
+        <div class="target-card-item">
+          <span class="target-lbl">Risk / Reward Ratio</span>
+          <span class="target-val" id="targetRrVal" style="color: var(--purple-soft, #c084fc);">3.4 : 1 (High Alpha)</span>
+        </div>
+        <div class="target-card-item">
+          <span class="target-lbl">Autonomous Action</span>
+          <span class="target-val" id="targetActionVal" style="font-size: 0.9rem; color: #10b981;">Accumulate &amp; LP Deploy</span>
+        </div>
+      </div>
+
+      <!-- Real-time Telemetry Stream Bar -->
+      <div class="futures-stream-bar">
+        <span class="stream-beacon"></span>
+        <span id="futuresTelemetryText">
+          <strong>Neural Bot Dispatch:</strong> Intraday futures scanner confirms bullish momentum breakout. Auto-allocating reserve capacity into Phoenix CLAMM tight bands for amplified trading fee captures.
+        </span>
+      </div>
+    </div>
+
 
     <!-- Human Approval Alert (conditionally displayed by JS) -->
     <div id="approvalBanner" class="approval-banner">
@@ -362,7 +452,7 @@
             <!-- Analytics Sub-Tabs: NAV Chart vs. Trading Bots -->
             <div class="analytics-subtabs">
               <button id="btnTabNavChart" class="subtab-btn active">NAV Progression</button>
-              <button id="btnTabTradingBots" class="subtab-btn">Trading Bots (3)</button>
+              <button id="btnTabTradingBots" class="subtab-btn">Trading Bots (4)</button>
             </div>
           </div>
 
@@ -400,7 +490,33 @@
           <!-- Sub-View 2: Autonomous Trading Bots under Analytics -->
           <div id="viewTradingBots" style="display: none; margin-top: 0.8rem;">
             <div class="bots-grid">
-              <!-- Bot 1: Hikari MEV Arbitrageur -->
+              <!-- Bot 1: Predictive Directional Futures Scanner -->
+              <div class="bot-card">
+                <div class="bot-card__top">
+                  <div class="bot-card__name">
+                    <span class="status-dot"></span>
+                    <strong>Predictive Futures Scanner</strong>
+                  </div>
+                  <span class="bot-badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.35);">Directional Bias</span>
+                </div>
+                <p class="bot-card__desc">Evaluates short-term & long-term orderflow to capture high-probability upward breakouts in XLM while hedging downside risks.</p>
+                <div class="bot-metrics-row">
+                  <div>
+                    <span class="bot-lbl">Win Rate</span>
+                    <span class="bot-val" style="color: var(--accent-emerald);">91.2%</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">Alpha Yield</span>
+                    <span class="bot-val" style="color: var(--purple-soft);">+4.85% APY</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">Bias Vector</span>
+                    <span class="bot-val" style="color: #10b981;">Bullish Long</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bot 2: Hikari MEV Arbitrageur -->
               <div class="bot-card">
                 <div class="bot-card__top">
                   <div class="bot-card__name">
