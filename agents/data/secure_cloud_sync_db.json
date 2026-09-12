@@ -1,0 +1,87 @@
+{
+  "updatedAt": "2026-09-12T19:28:28.107Z",
+  "mode": "ENCRYPTED_RESILIENT_STORAGE",
+  "users": [
+    {
+      "id": "a2e65722-f100-496f-8546-e4b6d2dec006",
+      "stellarAddress": "GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN",
+      "createdAt": "2026-09-12T19:27:37.916Z",
+      "lastActiveAt": "2026-09-12T19:28:28.101Z",
+      "riskProfile": "BALANCED",
+      "preferences": {
+        "theme": "light",
+        "currency": "XLM",
+        "notificationsEnabled": true,
+        "telegramAlerts": true,
+        "discordAlerts": false
+      },
+      "kycTier": "COMMUNITY_VERIFIED"
+    },
+    {
+      "id": "67e87a26-d509-4df4-9c3c-5c6546eb7f97",
+      "stellarAddress": "GAQZQABZADRIHXJSNS75OLEKNE65ZFU273PBSA6H23IHILQVFK3VQ5L2",
+      "createdAt": "2026-09-12T19:27:37.932Z",
+      "lastActiveAt": "2026-09-12T19:28:28.097Z",
+      "riskProfile": "BALANCED",
+      "preferences": {
+        "theme": "dark",
+        "currency": "XLM",
+        "notificationsEnabled": true,
+        "telegramAlerts": false,
+        "discordAlerts": false
+      },
+      "kycTier": "COMMUNITY_VERIFIED"
+    }
+  ],
+  "portfolios": [
+    {
+      "id": "ff3a3df8-f52a-447a-bd79-e21388c87a2b",
+      "userAddress": "GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN",
+      "vaultType": "EARN_XLM",
+      "depositedStroops": "7500000000",
+      "hSharesBalance": "7500000000",
+      "costBasisStroops": "7500000000",
+      "yieldEarnedStroops": "0",
+      "updatedAt": "2026-09-12T19:28:28.106Z"
+    }
+  ],
+  "transactions": [
+    {
+      "id": "cf1b772f-6106-40c6-8ef8-67aaecf3e8b0",
+      "userAddress": "GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN",
+      "txHash": "0x0db032d21a50210d11f52c69dedf0d20c72fdb384c80672ee3070d1d7ed4733c",
+      "action": "DEPOSIT",
+      "vaultType": "EARN_XLM",
+      "amountStroops": "2500000000",
+      "sharesDelta": "+2500000000",
+      "status": "CONFIRMED",
+      "ledgerSequence": 345688,
+      "timestamp": "2026-09-12T19:28:28.106Z"
+    },
+    {
+      "id": "330e90b9-e495-45a4-96a2-96dfa6f25feb",
+      "userAddress": "GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN",
+      "txHash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "action": "DEPOSIT",
+      "vaultType": "EARN_XLM",
+      "amountStroops": "2500000000",
+      "sharesDelta": "+2500000000",
+      "status": "CONFIRMED",
+      "ledgerSequence": 345450,
+      "timestamp": "2026-09-12T19:28:16.214Z"
+    },
+    {
+      "id": "2a204d4b-cff5-45c5-b27f-a9c606db99a8",
+      "userAddress": "GCJSDY6QA6CYEIZ6W6USD2QC22OBHKOI326YUU64QWBBMWL4GBSY6BQN",
+      "txHash": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "action": "DEPOSIT",
+      "vaultType": "EARN_XLM",
+      "amountStroops": "2500000000",
+      "sharesDelta": "+2500000000",
+      "status": "CONFIRMED",
+      "ledgerSequence": 345521,
+      "timestamp": "2026-09-12T19:27:37.940Z"
+    }
+  ],
+  "loyalty": []
+}

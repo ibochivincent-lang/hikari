@@ -1,11 +1,11 @@
 # docker-compose.yml
 # Author: ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>
-# Complete container orchestration for Hikari Protocol
+# Complete container orchestration for Hikari / Hakiru Protocol
 
 version: "3.8"
 
 services:
-  # 1. Flagship Web Dashboard & Telemetry Server
+  # 1. Primary Web Dashboard, DApp Workspace & API Gateway
   dashboard:
     build:
       context: .
@@ -20,11 +20,17 @@ services:
       - STELLAR_NETWORK=testnet
       - RPC_URL=https://soroban-testnet.stellar.org
       - HORIZON_URL=https://horizon-testnet.stellar.org
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/hikari?sslmode=disable}
+      - SUPABASE_URL=${SUPABASE_URL:-}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY:-}
+      - JWT_SECRET=${JWT_SECRET:-hikari-protocol-master-secret-key-2026-ibochivincent-lang}
     healthcheck:
-      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/telemetry"]
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/v1/db/health"]
       interval: 30s
       timeout: 10s
       retries: 3
+    depends_on:
+      - postgres
     networks:
       - hikari-net
 
@@ -47,7 +53,42 @@ services:
     networks:
       - hikari-net
 
-  # 3. x402 Micropayment & Real-Time Volatility Gateway
+  # 3. 24/7 Autonomous Harvest & Auto-Compound Keeper
+  harvest-keeper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hikari-harvest-keeper
+    restart: unless-stopped
+    command: ["node", "services/automation/dist/harvest-keeper.js"]
+    environment:
+      - NODE_ENV=production
+      - STELLAR_NETWORK=testnet
+      - RPC_URL=https://soroban-testnet.stellar.org
+      - HARVEST_INTERVAL_MS=60000
+    depends_on:
+      - dashboard
+    networks:
+      - hikari-net
+
+  # 4. Zero-Knowledge Solvency & APY Indexer
+  solvency-indexer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hikari-solvency-indexer
+    restart: unless-stopped
+    command: ["node", "services/automation/dist/telemetry-indexer.js"]
+    environment:
+      - NODE_ENV=production
+      - STELLAR_NETWORK=testnet
+      - RPC_URL=https://soroban-testnet.stellar.org
+    depends_on:
+      - dashboard
+    networks:
+      - hikari-net
+
+  # 5. x402 Micropayment & Real-Time Volatility Gateway
   x402-gateway:
     build:
       context: .
@@ -64,6 +105,30 @@ services:
     networks:
       - hikari-net
 
+  # 6. Local Development PostgreSQL Database (Seamlessly swappable with online Supabase/Neon)
+  postgres:
+    image: postgres:16-alpine
+    container_name: hikari-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgrespassword
+      POSTGRES_DB: hikari
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - hikari-net
+
 networks:
   hikari-net:
     driver: bridge
+
+volumes:
+  postgres-data:

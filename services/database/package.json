@@ -1,0 +1,20 @@
+{
+  "name": "@hikari/database",
+  "version": "0.1.0",
+  "description": "Cloud-Ready Online Database & Anti-Mixup Security Layer for Hikari Protocol",
+  "author": "ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test dist/test.js"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^13.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.5.0"
+  }
+}

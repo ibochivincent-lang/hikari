@@ -11,8 +11,34 @@ const { exec } = require("child_process");
 const PRIMARY_PORT = parseInt(process.env.PORT || "3000", 10);
 const BACKUP_PORTS = [8080, 3001, 80];
 const PUBLIC_DIR = path.join(__dirname, "public");
-const DATA_FILE = path.join(__dirname, "..", "agents", "data", "daemon_state.json");
 const CONTRACTS_FILE = path.join(__dirname, "..", "deployed_contracts.json");
+
+let dbClientInstance = null;
+let authServiceInstance = null;
+
+function getDbClient() {
+  if (!dbClientInstance) {
+    try {
+      const { HikariDatabaseClient } = require("../services/database/dist/db-client.js");
+      dbClientInstance = new HikariDatabaseClient();
+    } catch (e) {
+      console.warn("Notice: Database client initialization notice:", e.message);
+    }
+  }
+  return dbClientInstance;
+}
+
+function getAuthService() {
+  if (!authServiceInstance) {
+    try {
+      const { HikariWalletSecurityService } = require("../services/database/dist/auth-service.js");
+      authServiceInstance = new HikariWalletSecurityService();
+    } catch (e) {
+      console.warn("Notice: Auth service initialization notice:", e.message);
+    }
+  }
+  return authServiceInstance;
+}
 
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -322,6 +348,180 @@ function handleRequest(req, res) {
       }
     });
     return;
+  }
+
+  // API 14: Cloud Database Health & Connectivity Status
+  if (pathname === "/api/v1/db/health") {
+    const db = getDbClient();
+    const health = db ? db.getHealth() : { mode: "UNINITIALIZED", isConnected: false };
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    return res.end(JSON.stringify(health));
+  }
+
+  // API 15: Cryptographic Wallet Authentication Challenge (SEP-10 Nonce)
+  if (pathname === "/api/v1/auth/challenge" && req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => body += chunk);
+    req.on("end", () => {
+      try {
+        const payload = JSON.parse(body || "{}");
+        const auth = getAuthService();
+        if (!auth) throw new Error("Authentication service offline");
+        const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "127.0.0.1";
+        const userAgent = req.headers["user-agent"] || "unknown";
+        const challenge = auth.generateChallenge({
+          stellarAddress: payload.stellarAddress,
+          clientIp: String(clientIp),
+          userAgent: String(userAgent)
+        });
+        res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+        return res.end(JSON.stringify({ success: true, challenge }));
+      } catch (err) {
+        res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+        return res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+    });
+    return;
+  }
+
+  // API 16: Cryptographic Signature Verification & Session Issuance
+  if (pathname === "/api/v1/auth/verify" && req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => body += chunk);
+    req.on("end", () => {
+      try {
+        const payload = JSON.parse(body || "{}");
+        const auth = getAuthService();
+        const db = getDbClient();
+        if (!auth) throw new Error("Authentication service offline");
+        const clientIp = req.headers["x-forwarded-for"] || req.socket.remoteAddress || "127.0.0.1";
+        const userAgent = req.headers["user-agent"] || "unknown";
+        const verification = auth.verifySignature({
+          challengeId: payload.challengeId,
+          stellarAddress: payload.stellarAddress,
+          signature: payload.signature,
+          clientIp: String(clientIp),
+          userAgent: String(userAgent)
+        });
+
+        if (!verification.success) {
+          res.writeHead(401, { "Content-Type": "application/json; charset=utf-8" });
+          return res.end(JSON.stringify(verification));
+        }
+
+        // Load or create anti-mixup user profile
+        let userProfile = null;
+        if (db) {
+          userProfile = db.getOrCreateUserProfile(payload.stellarAddress);
+        }
+
+        res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+        return res.end(JSON.stringify({
+          success: true,
+          session: verification.session,
+          user: userProfile
+        }));
+      } catch (err) {
+        res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+        return res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+    });
+    return;
+  }
+
+  // API 17: User Profile (Strict Address Isolation & Anti-Mixup)
+  if (pathname === "/api/v1/user/profile") {
+    const db = getDbClient();
+    const address = parsedUrl.searchParams.get("address");
+
+    if (req.method === "GET") {
+      if (!address) {
+        res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+        return res.end(JSON.stringify({ error: "Missing address query parameter" }));
+      }
+      const user = db ? db.getOrCreateUserProfile(address) : null;
+      res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+      return res.end(JSON.stringify({ success: true, user }));
+    }
+
+    if (req.method === "PUT" || req.method === "POST") {
+      let body = "";
+      req.on("data", chunk => body += chunk);
+      req.on("end", () => {
+        try {
+          const payload = JSON.parse(body || "{}");
+          const targetAddress = payload.stellarAddress || address;
+          if (!targetAddress) throw new Error("Missing stellar address");
+          const updated = db ? db.updateUserPreferences(targetAddress, payload.preferences || {}) : null;
+          res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+          return res.end(JSON.stringify({ success: true, user: updated }));
+        } catch (err) {
+          res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+          return res.end(JSON.stringify({ success: false, error: err.message }));
+        }
+      });
+      return;
+    }
+  }
+
+  // API 18: User Multi-Vault Portfolio Balances
+  if (pathname === "/api/v1/user/portfolio" && req.method === "GET") {
+    const address = parsedUrl.searchParams.get("address");
+    if (!address) {
+      res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+      return res.end(JSON.stringify({ error: "Missing address query parameter" }));
+    }
+    const db = getDbClient();
+    const portfolios = db ? db.getUserPortfolio(address) : [];
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    return res.end(JSON.stringify({ success: true, userAddress: address, portfolios }));
+  }
+
+  // API 19: User Transaction History
+  if (pathname === "/api/v1/user/history" && req.method === "GET") {
+    const address = parsedUrl.searchParams.get("address");
+    if (!address) {
+      res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+      return res.end(JSON.stringify({ error: "Missing address query parameter" }));
+    }
+    const db = getDbClient();
+    const transactions = db ? db.getUserTransactions(address) : [];
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    return res.end(JSON.stringify({ success: true, userAddress: address, transactions }));
+  }
+
+  // API 20: Record Confirmed Deposit Transaction (Database Accounting)
+  if (pathname === "/api/v1/user/deposit-record" && req.method === "POST") {
+    let body = "";
+    req.on("data", chunk => body += chunk);
+    req.on("end", () => {
+      try {
+        const payload = JSON.parse(body || "{}");
+        const db = getDbClient();
+        if (!db) throw new Error("Database offline");
+        const portfolio = db.recordDeposit(
+          payload.stellarAddress,
+          payload.vaultType || "EARN_XLM",
+          String(payload.amountStroops || "10000000"),
+          String(payload.sharesReceived || "10000000"),
+          payload.txHash || ("0x" + Math.random().toString(16).slice(2).padEnd(64, "0"))
+        );
+        res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+        return res.end(JSON.stringify({ success: true, portfolio }));
+      } catch (err) {
+        res.writeHead(400, { "Content-Type": "application/json; charset=utf-8" });
+        return res.end(JSON.stringify({ success: false, error: err.message }));
+      }
+    });
+    return;
+  }
+
+  // API 21: Security Audit Logs
+  if (pathname === "/api/v1/security/logs" && req.method === "GET") {
+    const auth = getAuthService();
+    const logs = auth ? auth.getSecurityLogs(50) : [];
+    res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+    return res.end(JSON.stringify({ success: true, logs }));
   }
 
   // 3. Static File & SPA Rerouting
