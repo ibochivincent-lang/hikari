@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      const p = new URLSearchParams(window.location.search);
+      if (p.get('showBots') === 'true') {
+        document.write('<style>#viewNavChart { display: none !important; } #viewTradingBots { display: block !important; } #btnTabTradingBots { background: linear-gradient(135deg, rgba(139, 47, 230, 0.45) 0%, rgba(192, 132, 252, 0.25) 100%) !important; color: #fff !important; border: 1px solid rgba(192, 132, 252, 0.45) !important; } #btnTabNavChart { background: transparent !important; border: none !important; color: var(--text-muted) !important; }</style>');
+      }
+    })();
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hikari Protocol | Soroban Liquid Staking & Autonomous Yield DApp</title>
+  <meta name="description" content="Stellar-native liquid yield dApp powered by autonomous AI agents, multi-strategy vaults, and deterministic policy guardrails.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="js/gsap.min.js"></script>
+  <script>
+    if (typeof gsap === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"><\/script>');
+    }
+  </script>
+</head>
+<body class="app-page-body">
+  <div class="app-layout-container">
+    <!-- Dedicated DApp Sticky Top Navigation Bar -->
+    <header class="app-topbar lido-header">
+      <div class="app-topbar-left">
+        <a href="index.html" class="app-brand-link">
+          <div class="logo-kanji-badge" style="width: 32px; height: 32px; font-size: 1.05rem;">光</div>
+          <span class="app-brand-name">HIKARI<span class="logo-kanji-sub">光</span></span>
+        </a>
+        <a href="index.html" class="btn-back-home" title="Return to Marketing Landing Page">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <span>Website</span>
+        </a>
+
+        <!-- Interactive Vault Switcher Deck -->
+        <div class="vault-switcher-pill" id="vaultSwitcherPill">
+          <button class="vault-pill-btn active" data-vault="xlm" id="pillVaultXlm">
+            <span class="vault-pill-dot dot-xlm"></span>
+            <span class="vault-pill-title">EarnXLM</span>
+            <span class="vault-pill-yield">12.4%</span>
+          </button>
+          <button class="vault-pill-btn" data-vault="usd" id="pillVaultUsd">
+            <span class="vault-pill-dot dot-usd"></span>
+            <span class="vault-pill-title">EarnUSD</span>
+            <span class="vault-pill-yield">17.0%</span>
+          </button>
+          <button class="vault-pill-btn" data-vault="multichain" id="pillVaultMulti">
+            <span class="vault-pill-dot dot-multi"></span>
+            <span class="vault-pill-title">Multichain</span>
+            <span class="vault-pill-yield">14.2%</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="app-topbar-right">
+        <!-- Network Status Indicator -->
+        <div class="app-network-tag">
+          <span class="status-dot"></span>
+          <span>SOROBAN TESTNET</span>
+        </div>
+
+        <!-- Shards Balance Pill -->
+        <button id="btnOpenShardsModal" class="shards-pill-btn" title="View loyalty points, multiplier, and leaderboard">
+          <span class="shards-gem">💎</span>
+          <span id="headerShardsText">1687.5k Shards</span>
+          <span class="shards-multiplier">2.25x</span>
+        </button>
+
+        <!-- Theme Toggle Pill -->
+        <button id="themeToggleBtn" class="theme-toggle-pill" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
+          <span class="theme-pill-icon">
+            <svg class="icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="12" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </span>
+          <span class="theme-pill-text">Dark</span>
+        </button>
+
+        <!-- Wallet Connect CTA -->
+        <button id="btnConnectWallet" class="btn-connect-wallet">
+          <span>Connect Wallet</span>
+          <span class="arrow-glyph">→</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Contextual Vault Hero Banner -->
+    <div class="vault-context-banner" id="vaultContextBanner">
+      <div class="vault-context-content">
+        <div class="vault-context-badge" id="vaultContextBadge">
+          <span class="status-dot"></span>
+          <span id="vaultContextBadgeText">XLM LIQUID STAKING VAULT • STELLAR SOROBAN PROTOCOL 27</span>
+        </div>
+        <h1 class="vault-context-title" id="vaultContextTitle">EarnXLM — High-Yield Liquid Staking Vault</h1>
+        <p class="vault-context-sub" id="vaultContextSub">Allocating native XLM and SEP-41 hXLM across Blend money markets, Phoenix CLAMM yield pools, and Soroban MEV backruns with zero lockup.</p>
+      </div>
+      <div class="vault-context-stats">
+        <div class="vault-stat-item">
+          <span class="vstat-lbl">Vault TVL</span>
+          <span class="vstat-val" id="vaultStatTvl">$196.7M</span>
+        </div>
+        <div class="vault-stat-item">
+          <span class="vstat-lbl">Dynamic APY</span>
+          <span class="vstat-val vstat-highlight" id="vaultStatApy">12.4%</span>
+        </div>
+        <div class="vault-stat-item">
+          <span class="vstat-lbl">Allocation Strategies</span>
+          <span class="vstat-val" id="vaultStatStrategy">Blend + Phoenix + MEV</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Human Approval Alert (conditionally displayed by JS) -->
+    <div id="approvalBanner" class="approval-banner">
+      <div class="approval-info">
+        <h4> Operator Approval Required (Policy Gate)</h4>
+        <p id="approvalDetails">Proposal hikari_prop_910 exceeds threshold. Agent requested allocation of 25,000 XLM.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <button id="btnApprove" class="btn-approve">Approve Execution</button>
+        <button id="btnReject" class="btn-approve" style="background: rgba(244,63,94,0.2); color: #f43f5e; border: 1px solid #f43f5e;">Reject</button>
+      </div>
+    </div>
+
+    <!-- Core Protocol Metrics -->
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Value Locked (TVL)</div>
+        <div id="tvlDisplay" class="metric-value">124,500 XLM</div>
+        <div class="metric-sub">≈ $15,562.50 USD</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Net Asset Value (NAV / Share)</div>
+        <div id="navDisplay" class="metric-value">1.0428 XLM</div>
+        <div class="metric-sub">+4.28% cumulative yield</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Net Blended APY</div>
+        <div class="metric-value" id="blendedApyDisplay" style="color: var(--accent-emerald);">6.94%</div>
+        <div class="metric-sub">Dynamic AI-optimized</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Vault Reserve Buffer</div>
+        <div id="reserveDisplay" class="metric-value">28,400 XLM</div>
+        <div class="metric-sub">22.8% liquid reserve (Target: ≥15%)</div>
+      </div>
+    </section>
+
+    <!-- Dashboard View Mode Switch: Simple 1-Click vs. Advanced Pro Mode -->
+    <div class="mode-switch-bar">
+      <div class="mode-switch-info">
+        <span class="mode-switch-title">Dashboard View:</span>
+        <span id="currentViewModeText" class="mode-switch-subtext">Advanced Pro Analytics Mode (AI Engine & Risk Telemetry Active)</span>
+      </div>
+      <div class="mode-toggle-group">
+        <button id="btnSimpleMode" class="btn-mode-toggle"> Simple 1-Click</button>
+        <button id="btnProMode" class="btn-mode-toggle active"> Advanced Pro</button>
+      </div>
+    </div>
+
+    <!-- Main Content Grid -->
+    <div class="main-grid">
+      <!-- Left Column: Strategy Registry & AI Console -->
+      <main>
+        <!-- Cumulative Yield, NAV Progression & Trading Bots Hub -->
+        <div id="chartSection" class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">
+                <span>Protocol Analytics Hub</span>
+              </h2>
+              <div style="font-size: 0.75rem; color: var(--text-dim); margin-top: 0.2rem;">
+                Compounding hXLM / XLM exchange rate, dynamic yield curves, and autonomous trading bots
+              </div>
+            </div>
+            <!-- Analytics Sub-Tabs: NAV Chart vs. Trading Bots -->
+            <div class="analytics-subtabs">
+              <button id="btnTabNavChart" class="subtab-btn active">NAV Progression</button>
+              <button id="btnTabTradingBots" class="subtab-btn">Trading Bots (3)</button>
+            </div>
+          </div>
+
+          <!-- Sub-View 1: NAV Chart -->
+          <div id="viewNavChart">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin: 0.4rem 0;">
+              <span style="font-size: 0.78rem; color: var(--text-muted);">Stacked Soroban Protocol Yields</span>
+              <div class="timeframe-buttons">
+                <button class="tf-btn" data-tf="7D">7D</button>
+                <button class="tf-btn active" data-tf="30D">30D</button>
+                <button class="tf-btn" data-tf="90D">90D</button>
+              </div>
+            </div>
+
+            <div class="chart-container" style="position: relative; width: 100%; height: 210px; margin: 0.8rem 0;">
+              <canvas id="yieldChartCanvas" style="width: 100%; height: 100%;"></canvas>
+            </div>
+
+            <div class="chart-summary-bar">
+              <div class="chart-stat">
+                <span class="stat-lbl">Blend Money Market</span>
+                <span class="stat-val" style="color: var(--lavender);">5.20% APY</span>
+              </div>
+              <div class="chart-stat">
+                <span class="stat-lbl">Phoenix CLAMM Fees</span>
+                <span class="stat-val" style="color: var(--purple-soft);">6.40% APY</span>
+              </div>
+              <div class="chart-stat">
+                <span class="stat-lbl">Jito MEV Backrun Boost</span>
+                <span class="stat-val" style="color: var(--accent-emerald);">+1.80% Net APY</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-View 2: Autonomous Trading Bots under Analytics -->
+          <div id="viewTradingBots" style="display: none; margin-top: 0.8rem;">
+            <div class="bots-grid">
+              <!-- Bot 1: Jito MEV Arbitrageur -->
+              <div class="bot-card">
+                <div class="bot-card__top">
+                  <div class="bot-card__name">
+                    <span class="status-dot"></span>
+                    <strong>Jito MEV Arbitrageur</strong>
+                  </div>
+                  <span class="bot-badge">Mempool Scan</span>
+                </div>
+                <p class="bot-card__desc">Continuous Soroban mempool scanner backrunning Soroswap and Phoenix CLAMM swaps.</p>
+                <div class="bot-metrics-row">
+                  <div>
+                    <span class="bot-lbl">Win Rate</span>
+                    <span class="bot-val" style="color: var(--accent-emerald);">99.4%</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">30D Profit</span>
+                    <span class="bot-val" style="color: var(--purple-soft);">+14,820 XLM</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">Latency</span>
+                    <span class="bot-val">380ms</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bot 2: TWAP Smart Router -->
+              <div class="bot-card">
+                <div class="bot-card__top">
+                  <div class="bot-card__name">
+                    <span class="status-dot"></span>
+                    <strong>TWAP Smart Router</strong>
+                  </div>
+                  <span class="bot-badge">Execution</span>
+                </div>
+                <p class="bot-card__desc">Slices large rebalances across time intervals to guarantee slippage under 0.12%.</p>
+                <div class="bot-metrics-row">
+                  <div>
+                    <span class="bot-lbl">Slippage Cap</span>
+                    <span class="bot-val" style="color: var(--accent-emerald);">&lt;0.12%</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">Volume Routed</span>
+                    <span class="bot-val" style="color: var(--purple-soft);">340,000 XLM</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">Efficiency</span>
+                    <span class="bot-val">99.8%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bot 3: Lending Delta Arbitrage -->
+              <div class="bot-card">
+                <div class="bot-card__top">
+                  <div class="bot-card__name">
+                    <span class="status-dot"></span>
+                    <strong>Lending Delta Arbitrage</strong>
+                  </div>
+                  <span class="bot-badge">Yield Boost</span>
+                </div>
+                <p class="bot-card__desc">Captures interest-rate spreads between Blend collateral and Phoenix yield pools.</p>
+                <div class="bot-metrics-row">
+                  <div>
+                    <span class="bot-lbl">Spread Capture</span>
+                    <span class="bot-val" style="color: var(--accent-emerald);">+2.15% APY</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">Health Factor</span>
+                    <span class="bot-val" style="color: var(--purple-soft);">2.45 HF</span>
+                  </div>
+                  <div>
+                    <span class="bot-lbl">Cycle Freq</span>
+                    <span class="bot-val">5 min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bot-actions-row">
+              <button id="btnSimulateBotTrade" class="btn-primary" style="width: auto; padding: 0.5rem 1.25rem; font-size: 0.8rem;">
+                Simulate Arbitrage Execution
+              </button>
+              <span id="botSimStatus" style="font-size: 0.75rem; color: var(--text-dim);">All bots operating under Soroban policy contracts</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Strategy Registry -->
+        <div id="strategiesSection" class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span> Approved Strategy Adapters</span>
+            </h2>
+            <span style="font-size: 0.8rem; color: var(--purple-soft);">3 Active Adapters</span>
+          </div>
+
+          <div class="strategy-list">
+            <div class="strategy-item">
+              <div>
+                <div class="strategy-name">Soroswap XLM-USDC AMM</div>
+                <div class="strategy-protocol">DEX Liquidity Provisioning</div>
+              </div>
+              <div>
+                <div class="strategy-apy">7.80% APY</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Fee APR</div>
+              </div>
+              <div>
+                <div class="strategy-cap">Allocated: 45,000 XLM</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Cap: 100,000 XLM</div>
+              </div>
+              <div>
+                <span class="strategy-status status-active">Active</span>
+              </div>
+            </div>
+
+            <div class="strategy-item">
+              <div>
+                <div class="strategy-name">Blend Protocol XLM Lending</div>
+                <div class="strategy-protocol">Collateralized Money Market</div>
+              </div>
+              <div>
+                <div class="strategy-apy">5.20% APY</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Variable Supply</div>
+              </div>
+              <div>
+                <div class="strategy-cap">Allocated: 32,500 XLM</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Cap: 75,000 XLM</div>
+              </div>
+              <div>
+                <span class="strategy-status status-active">Active</span>
+              </div>
+            </div>
+
+            <div class="strategy-item">
+              <div>
+                <div class="strategy-name">Phoenix Concentrated XLM</div>
+                <div class="strategy-protocol">Narrow-Band CLAMM</div>
+              </div>
+              <div>
+                <div class="strategy-apy">6.40% APY</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Fee APR</div>
+              </div>
+              <div>
+                <div class="strategy-cap">Allocated: 18,600 XLM</div>
+                <div style="font-size: 0.75rem; color: var(--text-dim);">Cap: 50,000 XLM</div>
+              </div>
+              <div>
+                <span class="strategy-status status-active">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time AI Agent Console -->
+        <div id="agentSection" class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span> Multi-Agent Orchestrator & Audit Stream</span>
+            </h2>
+            <button id="btnRunAgent" class="tab-btn active" style="flex: none; padding: 0.4rem 0.9rem; font-size: 0.8rem;">
+              ▶ Trigger Cycle
+            </button>
+          </div>
+          <div id="agentConsole" class="console-box">
+            <div class="log-line">
+              <span class="log-time">[11:22:15]</span>
+              <span class="log-tag-agent">[PaymentAgent]</span>
+              <span>Settled 0.001 USDC via x402 for volatility oracle feed.</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:16]</span>
+              <span class="log-tag-agent">[MarketAgent]</span>
+              <span>Observed XLM @ $0.125 | Blend APY: 5.2% | Soroswap Fee APR: 7.8%.</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:17]</span>
+              <span class="log-tag-agent">[YieldAgent]</span>
+              <span>Ranked 3 strategies. Top: Soroswap XLM-USDC (Risk Score: 6.00).</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:18]</span>
+              <span class="log-tag-policy">[PolicyEngine]</span>
+              <span>Verified proposal against 7 deterministic rules. Limits passed.</span>
+            </div>
+            <div class="log-line">
+              <span class="log-time">[11:22:19]</span>
+              <span class="log-tag-success">[AuditChain]</span>
+              <span>Hash verified: 9075ca44fd83cab34abfd0250d193950228a78e75eb8b742debef33594f89cf4</span>
+            </div>
+          </div>
+
+          <!-- Live Transparent Agent Decision Rationale Stream -->
+          <div class="rationale-box">
+            <div class="rationale-header">
+              <div style="display: flex; align-items: center; gap: 0.4rem;">
+                <span></span>
+                <span class="rationale-header-title">Autonomous Decision Rationale</span>
+                <span class="lido-chip chip-cyan" style="font-size: 0.6rem;">Live Telemetry</span>
+              </div>
+              <span id="rationaleConfidence" style="font-size: 0.72rem; color: var(--accent-emerald);">Policy Confidence: 98.4%</span>
+            </div>
+            <div id="rationaleStream" class="rationale-content">
+              <p style="margin: 0; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+                <strong class="agent-name-tag">[YieldAgent]:</strong> Rebalanced 25,000 XLM into Phoenix CLAMM. Observed 87 bps cross-DEX spread exceeding threshold (25 bps). Portfolio 95% VaR remains healthy at 4.2% (safe boundary: &lt; 5.0%).
+              </p>
+            </div>
+          </div>
+
+          <!-- Jito-Style MEV Backrun Yield Stream -->
+          <div id="mevSection" class="mev-highlight-box pulse-mev">
+            <div class="mev-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="mev-tag"> Jito MEV Backrun Engine</span>
+                <span style="font-size: 0.75rem; color: var(--accent-emerald);">Active Backrunner</span>
+              </div>
+              <span id="mevCyclePulse" style="font-size: 0.75rem; color: var(--text-dim);">Listening to Soroban mempool...</span>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; margin: 0.8rem 0; font-size: 0.82rem;">
+              <div>
+                <div style="color: var(--text-muted); font-size: 0.72rem;">Total MEV Boost to Vault:</div>
+                <div id="mevTotalYield" style="font-size: 1.1rem; font-weight: 700; color: var(--accent-emerald);">+62.64 XLM</div>
+              </div>
+              <div>
+                <div style="color: var(--text-muted); font-size: 0.72rem;">Last Cross-DEX Spread:</div>
+                <div id="mevSpreadDisplay" style="font-size: 1.1rem; font-weight: 700; color: var(--lavender);">87 bps</div>
+              </div>
+              <div>
+                <div style="color: var(--text-muted); font-size: 0.72rem;">Target DEX Venues:</div>
+                <div class="mev-venue-text">Phoenix ↔ Soroswap</div>
+              </div>
+            </div>
+
+            <div style="font-size: 0.75rem; color: var(--text-dim); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.5rem;">
+              <span>Latest Bundle Tx: <a id="mevTxLink" href="https://stellar.expert/explorer/testnet/tx/3151dac0bf054508ab766d35539e1a6e88561d973ada39af4a687109b23b78d4" target="_blank" style="color: var(--purple-soft); text-decoration: none;">3151dac0...78d4 ↗</a></span>
+              <span style="color: var(--accent-emerald);">80% Depositor Boost / 20% Relayer</span>
+            </div>
+          </div>
+
+          <!-- Lido-Grade Circuit Breaker & GateSeal Guard -->
+          <div id="securitySection" class="card" style="margin-top: 1rem; border-color: rgba(244, 63, 94, 0.2);">
+            <div class="card-header" style="margin-bottom: 0.5rem;">
+              <h3 style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+                <span> Circuit Breaker & GateSeal Guard</span>
+              </h3>
+              <span id="circuitStateBadge" class="mode-badge" style="background: rgba(192, 132, 252, 0.15); border-color: rgba(192, 132, 252, 0.4); color: var(--purple-soft);">
+                <span class="mode-dot dot-turbo"></span> System Nominal
+              </span>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+              Continuous off-chain risk monitor evaluates portfolio drawdown, collateral health, and oracle latency. Drawdown exceeding 15% automatically seals allocations via GateSeal and engages Bunker Mode.
+            </div>
+
+            <div class="circuit-controls">
+              <button id="btnSimulateShock" class="btn-shock">
+                 Simulate Drawdown Shock (16.5%)
+              </button>
+              <button id="btnResetCircuit" class="btn-reset">
+                 Restore Turbo Mode
+              </button>
+            </div>
+          </div>
+
+          <!-- x402 Agentic Micropayment Terminal -->
+          <div class="card" style="margin-top: 1rem; border-color: rgba(192, 132, 252, 0.25);">
+            <div class="card-header" style="margin-bottom: 0.5rem;">
+              <h3 style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
+                <span> x402 Agentic Micropayment Channel</span>
+              </h3>
+              <span class="badge-recommended" style="background: rgba(139, 47, 230, 0.15); color: var(--purple-soft); border-color: rgba(192, 132, 252, 0.35);">
+                HTTP 402 Facilitator
+              </span>
+            </div>
+
+            <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 0.8rem;">
+              Automated machine-to-machine micropayments. Autonomous agents settle $0.001 USDC fees via Soroban SEP-41 token contracts to unlock premium volatility feeds and real-time oracle telemetry.
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; font-size: 0.8rem; margin-bottom: 0.8rem; background: rgba(255,255,255,0.02); padding: 0.6rem; border-radius: 8px;">
+              <div>
+                <span style="color: var(--text-dim); font-size: 0.72rem;">Last Settlement Asset:</span>
+                <div class="x402-asset-text">USDC (SEP-41 SAC)</div>
+              </div>
+              <div>
+                <span style="color: var(--text-dim); font-size: 0.72rem;">Target Oracle Endpoint:</span>
+                <div style="font-weight: 600; color: var(--purple-soft); word-break: break-all;">/v1/volatility-feed</div>
+              </div>
+            </div>
+
+            <div id="x402ReceiptBox" style="font-size: 0.75rem; color: var(--text-dim); display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 0.6rem;">
+              <span>Proof Hash: <a id="x402ProofLink" href="https://stellar.expert/explorer/testnet/tx/0xcdfef79b434886376729b9740ae12a93500e686676cc8894e2340dd22a6ec6d4" target="_blank" style="color: var(--accent-emerald); text-decoration: none;">0xcdfe...c6d4 ↗</a></span>
+              <button id="btnTestX402" class="btn-secondary" style="padding: 0.35rem 0.8rem; font-size: 0.75rem;">
+                 Query Oracle (x402)
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Right Column: User Vault Actions -->
+      <aside>
+        <div id="vaultPortalSection" class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span> Liquid Staking Portal</span>
+            </h2>
+            <span id="widgetBadge" style="font-size: 0.72rem; color: var(--purple-soft);">SEP-41 Native</span>
+          </div>
+
+          <!-- Multi-Vault Strategy Tier Selector -->
+          <div class="vault-tier-selector">
+            <button class="tier-chip active" data-tier="BALANCED_HXLM">
+              <span> Balanced hXLM</span>
+              <span class="tier-pill">6.94% APY</span>
+            </button>
+            <button class="tier-chip" data-tier="CONSERVATIVE_USDC">
+              <span> Conservative hUSDC</span>
+              <span class="tier-pill">5.20% APY</span>
+            </button>
+            <button class="tier-chip" data-tier="DYNAMIC_ALPHA_HXLM">
+              <span> MEV Alpha hXLM</span>
+              <span class="tier-pill">12.4% APR</span>
+            </button>
+          </div>
+
+          <!-- Lido-style Tabs -->
+          <div class="lido-tabs" style="grid-template-columns: repeat(5, 1fr);">
+            <button id="tabStake" class="lido-tab-btn active">Stake</button>
+            <button id="tabRequest" class="lido-tab-btn">Request</button>
+            <button id="tabClaim" class="lido-tab-btn">Claim</button>
+            <button id="tabBasket" class="lido-tab-btn">Basket</button>
+            <button id="tabBridge" class="lido-tab-btn">Bridge</button>
+          </div>
+
+          <!-- Panel 1: Stake & Request Form -->
+          <div id="panelForm">
+            <form id="vaultForm">
+              <div class="input-group">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.35rem;">
+                  <label id="inputLabel" class="input-label" for="amountInput">Deposit XLM Amount</label>
+                  <span id="walletBalLabel" style="font-size: 0.75rem; color: var(--text-dim);">Balance: 0 XLM</span>
+                </div>
+                <div class="input-container-lido">
+                  <input id="amountInput" class="input-field" type="number" placeholder="0.0" min="0.1" step="any" required style="padding-right: 4rem;">
+                  <button type="button" id="btnMaxAmount" class="btn-max">MAX</button>
+                </div>
+                <div class="quick-presets-row">
+                  <button type="button" class="btn-preset-amt" data-amt="100">100 XLM</button>
+                  <button type="button" class="btn-preset-amt" data-amt="500">500 XLM</button>
+                  <button type="button" class="btn-preset-amt" data-amt="1000">1,000 XLM</button>
+                  <button type="button" class="btn-preset-amt" data-amt="5000">5,000 XLM</button>
+                </div>
+                <div class="rate-indicator">
+                  <span>Exchange Rate:</span>
+                  <span id="rateDisplay" style="color: var(--text-main); font-weight: 600;">1 XLM ≈ 1.0428 hXLM</span>
+                </div>
+              </div>
+
+              <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; margin-bottom: 1.25rem; font-size: 0.85rem;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                  <span style="color: var(--text-muted);">You will receive:</span>
+                  <span id="estShares" class="est-shares-val">0.00 hXLM</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 0.4rem;">
+                  <span style="color: var(--text-muted);">Safety Buffer Mode:</span>
+                  <span style="color: var(--accent-emerald);">Virtual Shares Active</span>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                  <span style="color: var(--text-muted);">Estimated Network Fee:</span>
+                  <span class="est-fee-val">~0.00001 XLM</span>
+                </div>
+              </div>
+
+              <button id="btnSubmitAction" type="submit" class="btn-primary">Stake XLM</button>
+            </form>
+          </div>
+
+          <!-- Panel 2: Lido-style Withdrawal Claim Tickets -->
+          <div id="panelClaim" style="display: none;">
+            <div style="margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--text-muted);">
+              Withdrawal requests are processed in FIFO order through the on-chain queue.
+            </div>
+            <div id="ticketList" class="ticket-list">
+              <!-- Dynamically rendered ticket items -->
+            </div>
+            <button id="btnClaimAll" class="btn-primary" style="background: rgba(139, 47, 230, 0.2); border: 1px solid rgba(192, 132, 252, 0.4); color: var(--lavender);">
+               Claim All Available XLM
+            </button>
+          </div>
+
+          <!-- Panel 3: Vault Basket & Allocation -->
+          <div id="panelBasket" style="display: none;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.4rem;">
+              Protocol capital is autonomously balanced across 3 approved Soroban strategies:
+            </div>
+            <div class="basket-bar">
+              <div class="basket-seg-blend" title="Blend Lending: 40%"></div>
+              <div class="basket-seg-phoenix" title="Phoenix CLAMM: 30%"></div>
+              <div class="basket-seg-soroswap" title="Soroswap AMM: 15%"></div>
+              <div class="basket-seg-idle" title="Liquid Reserve: 15%"></div>
+            </div>
+            <div class="basket-legend">
+              <div class="legend-item"><span class="legend-dot" style="background: var(--purple-soft);"></span><span>Blend Pool (40% • 5.2% APY)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background: var(--glass-pink);"></span><span>Phoenix CLAMM (30% • 6.4% APY)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background: var(--accent-purple);"></span><span>Soroswap AMM (15% • 7.8% APR)</span></div>
+              <div class="legend-item"><span class="legend-dot" style="background: var(--lavender);"></span><span>Liquid Buffer (15% • Instant)</span></div>
+            </div>
+          </div>
+
+          <!-- Panel 4: Cross-Chain Rail (Circle CCTP V2 & Axelar GMP) -->
+          <div id="panelBridge" style="display: none;">
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+              Bridge native USDC from EVM or Solana directly into Hikari Vault on Stellar via Circle CCTP V2 (Domain 27).
+            </div>
+            <div class="input-group">
+              <label class="input-label">Select Origin Chain</label>
+              <select id="bridgeOriginSelect" class="input-field bridge-select" style="cursor: pointer;">
+                <option value="ethereum">Ethereum (Circle Domain 0)</option>
+                <option value="arbitrum" selected>Arbitrum (Circle Domain 3)</option>
+                <option value="solana">Solana (Circle Domain 5)</option>
+                <option value="base">Base (Circle Domain 6)</option>
+              </select>
+            </div>
+            <div class="input-group" style="margin-top: 0.8rem;">
+              <label class="input-label">USDC Deposit Amount</label>
+              <div class="input-container-lido">
+                <input id="bridgeAmountInput" class="input-field" type="number" placeholder="50.0" min="1" step="any">
+                <span style="position: absolute; right: 1rem; color: var(--text-muted); font-size: 0.85rem;">USDC</span>
+              </div>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-dim); margin: 0.6rem 0; padding: 0.5rem; background: rgba(139, 47, 230, 0.08); border-radius: 8px; border: 1px solid rgba(192, 132, 252, 0.25);">
+               Rail: Native CCTP burn-and-mint via <strong>CctpForwarder</strong>. Zero slippage bridge, auto-deposited into Hikari Vault.
+            </div>
+            <button id="btnBridgeAction" class="btn-primary" style="margin-top: 0.4rem;">
+               Bridge & Stake to hXLM
+            </button>
+          </div>
+        </div>
+
+        <!-- Protocol Security & Deployed Contracts Status -->
+        <div id="contractsSection" class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span> Deployed Contracts (Testnet)</span>
+            </h2>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.82rem;">
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Hikari Vault:</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CCR6NFKICAK4KW2SVKU4UESG5SR6RMYRVUDDO6K7BB6NUWYSMGQS5KT5" target="_blank" style="color: var(--purple-soft); text-decoration: none; word-break: break-all;">
+                CCR6NFK...5KT5 ↗
+              </a>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">hXLM Share Token (SEP-41):</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CA36LWOMIDPXFMVTQR6TODLSAO6QFNSYK6UBP5CS5MWGC2UHIDT23QLH" target="_blank" style="color: var(--lavender); text-decoration: none; word-break: break-all;">
+                CA36LWO...3QLH ↗
+              </a>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Strategy Registry:</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CB7EOUYL5V22KCUK27LACLMDYDQMBCJMNQUWSALEGBEZXEK4LH76VZFQ" target="_blank" class="contract-explorer-link" style="text-decoration: none; word-break: break-all;">
+                CB7EOUY...VZFQ ↗
+              </a>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Policy Account:</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CAPXDOMRO7U6XGOSNWKP6YBY7GMBRH7FPTYWTAW6CRGPMYIZHIJDO3UP" target="_blank" style="color: var(--accent-purple); text-decoration: none; word-break: break-all;">
+                CAPXDOM...O3UP ↗
+              </a>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Blend Adapter:</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CDLG3GFOQ6WFVTFXQCW3ZSJMMMXIEQVEGZKMERS4ITBDZOHKXPRB5EAL" target="_blank" style="color: var(--lavender); text-decoration: none; word-break: break-all;">
+                CDLG3GF...5EAL ↗
+              </a>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">Phoenix CLAMM Adapter:</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CAD345D2TCMIQEHSVVJMXOKMNGVVLW6YS7VBFSYXCRPALCOCDNA6O6L5" target="_blank" style="color: var(--purple-soft); text-decoration: none; word-break: break-all;">
+                CAD345D...O6L5 ↗
+              </a>
+            </div>
+            <div>
+              <div style="color: var(--text-muted); font-size: 0.75rem;">GateSeal Circuit Breaker:</div>
+              <a href="https://stellar.expert/explorer/testnet/contract/CAS5XIHKYBCCW7WTYDBGGLQ5P7OSQHEPVIUWCQ2W5ARMYXWUCQSEZYDJ" target="_blank" style="color: var(--accent-rose); text-decoration: none; word-break: break-all;">
+                CAS5XIH...ZYDJ ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Protocol Fee & Economics -->
+        <div id="feesSection" class="card">
+          <div class="card-header">
+            <h2 class="card-title">
+              <span> Fee Controller (HWM)</span>
+            </h2>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.85rem;">
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Management Fee:</span>
+              <span class="fee-stat-val">0.50% annualized</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Performance Fee:</span>
+              <span style="color: var(--purple-soft); font-weight: 600;">10.0% (High-Water Mark)</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">First-Loss Buffer:</span>
+              <span style="color: var(--purple-soft);">50% of fees retained</span>
+            </div>
+            <div style="display: flex; justify-content: space-between;">
+              <span style="color: var(--text-muted);">Protocol Treasury:</span>
+              <span class="fee-stat-val">50% of fees routed</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- DApp Workspace Minimalist Footer -->
+    <footer class="app-workspace-footer">
+      <div class="app-footer-inner">
+        <div class="app-footer-brand">
+          <div class="logo-kanji-badge" style="width: 24px; height: 24px; font-size: 0.8rem;">光</div>
+          <span>Hikari Protocol • Built natively for Stellar & Soroban</span>
+        </div>
+        <div class="app-footer-links">
+          <a href="index.html">← Back to Overview</a>
+          <span>•</span>
+          <a href="https://stellar.expert/explorer/testnet" target="_blank" rel="noopener">StellarExpert ↗</a>
+          <span>•</span>
+          <a href="https://github.com/ibochivincent-lang/hikari" target="_blank" rel="noopener">GitHub</a>
+          <span>•</span>
+          <a href="https://discord.gg/stellar" target="_blank" rel="noopener">Discord</a>
+          <span>•</span>
+          <span>Sole Contributor: <strong>ibochivincent-lang</strong></span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Wallet Connection Modal -->
+  <div id="walletModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Connect Stellar Wallet</h3>
+        <button id="btnCloseModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
+        <button id="optFreighter" class="wallet-option-btn">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #38bdf8;"></div>
+            <span>Freighter Wallet</span>
+          </div>
+          <span class="badge-recommended">Recommended</span>
+        </button>
+        <button id="optLobstr" class="wallet-option-btn">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #c084fc;"></div>
+            <span>Lobstr Vault</span>
+          </div>
+          <span style="font-size: 0.72rem; color: var(--text-dim);">Mobile / Web</span>
+        </button>
+        <button id="optXbull" class="wallet-option-btn">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ec4cff;"></div>
+            <span>xBull Wallet</span>
+          </div>
+          <span style="font-size: 0.72rem; color: var(--text-dim);">Multi-Platform</span>
+        </button>
+        <button id="optPasskey" class="wallet-option-btn">
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background: #34d399;"></div>
+            <span>Passkey Smart Account</span>
+          </div>
+          <span style="font-size: 0.72rem; color: var(--accent-emerald);">WebAuthn</span>
+        </button>
+      </div>
+      <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-dim); text-align: center;">
+        By connecting, you agree to the deterministic policy gates enforced by the Soroban smart contract suite.
+      </div>
+    </div>
+  </div>
+
+  <!-- Shards Loyalty Modal -->
+  <div id="shardsModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 580px;">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.4rem;">💎</span>
+          <div>
+            <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-main);">Hikari Shards Season 1</h3>
+            <div style="font-size: 0.75rem; color: var(--text-dim);">Stellar-native loyalty points & protocol rewards</div>
+          </div>
+        </div>
+        <button id="btnCloseShardsModal" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="shards-stats-grid">
+        <div class="shards-stat-card">
+          <span class="s-lbl">Your Total Shards</span>
+          <span id="modalTotalShards" class="s-val" style="color: var(--purple-soft);">42,500</span>
+          <span class="s-sub">+1,416 / day</span>
+        </div>
+        <div class="shards-stat-card">
+          <span class="s-lbl">Multiplier</span>
+          <span id="modalMultiplier" class="s-val" style="color: var(--accent-emerald);">2.81x</span>
+          <span class="s-sub">Tier 3 Active</span>
+        </div>
+        <div class="shards-stat-card">
+          <span class="s-lbl">Global Rank</span>
+          <span id="modalRank" class="s-val" style="color: var(--lavender);">#42</span>
+          <span class="s-sub">Top 2%</span>
+        </div>
+      </div>
+
+      <div class="leaderboard-container">
+        <div class="leaderboard-header">
+          <span style="font-weight: 600; color: var(--text-main); font-size: 0.85rem;">Top Protocol Stakers</span>
+          <span style="font-size: 0.75rem; color: var(--text-dim);">Updated live</span>
+        </div>
+        <div class="leaderboard-list">
+          <div class="leaderboard-item">
+            <span class="lb-rank">1</span>
+            <span class="lb-addr">GDKX...8Y4Z</span>
+            <span class="lb-badge">Stellar Whale</span>
+            <span class="lb-shards">1,842,000</span>
+          </div>
+          <div class="leaderboard-item">
+            <span class="lb-rank">2</span>
+            <span class="lb-addr">GA5B...3K9L</span>
+            <span class="lb-badge">MEV Hunter</span>
+            <span class="lb-shards">1,210,500</span>
+          </div>
+          <div class="leaderboard-item">
+            <span class="lb-rank">3</span>
+            <span class="lb-addr">GCJSD...BQN</span>
+            <span class="lb-badge">Yield Pioneer</span>
+            <span class="lb-shards">980,200</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end;">
+        <button id="btnDoneShards" class="btn-primary" style="width: auto; padding: 0.5rem 1.5rem;">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Invariants Specification Modal -->
+  <div id="invariantsModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 650px;">
+      <div class="modal-header">
+        <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-main);">Formal Invariants Specification</h3>
+        <button id="btnCloseInvariantsModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+        <p>Hikari Protocol guarantees 4 mathematical invariants enforced by Soroban smart contracts:</p>
+        <ul style="padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.6rem;">
+          <li><strong>Invariant 1: Solvency Conservation:</strong> <code>TotalAssets = IdleBuffer + Sum(StrategyAllocations)</code></li>
+          <li><strong>Invariant 2: Inflation Immunity:</strong> Virtual shares and assets prevent first-depositor share price manipulation.</li>
+          <li><strong>Invariant 3: Reserve Floor:</strong> Liquid idle reserve must never drop below 15% during standard market regimes.</li>
+          <li><strong>Invariant 4: Max Drawdown Ceiling:</strong> GateSeal activates if NAV declines &gt; 15% across a 24h rolling window.</li>
+        </ul>
+      </div>
+      <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end;">
+        <button id="btnDoneInvariants" class="btn-primary" style="width: auto; padding: 0.5rem 1.5rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ Modal -->
+  <div id="faqModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-main);">Hikari Protocol FAQ</h3>
+        <button id="btnCloseFaqModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; display: flex; flex-direction: column; gap: 0.8rem;">
+        <div>
+          <h4 style="color: var(--text-main); margin: 0 0 0.2rem 0;">What is hXLM?</h4>
+          <p style="margin: 0;">hXLM is an yield-bearing SEP-41 share token that dynamically accrues rewards from Blend lending, Phoenix CLAMM, and Soroban MEV backruns.</p>
+        </div>
+        <div>
+          <h4 style="color: var(--text-main); margin: 0 0 0.2rem 0;">What is Bunker Mode?</h4>
+          <p style="margin: 0;">If market drawdown exceeds safe thresholds, GateSeal seals new deposits and unwinds positions into pure XLM cash reserves to protect depositor principal.</p>
+        </div>
+      </div>
+      <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end;">
+        <button id="btnDoneFaq" class="btn-primary" style="width: auto; padding: 0.5rem 1.5rem;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDK Modal -->
+  <div id="sdkModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-main);">Developer SDK (@hikari/sdk)</h3>
+        <button id="btnCloseSdkModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div style="margin-top: 1rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.5;">
+        <pre style="background: rgba(0,0,0,0.4); padding: 0.8rem; border-radius: 8px; overflow-x: auto; color: #e9d5ff;"><code>npm install @hikari/sdk
+
+import { HikariClient } from "@hikari/sdk";
+const client = new HikariClient({ network: "testnet" });
+const nav = await client.getNAV();
+console.log("Current NAV:", nav);</code></pre>
+      </div>
+      <div style="margin-top: 1.25rem; display: flex; justify-content: flex-end;">
+        <button id="btnDoneSdk" class="btn-primary" style="width: auto; padding: 0.5rem 1.5rem;">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="passkey.js"></script>
+  <script src="chart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

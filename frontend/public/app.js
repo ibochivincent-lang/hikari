@@ -126,22 +126,22 @@ const btnResetCircuit = document.getElementById("btnResetCircuit");
 function updateMetrics() {
   const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
   const nav = (state.totalAssets + VIRTUAL_ASSETS) / (state.totalShares + VIRTUAL_SHARES);
-  tvlDisplay.innerText = `${state.totalAssets.toLocaleString()} ${tier.token}`;
-  navDisplay.innerText = `${nav.toFixed(4)} ${tier.token}`;
-  reserveDisplay.innerText = `${state.idleAssets.toLocaleString()} ${tier.token}`;
+  if (tvlDisplay) tvlDisplay.innerText = `${state.totalAssets.toLocaleString()} ${tier.token}`;
+  if (navDisplay) navDisplay.innerText = `${nav.toFixed(4)} ${tier.token}`;
+  if (reserveDisplay) reserveDisplay.innerText = `${state.idleAssets.toLocaleString()} ${tier.token}`;
 
   if (rateDisplay) {
     rateDisplay.innerText = `1 ${tier.token} ≈ ${(1 / nav).toFixed(4)} ${tier.shareToken}`;
   }
 }
 
-if (btnHeroDemo) {
+if (btnHeroDemo && document.querySelector(".main-grid")) {
   btnHeroDemo.addEventListener("click", () => {
     document.querySelector(".main-grid").scrollIntoView({ behavior: "smooth" });
     if (typeof gsap !== "undefined") {
       gsap.fromTo(btnHeroDemo, { scale: 0.95 }, { scale: 1, duration: 0.2, ease: "back.out(2)" });
     }
-    btnRunAgent.click();
+    if (btnRunAgent) btnRunAgent.click();
   });
 }
 
@@ -152,27 +152,29 @@ const optPasskey = document.getElementById("optPasskey");
 const optFreighter = document.getElementById("optFreighter");
 
 // Wallet Connection & Modal Trigger
-btnConnectWallet.addEventListener("click", () => {
-  if (state.wallet.connected) {
-    state.wallet.connected = false;
-    state.wallet.address = null;
-    const btnConnectWalletText = document.getElementById("btnConnectWalletText");
-    if (btnConnectWalletText) {
-      btnConnectWalletText.innerText = "Connect Wallet";
-    } else {
-      btnConnectWallet.innerText = "Connect Wallet";
+if (btnConnectWallet && btnConnectWallet.tagName === "BUTTON") {
+  btnConnectWallet.addEventListener("click", () => {
+    if (state.wallet.connected) {
+      state.wallet.connected = false;
+      state.wallet.address = null;
+      const btnConnectWalletText = document.getElementById("btnConnectWalletText");
+      if (btnConnectWalletText) {
+        btnConnectWalletText.innerText = "Connect Wallet";
+      } else {
+        btnConnectWallet.innerText = "Connect Wallet";
+      }
+      btnConnectWallet.style.background = "";
+      btnConnectWallet.style.borderColor = "";
+      btnConnectWallet.style.color = "";
+      if (walletBalLabel) walletBalLabel.innerText = "Balance: 0 XLM";
+      addLog("[Wallet]", "Disconnected from wallet session.", "log-tag-warn");
+      return;
     }
-    btnConnectWallet.style.background = "";
-    btnConnectWallet.style.borderColor = "";
-    btnConnectWallet.style.color = "";
-    if (walletBalLabel) walletBalLabel.innerText = "Balance: 0 XLM";
-    addLog("[Wallet]", "Disconnected from wallet session.", "log-tag-warn");
-    return;
-  }
-  if (walletModal) {
-    walletModal.style.display = "flex";
-  }
-});
+    if (walletModal) {
+      walletModal.style.display = "flex";
+    }
+  });
+}
 
 if (btnCloseWalletModal) {
   btnCloseWalletModal.addEventListener("click", () => {
@@ -334,17 +336,21 @@ function setActiveTab(tab) {
   if (tab === "stake") {
     if (tabStake) tabStake.classList.add("active");
     if (panelForm) panelForm.style.display = "block";
-    inputLabel.innerText = `Deposit ${tier.token} Amount`;
-    btnSubmitAction.innerText = `Stake ${tier.token}`;
-    btnSubmitAction.style.display = "block";
+    if (inputLabel) inputLabel.innerText = `Deposit ${tier.token} Amount`;
+    if (btnSubmitAction) {
+      btnSubmitAction.innerText = `Stake ${tier.token}`;
+      btnSubmitAction.style.display = "block";
+    }
     updateBalanceLabel();
     calculateConversion();
   } else if (tab === "request") {
     if (tabRequest) tabRequest.classList.add("active");
     if (panelForm) panelForm.style.display = "block";
-    inputLabel.innerText = `Redeem ${tier.shareToken} Shares`;
-    btnSubmitAction.innerText = "Queue Withdrawal Request";
-    btnSubmitAction.style.display = "block";
+    if (inputLabel) inputLabel.innerText = `Redeem ${tier.shareToken} Shares`;
+    if (btnSubmitAction) {
+      btnSubmitAction.innerText = "Queue Withdrawal Request";
+      btnSubmitAction.style.display = "block";
+    }
     updateBalanceLabel();
     calculateConversion();
   } else if (tab === "claim") {
@@ -359,8 +365,9 @@ function setActiveTab(tab) {
     if (panelBridge) panelBridge.style.display = "block";
   }
 
-  if (typeof gsap !== "undefined") {
-    gsap.fromTo([panelForm, panelClaim, panelBasket, panelBridge], { autoAlpha: 0.4, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "power2.out" });
+  const activePanels = [panelForm, panelClaim, panelBasket, panelBridge].filter(Boolean);
+  if (typeof gsap !== "undefined" && activePanels.length > 0) {
+    gsap.fromTo(activePanels, { autoAlpha: 0.4, y: 6 }, { autoAlpha: 1, y: 0, duration: 0.25, ease: "power2.out" });
   }
 }
 
@@ -425,9 +432,12 @@ if (btnTestX402) {
 
 
 // Conversion Calculation
-amountInput.addEventListener("input", calculateConversion);
+if (amountInput) {
+  amountInput.addEventListener("input", calculateConversion);
+}
 
 function calculateConversion() {
+  if (!amountInput || !estShares) return;
   const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
   const val = parseFloat(amountInput.value) || 0;
   if (state.activeTab === "stake") {
@@ -517,103 +527,110 @@ if (btnClaimAll) {
 }
 
 // Form Submission with Pulse Flash
-vaultForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const val = parseFloat(amountInput.value);
-  if (!val || val <= 0) return;
+if (vaultForm) {
+  vaultForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if (!amountInput) return;
+    const val = parseFloat(amountInput.value);
+    if (!val || val <= 0) return;
 
-  const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
-  if (state.activeTab === "stake") {
-    const shares = (val * (state.totalShares + VIRTUAL_SHARES)) / (state.totalAssets + VIRTUAL_ASSETS);
-    state.totalAssets += val;
-    state.idleAssets += val;
-    state.totalShares += shares;
-    state.wallet.balanceXlm -= val;
-    state.wallet.sharesHXlm += shares;
-    addLog("[Vault]", `Staked ${val} ${tier.token}. Minted ${shares.toFixed(2)} ${tier.shareToken} shares.`, "log-tag-success");
-  } else if (state.activeTab === "request") {
-    if (val > state.wallet.sharesHXlm) {
-      addLog("[WithdrawalQueue]", `Insufficient ${tier.shareToken} shares in wallet.`, "log-tag-warn");
-      return;
-    }
-    const assets = (val * (state.totalAssets + VIRTUAL_ASSETS)) / (state.totalShares + VIRTUAL_SHARES);
-    const newId = (state.withdrawalTickets.length > 0 ? Math.max(...state.withdrawalTickets.map((t) => t.id)) : 100) + 1;
-    state.withdrawalTickets.push({
-      id: newId,
-      shares: val,
-      claimableXlm: assets,
-      status: "pending",
-    });
-    state.wallet.sharesHXlm -= val;
-    state.totalShares -= val;
-    addLog("[WithdrawalQueue]", `Created Request Ticket #${newId} for ${val} ${tier.shareToken} (${assets.toFixed(2)} ${tier.token}). Cooldown started.`, "log-tag-success");
-
-    // Automatically simulate finalization after 6 seconds
-    setTimeout(() => {
-      const t = state.withdrawalTickets.find((tk) => tk.id === newId);
-      if (t) {
-        t.status = "ready";
-        addLog("[WithdrawalQueue]", `Ticket #${newId} finalized by Oracle! Ready to claim.`, "log-tag-success");
-        if (state.activeTab === "claim") renderTicketList();
+    const tier = VAULT_TIERS[state.currentTier] || VAULT_TIERS.BALANCED_HXLM;
+    if (state.activeTab === "stake") {
+      const shares = (val * (state.totalShares + VIRTUAL_SHARES)) / (state.totalAssets + VIRTUAL_ASSETS);
+      state.totalAssets += val;
+      state.idleAssets += val;
+      state.totalShares += shares;
+      state.wallet.balanceXlm -= val;
+      state.wallet.sharesHXlm += shares;
+      addLog("[Vault]", `Staked ${val} ${tier.token}. Minted ${shares.toFixed(2)} ${tier.shareToken} shares.`, "log-tag-success");
+    } else if (state.activeTab === "request") {
+      if (val > state.wallet.sharesHXlm) {
+        addLog("[WithdrawalQueue]", `Insufficient ${tier.shareToken} shares in wallet.`, "log-tag-warn");
+        return;
       }
-    }, 6000);
-  }
+      const assets = (val * (state.totalAssets + VIRTUAL_ASSETS)) / (state.totalShares + VIRTUAL_SHARES);
+      const newId = (state.withdrawalTickets.length > 0 ? Math.max(...state.withdrawalTickets.map((t) => t.id)) : 100) + 1;
+      state.withdrawalTickets.push({
+        id: newId,
+        shares: val,
+        claimableXlm: assets,
+        status: "pending",
+      });
+      state.wallet.sharesHXlm -= val;
+      state.totalShares -= val;
+      addLog("[WithdrawalQueue]", `Created Request Ticket #${newId} for ${val} ${tier.shareToken} (${assets.toFixed(2)} ${tier.token}). Cooldown started.`, "log-tag-success");
 
-  amountInput.value = "";
-  estShares.innerText = "0.00";
-  updateMetrics();
-  updateBalanceLabel();
+      // Automatically simulate finalization after 6 seconds
+      setTimeout(() => {
+        const t = state.withdrawalTickets.find((tk) => tk.id === newId);
+        if (t) {
+          t.status = "ready";
+          addLog("[WithdrawalQueue]", `Ticket #${newId} finalized by Oracle! Ready to claim.`, "log-tag-success");
+          if (state.activeTab === "claim") renderTicketList();
+        }
+      }, 6000);
+    }
 
-  if (typeof gsap !== "undefined") {
-    gsap.fromTo("#tvlDisplay", { scale: 1.15, color: "#c084fc" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
-    gsap.fromTo("#reserveDisplay", { scale: 1.12, color: "#c084fc" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
-  }
-});
+    amountInput.value = "";
+    if (estShares) estShares.innerText = "0.00";
+    updateMetrics();
+    updateBalanceLabel();
+
+    if (typeof gsap !== "undefined") {
+      gsap.fromTo("#tvlDisplay", { scale: 1.15, color: "#c084fc" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
+      gsap.fromTo("#reserveDisplay", { scale: 1.12, color: "#c084fc" }, { scale: 1, color: "#ffffff", duration: 0.45, ease: "power2.out" });
+    }
+  });
+}
 
 // Human Approval Flow with GSAP
-btnApprove.addEventListener("click", () => {
-  if (state.pendingProposal) {
-    addLog(
-      "[Operator]",
-      `Approved ${state.pendingProposal.id}: Deployed ${state.pendingProposal.amount} XLM to ${state.pendingProposal.strategy}.`,
-      "log-tag-success"
-    );
-    if (typeof gsap !== "undefined") {
-      gsap.to(approvalBanner, {
-        y: -15,
-        autoAlpha: 0,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => { approvalBanner.style.display = "none"; }
-      });
-    } else {
-      approvalBanner.style.display = "none";
+if (btnApprove) {
+  btnApprove.addEventListener("click", () => {
+    if (state.pendingProposal) {
+      addLog(
+        "[Operator]",
+        `Approved ${state.pendingProposal.id}: Deployed ${state.pendingProposal.amount} XLM to ${state.pendingProposal.strategy}.`,
+        "log-tag-success"
+      );
+      if (typeof gsap !== "undefined" && approvalBanner) {
+        gsap.to(approvalBanner, {
+          y: -15,
+          autoAlpha: 0,
+          duration: 0.3,
+          ease: "power2.in",
+          onComplete: () => { approvalBanner.style.display = "none"; }
+        });
+      } else if (approvalBanner) {
+        approvalBanner.style.display = "none";
+      }
+      state.pendingProposal = null;
     }
-    state.pendingProposal = null;
-  }
-});
+  });
+}
 
-btnReject.addEventListener("click", () => {
-  if (state.pendingProposal) {
-    addLog(
-      "[Operator]",
-      `Rejected proposal ${state.pendingProposal.id}. Allocation cancelled.`,
-      "log-tag-warn"
-    );
-    if (typeof gsap !== "undefined") {
-      gsap.to(approvalBanner, {
-        y: -15,
-        autoAlpha: 0,
-        duration: 0.3,
-        ease: "power2.in",
-        onComplete: () => { approvalBanner.style.display = "none"; }
-      });
-    } else {
-      approvalBanner.style.display = "none";
+if (btnReject) {
+  btnReject.addEventListener("click", () => {
+    if (state.pendingProposal) {
+      addLog(
+        "[Operator]",
+        `Rejected proposal ${state.pendingProposal.id}. Allocation cancelled.`,
+        "log-tag-warn"
+      );
+      if (typeof gsap !== "undefined" && approvalBanner) {
+        gsap.to(approvalBanner, {
+          y: -15,
+          autoAlpha: 0,
+          duration: 0.3,
+          ease: "power2.in",
+          onComplete: () => { approvalBanner.style.display = "none"; }
+        });
+      } else if (approvalBanner) {
+        approvalBanner.style.display = "none";
+      }
+      state.pendingProposal = null;
     }
-    state.pendingProposal = null;
-  }
-});
+  });
+}
 
 async function applyTelemetry(data) {
   if (!data) return;
@@ -683,8 +700,10 @@ async function fetchTelemetry() {
 }
 
 // Poll telemetry periodically
-setInterval(fetchTelemetry, 5000);
-fetchTelemetry();
+if (document.getElementById("tvlDisplay") || document.getElementById("agentConsole")) {
+  setInterval(fetchTelemetry, 5000);
+  fetchTelemetry();
+}
 
 const rationaleStream = document.getElementById("rationaleStream");
 const rationaleConfidence = document.getElementById("rationaleConfidence");
@@ -710,7 +729,8 @@ function pushDecisionRationale(author, message, confidence) {
 }
 
 // Real-time Agent Cycle Execution
-btnRunAgent.addEventListener("click", async () => {
+if (btnRunAgent) {
+  btnRunAgent.addEventListener("click", async () => {
   btnRunAgent.disabled = true;
   btnRunAgent.innerText = "Executing On-Chain...";
   if (typeof gsap !== "undefined") {
@@ -744,11 +764,12 @@ btnRunAgent.addEventListener("click", async () => {
   } finally {
     btnRunAgent.disabled = false;
     btnRunAgent.innerText = "Trigger Cycle";
-    if (typeof gsap !== "undefined") {
+    if (typeof gsap !== "undefined" && agentConsole) {
       gsap.fromTo(agentConsole, { borderColor: "rgba(192, 132, 252, 0.8)" }, { borderColor: "rgba(255, 255, 255, 0.08)", duration: 0.8 });
     }
   }
 });
+}
 
 // Interactive Circuit Breaker Buttons
 if (btnSimulateShock) {
@@ -954,6 +975,7 @@ initTopNav();
 // Multi-Vault Strategy Tier Switching
 function initVaultTiers() {
   const tierChips = document.querySelectorAll(".tier-chip");
+  if (!tierChips || tierChips.length === 0) return;
   const widgetBadge = document.getElementById("widgetBadge");
   const vaultPortalSection = document.getElementById("vaultPortalSection");
 
@@ -971,11 +993,11 @@ function initVaultTiers() {
       if (widgetBadge) widgetBadge.innerText = tier.badge;
 
       if (state.activeTab === "stake") {
-        inputLabel.innerText = `Deposit ${tier.token} Amount`;
-        btnSubmitAction.innerText = `Stake ${tier.token}`;
+        if (inputLabel) inputLabel.innerText = `Deposit ${tier.token} Amount`;
+        if (btnSubmitAction) btnSubmitAction.innerText = `Stake ${tier.token}`;
       } else if (state.activeTab === "request") {
-        inputLabel.innerText = `Redeem ${tier.shareToken} Shares`;
-        btnSubmitAction.innerText = `Queue Withdrawal Request`;
+        if (inputLabel) inputLabel.innerText = `Redeem ${tier.shareToken} Shares`;
+        if (btnSubmitAction) btnSubmitAction.innerText = `Queue Withdrawal Request`;
       }
 
       updateMetrics();
@@ -995,6 +1017,7 @@ function initVaultTiers() {
 function initDashboardViewModes() {
   const btnSimpleMode = document.getElementById("btnSimpleMode");
   const btnProMode = document.getElementById("btnProMode");
+  if (!btnSimpleMode || !btnProMode) return;
   const currentViewModeText = document.getElementById("currentViewModeText");
   const vaultPortal = document.getElementById("vaultPortalSection");
   const chartSection = document.getElementById("chartSection");
@@ -1162,8 +1185,8 @@ initShardsSystem();
 
 // Top Navigation Theme Toggle System
 function initThemeSystem() {
-  const themeSwitch = document.getElementById("themeSwitch");
-  const themeToggleText = document.getElementById("themeToggleText");
+  const themeSwitch = document.getElementById("themeSwitch") || document.getElementById("themeToggleBtn");
+  const themeToggleText = document.getElementById("themeToggleText") || document.querySelector(".theme-pill-text");
   if (!themeSwitch) return;
 
   function applyTheme(theme) {
@@ -1173,6 +1196,20 @@ function initThemeSystem() {
       themeToggleText.textContent = theme === "dark" ? "Dark" : "Light";
     }
     themeSwitch.setAttribute("data-theme-state", theme);
+
+    // Update moon/sun icon visibility on app.html if present
+    const iconSun = themeSwitch.querySelector(".icon-sun");
+    const iconMoon = themeSwitch.querySelector(".icon-moon");
+    if (iconSun && iconMoon) {
+      if (theme === "light") {
+        iconSun.style.display = "none";
+        iconMoon.style.display = "block";
+      } else {
+        iconSun.style.display = "block";
+        iconMoon.style.display = "none";
+      }
+    }
+
     if (typeof yieldChartInstance !== "undefined" && yieldChartInstance && typeof yieldChartInstance.render === "function") {
       yieldChartInstance.render();
     }
@@ -1892,45 +1929,7 @@ function initNavSliderAndCalculator() {
 // LIDO MARKETING FLOW & MODAL INTERACTIONS
 // ============================================================================
 function initLidoMarketingInteractions() {
-  // Earn Cards Deposit Buttons
-  const btnDepositXlm = document.getElementById("btnDepositXlm");
-  const btnDepositUsd = document.getElementById("btnDepositUsd");
-  const btnDepositMulti = document.getElementById("btnDepositMulti");
-  const tabStake = document.getElementById("tabStake");
-  const tabBasket = document.getElementById("tabBasket");
-  const tabBridge = document.getElementById("tabBridge");
-  const amountInput = document.getElementById("amountInput");
-  const vaultPortalSection = document.getElementById("vaultPortalSection");
-
-  if (btnDepositXlm) {
-    btnDepositXlm.addEventListener("click", () => {
-      if (tabStake) tabStake.click();
-      if (vaultPortalSection) {
-        vaultPortalSection.scrollIntoView({ behavior: "smooth" });
-        if (amountInput) {
-          setTimeout(() => amountInput.focus(), 600);
-        }
-      }
-    });
-  }
-
-  if (btnDepositUsd) {
-    btnDepositUsd.addEventListener("click", () => {
-      if (tabBasket) tabBasket.click();
-      if (vaultPortalSection) {
-        vaultPortalSection.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  }
-
-  if (btnDepositMulti) {
-    btnDepositMulti.addEventListener("click", () => {
-      if (tabBridge) tabBridge.click();
-      if (vaultPortalSection) {
-        vaultPortalSection.scrollIntoView({ behavior: "smooth" });
-      }
-    });
-  }
+  // Earn Cards Deposit Buttons navigate directly to app.html?vault=... via HTML href
 
   // Modals
   const nodeOperatorsModal = document.getElementById("nodeOperatorsModal");
@@ -2044,14 +2043,146 @@ function initLidoMarketingInteractions() {
   });
 }
 
+// =========================================================
+// Contextual Vault Deep-Linking & Switcher for DApp Page
+// =========================================================
+const VAULT_CONFIGS = {
+  xlm: {
+    key: "xlm",
+    pillId: "pillVaultXlm",
+    tierKey: "BALANCED_HXLM",
+    tab: "stake",
+    badgeText: "XLM LIQUID STAKING VAULT • STELLAR SOROBAN PROTOCOL 27",
+    title: "EarnXLM — High-Yield Liquid Staking Vault",
+    sub: "Allocating native XLM and SEP-41 hXLM across Blend money markets, Phoenix CLAMM yield pools, and Soroban MEV backruns with zero lockup.",
+    tvl: "$196.7M",
+    apy: "12.4%",
+    strategy: "Blend + Phoenix + MEV"
+  },
+  usd: {
+    key: "usd",
+    pillId: "pillVaultUsd",
+    tierKey: "CONSERVATIVE_USDC",
+    tab: "basket",
+    badgeText: "USD STABLECOIN HIGH-YIELD VAULT • SEP-41 USDC & USDS",
+    title: "EarnUSD — Multi-Strategy Stablecoin Vault",
+    sub: "Automated yield aggregation for USDC and institutional stablecoins via Blend lending and Soroswap liquidity pools.",
+    tvl: "$42.4M",
+    apy: "17.0%",
+    strategy: "Blend SAC + Soroswap LP"
+  },
+  multichain: {
+    key: "multichain",
+    pillId: "pillVaultMulti",
+    tierKey: "DYNAMIC_ALPHA_HXLM",
+    tab: "bridge",
+    badgeText: "CROSS-CHAIN REHYDRATION VAULT • CIRCLE CCTP V2 & EVM INTEROP",
+    title: "Earn Multichain — Cross-Chain Yield Bridge & Rehydration",
+    sub: "Seamless zero-slippage rehydration from Arbitrum, Optimism, and Base directly into Stellar Soroban high-yield vaults.",
+    tvl: "$88.2M",
+    apy: "14.2%",
+    strategy: "Circle CCTP + Soroban SAC"
+  }
+};
+
+function selectVault(vaultKey, updateHistory = true) {
+  const normKey = (vaultKey || "xlm").toLowerCase();
+  const cfg = VAULT_CONFIGS[normKey] || VAULT_CONFIGS.xlm;
+
+  // Update pills
+  const pillBtns = document.querySelectorAll(".vault-pill-btn");
+  pillBtns.forEach((btn) => {
+    btn.classList.toggle("active", btn.getAttribute("data-vault") === cfg.key);
+  });
+
+  // Update Context Banner
+  const badgeText = document.getElementById("vaultContextBadgeText");
+  const title = document.getElementById("vaultContextTitle");
+  const sub = document.getElementById("vaultContextSub");
+  const statTvl = document.getElementById("vaultStatTvl");
+  const statApy = document.getElementById("vaultStatApy");
+  const statStrategy = document.getElementById("vaultStatStrategy");
+
+  if (badgeText) badgeText.innerText = cfg.badgeText;
+  if (title) title.innerText = cfg.title;
+  if (sub) sub.innerText = cfg.sub;
+  if (statTvl) statTvl.innerText = cfg.tvl;
+  if (statApy) statApy.innerText = cfg.apy;
+  if (statStrategy) statStrategy.innerText = cfg.strategy;
+
+  // Switch Tier
+  if (VAULT_TIERS[cfg.tierKey]) {
+    state.currentTier = cfg.tierKey;
+    const tierChips = document.querySelectorAll(".tier-chip");
+    tierChips.forEach((chip) => {
+      chip.classList.toggle("active", chip.getAttribute("data-tier") === cfg.tierKey);
+    });
+    const widgetBadge = document.getElementById("widgetBadge");
+    if (widgetBadge) widgetBadge.innerText = VAULT_TIERS[cfg.tierKey].badge;
+  }
+
+  // Switch Tab
+  setActiveTab(cfg.tab);
+  updateMetrics();
+  updateBalanceLabel();
+  calculateConversion();
+
+  addLog("[VaultRouter]", `Activated ${cfg.title} (${cfg.apy} APY).`, "log-tag-agent");
+
+  if (updateHistory) {
+    try {
+      const url = new URL(window.location);
+      url.searchParams.set("vault", cfg.key);
+      window.history.pushState({ vault: cfg.key }, "", url.toString());
+    } catch (e) {
+      console.warn("History update failed", e);
+    }
+  }
+
+  if (typeof gsap !== "undefined") {
+    const banner = document.getElementById("vaultContextBanner");
+    if (banner) {
+      gsap.fromTo(banner, { y: -8, opacity: 0.8 }, { y: 0, opacity: 1, duration: 0.35, ease: "power2.out" });
+    }
+  }
+}
+
+function initAppPageVaultRouting() {
+  const isAppPage = !!document.getElementById("vaultContextBanner") || document.body.classList.contains("app-page-body");
+  if (!isAppPage) return;
+
+  // Read URL query parameter
+  const urlParams = new URLSearchParams(window.location.search);
+  const vaultParam = urlParams.get("vault") || "xlm";
+  selectVault(vaultParam, false);
+
+  // Wire pill click listeners
+  const pillBtns = document.querySelectorAll(".vault-pill-btn");
+  pillBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const vKey = btn.getAttribute("data-vault");
+      selectVault(vKey, true);
+    });
+  });
+
+  // Handle browser back/forward
+  window.addEventListener("popstate", (e) => {
+    const params = new URLSearchParams(window.location.search);
+    const v = (e.state && e.state.vault) || params.get("vault") || "xlm";
+    selectVault(v, false);
+  });
+}
+
 // Call on load
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     initNavSliderAndCalculator();
     initLidoMarketingInteractions();
+    initAppPageVaultRouting();
   });
 } else {
   initNavSliderAndCalculator();
   initLidoMarketingInteractions();
+  initAppPageVaultRouting();
 }
 

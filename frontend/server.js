@@ -240,9 +240,15 @@ function handleRequest(req, res) {
   let relativePath = pathname === "/" ? "index.html" : pathname.replace(/^\/+/, "");
   let filePath = path.join(PUBLIC_DIR, relativePath);
 
-  // If path has no extension or doesn't exist, route to index.html (SPA Fallback)
+  // If path has no extension, check if an .html file exists, e.g. /app -> /app.html
   if (!path.extname(filePath)) {
-    filePath = path.join(PUBLIC_DIR, "index.html");
+    if (fs.existsSync(filePath + ".html")) {
+      filePath = filePath + ".html";
+    } else if (fs.existsSync(path.join(filePath, "index.html"))) {
+      filePath = path.join(filePath, "index.html");
+    } else {
+      filePath = path.join(PUBLIC_DIR, "index.html");
+    }
   } else if (!fs.existsSync(filePath)) {
     // If specific file not found and is an HTML navigation request, fall back to index.html
     if (pathname.endsWith(".html") || !pathname.includes(".")) {

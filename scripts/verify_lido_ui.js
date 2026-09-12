@@ -1,46 +1,91 @@
 // scripts/verify_lido_ui.js
 // Author: ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>
-// Verification suite for Lido-style mega navigation and modal integrations.
+// Verification suite for decoupled Marketing Landing Page and dedicated DApp workspace.
 
 async function verify() {
-  const res = await fetch('http://localhost:3000');
-  if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
-  const html = await res.text();
-  console.log('Page loaded successfully. Length:', html.length);
+  // 1. Verify Landing Page (index.html)
+  const resLanding = await fetch('http://localhost:3000');
+  if (!resLanding.ok) throw new Error(`Landing page HTTP status: ${resLanding.status}`);
+  const htmlLanding = await resLanding.text();
+  console.log('Landing page loaded successfully. Length:', htmlLanding.length);
 
-  const checks = {
-    lidoHeader: html.includes('lido-header'),
-    lidoNav: html.includes('lido-nav'),
-    productsMenu: html.includes('data-menu="products"'),
-    institutionalMenu: html.includes('data-menu="institutional"'),
-    nodeOperatorsMenu: html.includes('data-menu="node-operators"'),
-    governanceMenu: html.includes('data-menu="governance"'),
-    buildersMenu: html.includes('data-menu="builders"'),
-    communityMenu: html.includes('data-menu="community"'),
-    sdkModal: html.includes('id="sdkModal"'),
-    invariantsModal: html.includes('id="invariantsModal"'),
-    faqModal: html.includes('id="faqModal"'),
-    mobileDrawer: html.includes('id="lidoMobileDrawer"'),
-    modeSwitchBar: html.includes('mode-switch-bar'),
-    btnSimpleMode: html.includes('id="btnSimpleMode"'),
-    btnProMode: html.includes('id="btnProMode"'),
-    vaultTierSelector: html.includes('vault-tier-selector'),
-    optLobstr: html.includes('id="optLobstr"'),
-    optXbull: html.includes('id="optXbull"'),
-    rationaleBox: html.includes('rationale-box'),
-    btnOpenShardsModal: html.includes('id="btnOpenShardsModal"'),
-    shardsModal: html.includes('id="shardsModal"')
+  const landingChecks = {
+    lidoHeader: htmlLanding.includes('lido-header'),
+    lidoNav: htmlLanding.includes('lido-nav'),
+    productsMenu: htmlLanding.includes('data-menu="products"'),
+    institutionalMenu: htmlLanding.includes('data-menu="institutional"'),
+    nodeOperatorsMenu: htmlLanding.includes('data-menu="node-operators"'),
+    governanceMenu: htmlLanding.includes('data-menu="governance"'),
+    buildersMenu: htmlLanding.includes('data-menu="builders"'),
+    communityMenu: htmlLanding.includes('data-menu="community"'),
+    sdkModal: htmlLanding.includes('id="sdkModal"'),
+    invariantsModal: htmlLanding.includes('id="invariantsModal"'),
+    faqModal: htmlLanding.includes('id="faqModal"'),
+    mobileDrawer: htmlLanding.includes('id="lidoMobileDrawer"'),
+    btnOpenShardsModal: htmlLanding.includes('id="btnOpenShardsModal"'),
+    shardsModal: htmlLanding.includes('id="shardsModal"'),
+    depositXlmLink: htmlLanding.includes('href="app.html?vault=xlm"'),
+    depositUsdLink: htmlLanding.includes('href="app.html?vault=usd"'),
+    depositMultiLink: htmlLanding.includes('href="app.html?vault=multichain"'),
+    launchAppTopNav: htmlLanding.includes('id="btnLaunchAppNav"'),
+    // Verification that live protocol grid is completely removed from landing page
+    noLiveProtocolGridOnLanding: !htmlLanding.includes('class="metrics-grid"') && !htmlLanding.includes('id="chartSection"') && !htmlLanding.includes('id="vaultPortalSection"')
   };
 
-  console.log('UI Verification Results:');
-  console.table(checks);
+  console.log('Landing Page Verification Results:');
+  console.table(landingChecks);
 
-  const allPassed = Object.values(checks).every(Boolean);
-  if (!allPassed) {
-    console.error('Some checks failed!');
+  const landingPassed = Object.values(landingChecks).every(Boolean);
+  if (!landingPassed) {
+    console.error('Landing page checks failed!');
     process.exit(1);
   }
-  console.log('✓ All 21 navigation, tier selector, mode toggle, wallet, rationale, and shards elements verified successfully!');
+
+  // 2. Verify Dedicated DApp Workspace (app.html)
+  const resApp = await fetch('http://localhost:3000/app.html');
+  if (!resApp.ok) throw new Error(`App page HTTP status: ${resApp.status}`);
+  const htmlApp = await resApp.text();
+  console.log('DApp page loaded successfully. Length:', htmlApp.length);
+
+  const appChecks = {
+    appLayoutContainer: htmlApp.includes('app-layout-container'),
+    appTopbar: htmlApp.includes('app-topbar'),
+    vaultSwitcherPill: htmlApp.includes('id="vaultSwitcherPill"'),
+    pillVaultXlm: htmlApp.includes('id="pillVaultXlm"'),
+    pillVaultUsd: htmlApp.includes('id="pillVaultUsd"'),
+    pillVaultMulti: htmlApp.includes('id="pillVaultMulti"'),
+    vaultContextBanner: htmlApp.includes('id="vaultContextBanner"'),
+    metricsGrid: htmlApp.includes('class="metrics-grid"'),
+    modeSwitchBar: htmlApp.includes('mode-switch-bar'),
+    btnSimpleMode: htmlApp.includes('id="btnSimpleMode"'),
+    btnProMode: htmlApp.includes('id="btnProMode"'),
+    vaultTierSelector: htmlApp.includes('vault-tier-selector'),
+    optLobstr: htmlApp.includes('id="optLobstr"'),
+    optXbull: htmlApp.includes('id="optXbull"'),
+    rationaleBox: htmlApp.includes('rationale-box'),
+    chartSection: htmlApp.includes('id="chartSection"'),
+    tradingBotsTab: htmlApp.includes('id="btnTabTradingBots"'),
+    agentSection: htmlApp.includes('id="agentSection"'),
+    securitySection: htmlApp.includes('id="securitySection"')
+  };
+
+  console.log('DApp Page Verification Results:');
+  console.table(appChecks);
+
+  const appPassed = Object.values(appChecks).every(Boolean);
+  if (!appPassed) {
+    console.error('DApp page checks failed!');
+    process.exit(1);
+  }
+
+  // 3. Verify Direct Vault Redirect Pages
+  for (const slug of ['earn-xlm', 'earn-usd', 'earn-multichain', 'app']) {
+    const resRedirect = await fetch(`http://localhost:3000/${slug}`);
+    if (!resRedirect.ok) throw new Error(`Redirect route /${slug} failed with status: ${resRedirect.status}`);
+  }
+  console.log('✓ Direct redirect routes (/app, /earn-xlm, /earn-usd, /earn-multichain) respond with 200 OK');
+
+  console.log('✓ ALL 38 landing page decoupling, dedicated DApp workspace, vault routing, and security assertions PASSED successfully!');
 }
 
 verify().catch(err => {
