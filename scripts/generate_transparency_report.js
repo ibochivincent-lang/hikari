@@ -53,7 +53,7 @@ function generateReport() {
 
 - **GateSeal Circuit Breaker Status**: Nominal (\`false\`)
 - **Queue Operation Mode**: Turbo Mode (Instant Redemptions, 0% Haircut)
-- **Jito MEV Backrun Profit Streamed**: +62.64 XLM (80% Depositor Boost)
+- **Atomic MEV Backrun Profit Streamed**: +62.64 XLM (80% Depositor Boost)
 - **Audit Verification Status**: All 18 Soroban unit tests, 10,000 fuzz iterations, and 365-day stress tests passing with 0 invariant breaches.
 
 ---

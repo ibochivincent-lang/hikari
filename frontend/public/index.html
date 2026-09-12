@@ -72,10 +72,10 @@
       <span class="loader__counter" id="loader-counter">0%</span>
     </div>
   </div>
-  <section class="voxr" id="voxr">
-    <div class="voxr__glow" id="glow"></div>
+  <section class="hero-ambient" id="heroAmbient">
+    <div class="hero-ambient__glow" id="glow"></div>
 
-    <header class="topnav lido-header" id="mainHeader">
+    <header class="topnav hikari-header" id="mainHeader">
       <a href="#" class="topnav__logo" data-magnetic aria-label="Hikari Protocol Home">
         <div class="logo-kanji-badge">光</div>
         <div class="brand-text-col">
@@ -87,14 +87,14 @@
         </div>
       </a>
 
-      <!-- Lido Navigation Deck Links -->
-      <nav class="topnav__nav lido-nav">
-        <a href="#earnSection" class="lido-nav-link" data-menu="products">Products</a>
-        <a href="#governanceShowcase" class="lido-nav-link" data-menu="institutional">Institutional</a>
-        <a href="#governanceShowcase" class="lido-nav-link" data-menu="node-operators">Node Operators</a>
-        <a href="#governanceShowcase" class="lido-nav-link" data-menu="governance">Governance</a>
-        <a href="#contractsSection" class="lido-nav-link" data-menu="builders">Builders</a>
-        <a href="#securityShowcase" class="lido-nav-link" data-menu="community">Community</a>
+      <!-- Top Navigation Deck Links -->
+      <nav class="topnav__nav hikari-nav">
+        <a href="#earnSection" class="hikari-nav-link" data-menu="products">Products</a>
+        <a href="#governanceShowcase" class="hikari-nav-link" data-menu="institutional">Institutional</a>
+        <a href="#governanceShowcase" class="hikari-nav-link" data-menu="node-operators">Node Operators</a>
+        <a href="#governanceShowcase" class="hikari-nav-link" data-menu="governance">Governance</a>
+        <a href="#contractsSection" class="hikari-nav-link" data-menu="builders">Builders</a>
+        <a href="#securityShowcase" class="hikari-nav-link" data-menu="community">Community</a>
       </nav>
 
       <!-- Uncongested Menu Trigger Box / Slider -->
@@ -106,7 +106,7 @@
         <span class="nav-slider-pill">9 Modules</span>
       </button>
 
-      <div id="lidoMobileDrawer" class="lido-mobile-drawer" style="display: none;"></div>
+      <div id="hikariMobileDrawer" class="hikari-mobile-drawer" style="display: none;"></div>
 
       <div class="topnav__actions">
         <div class="network-badge">
@@ -222,7 +222,7 @@
 
               <a href="app.html?showBots=true#chartSection" class="nav-slider-card">
                 <div class="nav-slider-card-top">
-                  <span class="nav-card-title">Trading Bots & Jito MEV</span>
+                  <span class="nav-card-title">Trading Bots & Atomic MEV</span>
                   <span class="nav-card-badge">3 Bots Active</span>
                 </div>
                 <p class="nav-card-desc">Real-time Soroban mempool backrunning, TWAP rebalancing, and rate delta capture.</p>
@@ -590,7 +590,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
           <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
             <h4 class="faq-modal-q">What is hXLM?</h4>
             <p style="color: var(--text-muted); line-height: 1.4;">
-              hXLM is the SEP-41 compliant yield-bearing liquid staking token on Stellar. Holding hXLM continuously earns compounded yield from Blend lending, Phoenix CLAMM fees, and Jito MEV backruns.
+              hXLM is the SEP-41 compliant yield-bearing liquid staking token on Stellar. Holding hXLM continuously earns compounded yield from Blend lending, Phoenix CLAMM fees, and atomic Soroban MEV backruns.
             </p>
           </div>
           <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
@@ -602,7 +602,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
           <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 0.8rem;">
             <h4 class="faq-modal-q">What is GateSeal and Dual Governance?</h4>
             <p style="color: var(--text-muted); line-height: 1.4;">
-              Adopted directly from Lido, GateSeal is a one-shot circuit breaker that pauses contract allocations for 7 days during critical anomalies. Dual Governance empowers stakers with veto rights against malicious DAO proposals.
+              GateSeal is Hikari's native one-shot circuit breaker that pauses contract allocations for 7 days during critical anomalies. Dual Governance empowers stakers with veto rights against malicious DAO proposals.
             </p>
           </div>
         </div>
@@ -1018,7 +1018,7 @@ console.log(`Confirmed in ledger! Tx: ${tx.txHash}`);</code></pre>
           <div class="hx-feature-block">
             <div class="hx-node-icon"></div>
             <h3 class="hx-feature-title">Competitive rewards</h3>
-            <p class="hx-feature-desc">Dynamic multi-strategy yields compounding 24/7 across Blend money markets, Phoenix CLAMM fees, and Jito-style Soroban MEV backruns.</p>
+            <p class="hx-feature-desc">Dynamic multi-strategy yields compounding 24/7 across Blend money markets, Phoenix CLAMM fees, and atomic Soroban MEV backruns.</p>
           </div>
 
           <!-- Feature 3: Deep liquidity -->

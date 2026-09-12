@@ -67,7 +67,7 @@ function handleRequest(req, res) {
       status: "ONLINE",
       lastCycleTimestamp: Date.now(),
       totalCycles: 142,
-      activeStrategies: ["Blend XLM Reserve", "Phoenix CLAMM Pool", "Jito MEV Backrun"],
+      activeStrategies: ["Blend XLM Reserve", "Phoenix CLAMM Pool", "Soroban MEV Backrun"],
       vaultState: {
         totalAssetsStroops: "1245000000000",
         idleAssetsStroops: "284000000000",

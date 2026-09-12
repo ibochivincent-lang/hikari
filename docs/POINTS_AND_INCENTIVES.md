@@ -26,7 +26,7 @@ $$\text{Points}_{\text{epoch}} = \sum_{t=1}^{T} \left( \text{Deposit}_{\text{XLM
 |---|---|---|---|---|
 | **Conservative Stablecoin** | `USDC` / `PYUSD` | Low (1/10) | **1.0x** | Blend collateralized supply + CCTP yield |
 | **Balanced Multi-Strategy** | `hXLM Core` | Medium (4/10) | **1.5x** | Blend + Phoenix CLAMM + Soroswap AMM |
-| **Dynamic MEV Alpha** | `hXLM Degen` | High (7/10) | **2.5x** | Concentrated CLAMM + Jito MEV arbitrage |
+| **Dynamic MEV Alpha** | `hXLM Degen` | High (7/10) | **2.5x** | Concentrated CLAMM + atomic Soroban MEV arbitrage |
 
 ### 2.2 Loyalty Time-Multiplier ($\lambda_{\text{time}}$)
 

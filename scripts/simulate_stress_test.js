@@ -97,7 +97,7 @@ class ProtocolSimulator {
     this.allocatedAssetsStroops += yieldEarned;
     this.totalAssetsStroops += yieldEarned;
 
-    // 2. Jito MEV Backrun Boost
+    // 2. Atomic MEV Backrun Boost
     if (mevBoostStroops > 0n) {
       this.totalAssetsStroops += mevBoostStroops;
       this.idleAssetsStroops += mevBoostStroops;

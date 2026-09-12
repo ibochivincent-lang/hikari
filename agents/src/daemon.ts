@@ -103,7 +103,7 @@ export class HikariAutonomousDaemon {
     this.cycleCount++;
     this.log(`--- [CYCLE #${this.cycleCount}] Autonomous Rebalance & MEV Scan ---`);
 
-    // 1. Run Jito-style MEV backrun scanner between Phoenix and Soroswap
+    // 1. Run native Soroban atomic MEV backrun scanner between Phoenix and Soroswap
     const basePrice = 0.1245 + (Math.sin(this.cycleCount) * 0.002);
     const spreadDelta = 0.0008 + ((this.cycleCount % 3) * 0.0005);
 

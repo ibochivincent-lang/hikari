@@ -68,11 +68,11 @@ jobs:
       - name: Verify Points & Shards Multiplier Engine
         run: node scripts/verify_points_engine.js
 
-      - name: Verify Web Dashboard & Lido Mega-Nav (21 Elements)
+      - name: Verify Web Dashboard & Decoupled Navigation
         run: |
           node frontend/server.js &
           sleep 3
-          node scripts/verify_lido_ui.js
+          node scripts/verify_ui.js
 
   docker-validation:
     name: Dockerfile Build Validation

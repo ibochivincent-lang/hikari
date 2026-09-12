@@ -1,6 +1,6 @@
 // agents/src/mev_backrun.ts
 // Author: ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>
-// Jito-style cross-DEX backrun arbitrage and atomic MEV capture engine.
+// Native Soroban cross-DEX backrun arbitrage and atomic MEV capture engine.
 
 export interface DexPriceFeed {
   venue: "PhoenixCLAMM" | "SoroswapAMM";

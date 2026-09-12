@@ -13,7 +13,7 @@ http.get('http://localhost:3000', (res) => {
     console.log('has navSlider deck:', d.includes('id="navSlider"'));
     console.log('has hero 12.4% APY card:', d.includes('hero__yield-card') && d.includes('12.4%'));
     console.log('has hero calculator slider:', d.includes('heroCalcSlider'));
-    console.log('has Trading Bots in Analytics:', d.includes('viewTradingBots') && d.includes('Jito MEV Arbitrageur'));
+    console.log('has Trading Bots in Analytics:', d.includes('viewTradingBots') && d.includes('Hikari MEV Arbitrageur'));
     console.log('has Cross-Chain bridge (CCTP):', d.includes('panelBridge') && d.includes('CctpForwarder'));
     console.log('has wallet connect button:', d.includes('btnConnectWallet'));
     console.log('has emojis:', /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u.test(d));

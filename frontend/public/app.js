@@ -54,10 +54,10 @@ const VAULT_TIERS = {
     token: "XLM",
     shareToken: "hXLM-α",
     baseApy: "12.4% APR",
-    badge: "Jito-Style Alpha",
+    badge: "Soroban Alpha MEV",
     walletBalance: 10000,
     walletShares: 350,
-    desc: "High-yield dynamic strategy combining CLAMM LP fees and Jito atomic MEV backruns."
+    desc: "High-yield dynamic strategy combining CLAMM LP fees and native atomic MEV backruns."
   }
 };
 
@@ -70,7 +70,7 @@ const networkBadge = document.getElementById("networkBadge");
 const queueModeBadge = document.getElementById("queueModeBadge");
 const queueModeText = document.getElementById("queueModeText");
 
-// Lido Widget Elements
+// Vault Portal Elements
 const tabStake = document.getElementById("tabStake");
 const tabRequest = document.getElementById("tabRequest");
 const tabClaim = document.getElementById("tabClaim");
@@ -323,7 +323,7 @@ if (btnMaxAmount) {
   });
 }
 
-// Lido 5-Tab Navigation (Stake, Request, Claim, Basket, Bridge)
+// Vault 5-Tab Navigation (Stake, Request, Claim, Basket, Bridge)
 function setActiveTab(tab) {
   state.activeTab = tab;
   [tabStake, tabRequest, tabClaim, tabBasket, tabBridge].forEach((btn) => btn && btn.classList.remove("active"));
@@ -452,7 +452,7 @@ function calculateConversion() {
   }
 }
 
-// Render Lido-style Withdrawal Tickets
+// Render Withdrawal Claim Tickets
 function renderTicketList() {
   if (!ticketList) return;
   ticketList.innerHTML = "";
@@ -1154,7 +1154,7 @@ function initShardsSystem() {
   const openShards = (e) => {
     if (e) e.preventDefault();
     if (shardsModal) shardsModal.style.display = "flex";
-    const drawer = document.getElementById("lidoMobileDrawer");
+    const drawer = document.getElementById("hikariMobileDrawer");
     if (drawer) drawer.style.display = "none";
     fetchLeaderboard();
   };
@@ -1228,10 +1228,10 @@ function initThemeSystem() {
 initThemeSystem();
 
 // =========================================================
-// VOXR AI TEMPLATE ENGINE: LOADER, CURSOR, GLOW, HERO, 3D SCENE
+// IMMERSIVE SCENE ENGINE: LOADER, CURSOR, GLOW, HERO, 3D SCENE
 // =========================================================
-function initVoxrTemplate() {
-  const root = document.getElementById("voxr");
+function initHeroAmbientScene() {
+  const root = document.getElementById("heroAmbient");
   if (!root) return;
 
   // 1. SPLIT TITLE: wrap text nodes' characters into char spans
@@ -1519,7 +1519,7 @@ function initVoxrTemplate() {
       });
 
       const hovers = document.querySelectorAll(
-        "a, button, [data-magnetic], [data-chip], .scene__orb, .hero__char, .lido-nav-trigger"
+        "a, button, [data-magnetic], [data-chip], .scene__orb, .hero__char, .hikari-nav-trigger"
       );
       hovers.forEach((el) => {
         el.addEventListener("mouseenter", () => cursorRing.classList.add("is-hover"));
@@ -1762,9 +1762,9 @@ function initVoxrTemplate() {
 
 // Auto-run when DOM is ready
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initVoxrTemplate);
+  document.addEventListener("DOMContentLoaded", initHeroAmbientScene);
 } else {
-  initVoxrTemplate();
+  initHeroAmbientScene();
 }
 
 
@@ -1874,7 +1874,7 @@ function initNavSliderAndCalculator() {
         botSimStatus.innerText = "Arbitrage executed: +42.80 XLM captured and routed to hXLM reserve!";
         botSimStatus.style.color = "var(--purple-soft)";
         if (typeof addLog === "function") {
-          addLog("[TradingBot]", "Jito MEV arb executed: Swapped 1,200 XLM on Phoenix -> Soroswap (+42.80 XLM profit).", "log-tag-success");
+          addLog("[TradingBot]", "Soroban atomic MEV arb executed: Swapped 1,200 XLM on Phoenix -> Soroswap (+42.80 XLM profit).", "log-tag-success");
         }
       }, 1200);
     });
@@ -1926,9 +1926,9 @@ function initNavSliderAndCalculator() {
 }
 
 // ============================================================================
-// LIDO MARKETING FLOW & MODAL INTERACTIONS
+// MARKETING FLOW & MODAL INTERACTIONS
 // ============================================================================
-function initLidoMarketingInteractions() {
+function initMarketingInteractions() {
   // Earn Cards Deposit Buttons navigate directly to app.html?vault=... via HTML href
 
   // Modals
@@ -2177,12 +2177,12 @@ function initAppPageVaultRouting() {
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
     initNavSliderAndCalculator();
-    initLidoMarketingInteractions();
+    initMarketingInteractions();
     initAppPageVaultRouting();
   });
 } else {
   initNavSliderAndCalculator();
-  initLidoMarketingInteractions();
+  initMarketingInteractions();
   initAppPageVaultRouting();
 }
 

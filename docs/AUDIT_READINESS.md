@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary & Architecture Scope
 
-Hikari is an autonomous, non-custodial liquid-yield and agentic finance protocol natively deployed on Stellar Soroban. It pools user deposits, mints yield-bearing `hXLM` shares (SEP-41 compliant), and dynamically balances capital across approved DeFi strategies (Blend Protocol lending, Phoenix CLAMM, and Soroswap AMM) with deterministic on-chain policy constraints and Jito-style MEV backrun capture.
+Hikari is an autonomous, non-custodial liquid-yield and agentic finance protocol natively deployed on Stellar Soroban. It pools user deposits, mints yield-bearing `hXLM` shares (SEP-41 compliant), and dynamically balances capital across approved DeFi strategies (Blend Protocol lending, Phoenix CLAMM, and Soroswap AMM) with deterministic on-chain policy constraints and atomic Soroban MEV backrun capture.
 
 ### Core Smart Contract Scope
 

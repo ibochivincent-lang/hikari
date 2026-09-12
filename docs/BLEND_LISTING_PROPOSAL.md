@@ -13,7 +13,7 @@
 
 This proposal requests the onboarding of **`hXLM`** as an accepted collateral asset within the **Blend Lending Market** on Stellar Soroban.
 
-`hXLM` is the liquid staking token of Hikari Protocol. Holding `hXLM` continuously accrues yield compounded from Blend money markets, Phoenix concentrated liquidity fees, and Jito-style atomic MEV backruns. Adding `hXLM` as collateral enables stakers to access leverage, borrow stablecoins (`USDC`, `PYUSD`), and implement looping yield strategies without sacrificing staking rewards.
+`hXLM` is the liquid staking token of Hikari Protocol. Holding `hXLM` continuously accrues yield compounded from Blend money markets, Phoenix concentrated liquidity fees, and atomic Soroban MEV backruns. Adding `hXLM` as collateral enables stakers to access leverage, borrow stablecoins (`USDC`, `PYUSD`), and implement looping yield strategies without sacrificing staking rewards.
 
 ---
 

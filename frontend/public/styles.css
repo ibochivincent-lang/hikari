@@ -763,7 +763,7 @@ body {
   white-space: nowrap;
 }
 
-/* Lido-Style Widget Components */
+/* Interactive Vault Portal Components */
 .mode-badge {
   display: inline-flex;
   align-items: center;
@@ -792,7 +792,7 @@ body {
   box-shadow: 0 0 8px var(--accent-amber);
 }
 
-.lido-tabs {
+.vault-tabs {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   background: rgba(0, 0, 0, 0.25);
@@ -803,7 +803,7 @@ body {
   border: 1px solid var(--border-subtle);
 }
 
-.lido-tab-btn {
+.vault-tab-btn {
   background: transparent;
   border: none;
   color: var(--text-muted);
@@ -816,13 +816,13 @@ body {
   text-align: center;
 }
 
-.lido-tab-btn.active {
+.vault-tab-btn.active {
   background: var(--accent-cyan);
   color: #051322;
   box-shadow: 0 2px 8px rgba(192, 132, 252, 0.3);
 }
 
-.input-container-lido {
+.input-container-portal {
   position: relative;
   display: flex;
   align-items: center;
@@ -947,7 +947,7 @@ body {
   border-radius: 50%;
 }
 
-/* Jito MEV Backrun & Circuit Breaker Styles */
+/* Soroban Atomic MEV Backrun & Circuit Breaker Styles */
 .mev-highlight-box {
   background: linear-gradient(135deg, rgba(139, 47, 230, 0.12), rgba(192, 132, 252, 0.08));
   border: 1px solid rgba(192, 132, 252, 0.25);
@@ -1249,12 +1249,12 @@ footer {
   color: #fff;
 }
 
-/* Responsiveness for Lido Menu */
+/* Responsiveness for Top Navigation Menu */
 @media (max-width: 1080px) {
-  .lido-nav {
+  .hikari-nav {
     display: none;
   }
-  .lido-burger-btn {
+  .hikari-burger-btn {
     display: block;
   }
 }
@@ -1680,7 +1680,7 @@ footer {
 }
 
 /* =========================================================
-   VOXR AI TEMPLATE INTEGRATION (Cursor, Loader, Hero, 3D Scene)
+   IMMERSIVE SCENE SYSTEM (Cursor, Loader, Hero, 3D Scene)
    ========================================================= */
 
 /* Custom Cursor */
@@ -1821,8 +1821,8 @@ footer {
   min-width: 3ch;
 }
 
-/* Voxr Hero Section Container */
-.voxr {
+/* Hero Ambient Scene Container */
+.hero-ambient {
   position: relative;
   width: 100%;
   min-height: auto;
@@ -1831,7 +1831,7 @@ footer {
   border-bottom: none;
 }
 
-.voxr__glow {
+.hero-ambient__glow {
   position: absolute;
   top: 50%; left: 50%;
   width: 550px; height: 550px;
@@ -1843,7 +1843,7 @@ footer {
   will-change: transform;
 }
 
-/* Top Nav Overrides for Voxr Aesthetic */
+/* Top Nav Overrides for Hero Ambient Aesthetic */
 .topnav__login {
   display: inline-flex;
   align-items: center;
@@ -3389,16 +3389,16 @@ footer {
   border-color: rgba(139, 47, 230, 0.25);
 }
 
-[data-theme="light"] .lido-tabs {
+[data-theme="light"] .vault-tabs {
   background: #ede8f8;
   border-color: #dcd3f2;
 }
 
-[data-theme="light"] .lido-tab-btn {
+[data-theme="light"] .vault-tab-btn {
   color: #5e5470;
 }
 
-[data-theme="light"] .lido-tab-btn.active {
+[data-theme="light"] .vault-tab-btn.active {
   background: #8b2fe6;
   color: #ffffff !important;
   box-shadow: 0 2px 8px rgba(139, 47, 230, 0.2);
@@ -3623,7 +3623,7 @@ footer {
 }
 
 /* ==========================================================================
-   HIKARI EARN SECTION (Lido Earn Design Reference)
+   HIKARI EARN SECTION (Multi-Vault Yield Architecture)
    ========================================================================== */
 .hikari-earn-section {
   margin: 4.5rem 0 5rem 0;

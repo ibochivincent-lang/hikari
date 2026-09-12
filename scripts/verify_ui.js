@@ -1,4 +1,4 @@
-// scripts/verify_lido_ui.js
+// scripts/verify_ui.js
 // Author: ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>
 // Verification suite for decoupled Marketing Landing Page and dedicated DApp workspace.
 
@@ -10,8 +10,8 @@ async function verify() {
   console.log('Landing page loaded successfully. Length:', htmlLanding.length);
 
   const landingChecks = {
-    lidoHeader: htmlLanding.includes('lido-header'),
-    lidoNav: htmlLanding.includes('lido-nav'),
+    hikariHeader: htmlLanding.includes('hikari-header') || htmlLanding.includes('topnav'),
+    hikariNav: htmlLanding.includes('hikari-nav') || htmlLanding.includes('topnav__nav'),
     productsMenu: htmlLanding.includes('data-menu="products"'),
     institutionalMenu: htmlLanding.includes('data-menu="institutional"'),
     nodeOperatorsMenu: htmlLanding.includes('data-menu="node-operators"'),
@@ -21,7 +21,7 @@ async function verify() {
     sdkModal: htmlLanding.includes('id="sdkModal"'),
     invariantsModal: htmlLanding.includes('id="invariantsModal"'),
     faqModal: htmlLanding.includes('id="faqModal"'),
-    mobileDrawer: htmlLanding.includes('id="lidoMobileDrawer"'),
+    mobileDrawer: htmlLanding.includes('id="hikariMobileDrawer"'),
     btnOpenShardsModal: htmlLanding.includes('id="btnOpenShardsModal"'),
     shardsModal: htmlLanding.includes('id="shardsModal"'),
     depositXlmLink: htmlLanding.includes('href="app.html?vault=xlm"'),

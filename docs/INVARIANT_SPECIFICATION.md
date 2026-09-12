@@ -69,7 +69,7 @@ $$\Phi_{\text{perf}} = \gamma \cdot (NAV_{\text{current}} - NAV_{HWM}) \cdot S_{
 ### Invariant 4: Bunker Mode Equity Preservation
 $$\text{Assets}_{\text{claimable}} = \frac{S_{\text{burned}} \cdot (A_{\text{total}} + V_A)}{S_{\text{total}} + V_S} \cdot \left(1 - \frac{H_{bps}}{10000}\right)$$
 
-#### Proof against Bank-Run Depletion (Lido Bunker Mode):
+#### Proof against Bank-Run Depletion (Autonomous Bunker Mode):
 1. Suppose protocol incurs bad debt or a $20\%$ collateral impairment ($A_{total}$ drops by $20\%$).
 2. In a standard queue without haircuts, the first $80\%$ of redeemers receive $100\%$ of nominal value, leaving the remaining $20\%$ of depositors with $0\text{ XLM}$ (100% loss).
 3. Under Hikari's Bunker Mode:

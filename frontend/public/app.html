@@ -30,7 +30,7 @@
 <body class="app-page-body">
   <div class="app-layout-container">
     <!-- Dedicated DApp Sticky Top Navigation Bar -->
-    <header class="app-topbar lido-header">
+    <header class="app-topbar hikari-header">
       <div class="app-topbar-left">
         <a href="index.html" class="app-brand-link">
           <div class="logo-kanji-badge" style="width: 32px; height: 32px; font-size: 1.05rem;">光</div>
@@ -213,7 +213,7 @@
                 <span class="stat-val" style="color: var(--purple-soft);">6.40% APY</span>
               </div>
               <div class="chart-stat">
-                <span class="stat-lbl">Jito MEV Backrun Boost</span>
+                <span class="stat-lbl">Atomic MEV Backrun Boost</span>
                 <span class="stat-val" style="color: var(--accent-emerald);">+1.80% Net APY</span>
               </div>
             </div>
@@ -222,12 +222,12 @@
           <!-- Sub-View 2: Autonomous Trading Bots under Analytics -->
           <div id="viewTradingBots" style="display: none; margin-top: 0.8rem;">
             <div class="bots-grid">
-              <!-- Bot 1: Jito MEV Arbitrageur -->
+              <!-- Bot 1: Hikari MEV Arbitrageur -->
               <div class="bot-card">
                 <div class="bot-card__top">
                   <div class="bot-card__name">
                     <span class="status-dot"></span>
-                    <strong>Jito MEV Arbitrageur</strong>
+                    <strong>Hikari MEV Arbitrageur</strong>
                   </div>
                   <span class="bot-badge">Mempool Scan</span>
                 </div>
@@ -420,7 +420,7 @@
               <div style="display: flex; align-items: center; gap: 0.4rem;">
                 <span></span>
                 <span class="rationale-header-title">Autonomous Decision Rationale</span>
-                <span class="lido-chip chip-cyan" style="font-size: 0.6rem;">Live Telemetry</span>
+                <span class="hikari-chip chip-cyan" style="font-size: 0.6rem;">Live Telemetry</span>
               </div>
               <span id="rationaleConfidence" style="font-size: 0.72rem; color: var(--accent-emerald);">Policy Confidence: 98.4%</span>
             </div>
@@ -431,11 +431,11 @@
             </div>
           </div>
 
-          <!-- Jito-Style MEV Backrun Yield Stream -->
+          <!-- Soroban Atomic MEV Backrun Yield Stream -->
           <div id="mevSection" class="mev-highlight-box pulse-mev">
             <div class="mev-header">
               <div style="display: flex; align-items: center; gap: 0.5rem;">
-                <span class="mev-tag"> Jito MEV Backrun Engine</span>
+                <span class="mev-tag"> Soroban Atomic MEV Engine</span>
                 <span style="font-size: 0.75rem; color: var(--accent-emerald);">Active Backrunner</span>
               </div>
               <span id="mevCyclePulse" style="font-size: 0.75rem; color: var(--text-dim);">Listening to Soroban mempool...</span>
@@ -462,7 +462,7 @@
             </div>
           </div>
 
-          <!-- Lido-Grade Circuit Breaker & GateSeal Guard -->
+          <!-- Autonomous Circuit Breaker & GateSeal Guard -->
           <div id="securitySection" class="card" style="margin-top: 1rem; border-color: rgba(244, 63, 94, 0.2);">
             <div class="card-header" style="margin-bottom: 0.5rem;">
               <h3 style="font-size: 0.95rem; font-weight: 700; display: flex; align-items: center; gap: 0.4rem;">
@@ -549,13 +549,13 @@
             </button>
           </div>
 
-          <!-- Lido-style Tabs -->
-          <div class="lido-tabs" style="grid-template-columns: repeat(5, 1fr);">
-            <button id="tabStake" class="lido-tab-btn active">Stake</button>
-            <button id="tabRequest" class="lido-tab-btn">Request</button>
-            <button id="tabClaim" class="lido-tab-btn">Claim</button>
-            <button id="tabBasket" class="lido-tab-btn">Basket</button>
-            <button id="tabBridge" class="lido-tab-btn">Bridge</button>
+          <!-- Interactive Vault Tabs -->
+          <div class="vault-tabs" style="grid-template-columns: repeat(5, 1fr);">
+            <button id="tabStake" class="vault-tab-btn active">Stake</button>
+            <button id="tabRequest" class="vault-tab-btn">Request</button>
+            <button id="tabClaim" class="vault-tab-btn">Claim</button>
+            <button id="tabBasket" class="vault-tab-btn">Basket</button>
+            <button id="tabBridge" class="vault-tab-btn">Bridge</button>
           </div>
 
           <!-- Panel 1: Stake & Request Form -->
@@ -566,7 +566,7 @@
                   <label id="inputLabel" class="input-label" for="amountInput">Deposit XLM Amount</label>
                   <span id="walletBalLabel" style="font-size: 0.75rem; color: var(--text-dim);">Balance: 0 XLM</span>
                 </div>
-                <div class="input-container-lido">
+                <div class="input-container-portal">
                   <input id="amountInput" class="input-field" type="number" placeholder="0.0" min="0.1" step="any" required style="padding-right: 4rem;">
                   <button type="button" id="btnMaxAmount" class="btn-max">MAX</button>
                 </div>
@@ -601,7 +601,7 @@
             </form>
           </div>
 
-          <!-- Panel 2: Lido-style Withdrawal Claim Tickets -->
+          <!-- Panel 2: Withdrawal Claim Tickets -->
           <div id="panelClaim" style="display: none;">
             <div style="margin-bottom: 0.8rem; font-size: 0.8rem; color: var(--text-muted);">
               Withdrawal requests are processed in FIFO order through the on-chain queue.
@@ -649,7 +649,7 @@
             </div>
             <div class="input-group" style="margin-top: 0.8rem;">
               <label class="input-label">USDC Deposit Amount</label>
-              <div class="input-container-lido">
+              <div class="input-container-portal">
                 <input id="bridgeAmountInput" class="input-field" type="number" placeholder="50.0" min="1" step="any">
                 <span style="position: absolute; right: 1rem; color: var(--text-muted); font-size: 0.85rem;">USDC</span>
               </div>

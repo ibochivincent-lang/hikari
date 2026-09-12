@@ -56,7 +56,7 @@ impl WithdrawalQueue {
         Ok(())
     }
 
-    // Lido-style Bunker Mode control
+    // Emergency Bunker Mode control
     pub fn enter_bunker_mode(env: Env, haircut_bps: u32, extra_cooldown: u32) -> Result<(), Error> {
         let admin: Address = env.storage().instance().get(&DataKey::Admin).unwrap();
         admin.require_auth();
@@ -142,7 +142,7 @@ impl WithdrawalQueue {
         Self::internal_claim(&env, &user, request_id)
     }
 
-    // Lido-style Batch Claiming
+    // Native FIFO Batch Claiming
     pub fn claim_batch(env: Env, user: Address, request_ids: Vec<u64>) -> Result<i128, Error> {
         user.require_auth();
         let mut total_payout: i128 = 0;

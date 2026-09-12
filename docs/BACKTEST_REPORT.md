@@ -41,4 +41,4 @@ To validate the stability of the deterministic policy engine, virtual share acco
 1. **Virtual Share Defense**: Zero share dilution or donation exploits occurred across any epoch.
 2. **Circuit Breaker Efficacy**: GateSeal paused the vault within a single ledger when drawdown crossed 15%, preventing cascading liquidations.
 3. **High-Water Mark Protection**: During the 40 days of Bunker Mode and drawdown recovery, precisely 0 XLM in performance fees was deducted from stakers.
-4. **MEV Staker Boost**: An aggregate of $+12,925\text{ XLM}$ was captured by Jito-style atomic backrunning and credited directly to vault depositors.
+4. **MEV Staker Boost**: An aggregate of $+12,925\text{ XLM}$ was captured by atomic MEV backrunning and credited directly to vault depositors.

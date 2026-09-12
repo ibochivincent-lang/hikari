@@ -1,8 +1,8 @@
 # Hikari Protocol: Monthly Transparency & Financial Audit Report
 
-**Report Date**: 2026-09-10  
+**Report Date**: 2026-09-12  
 **Author & Maintainer**: `ibochivincent-lang <ibochivincent-lang@users.noreply.github.com>`  
-**Generated At**: `2026-09-10T15:12:14.926Z`  
+**Generated At**: `2026-09-12T12:55:48.672Z`  
 **Network**: Stellar Testnet (Protocol 27 • Soroban)  
 
 ---
@@ -41,7 +41,7 @@
 
 - **GateSeal Circuit Breaker Status**: Nominal (`false`)
 - **Queue Operation Mode**: Turbo Mode (Instant Redemptions, 0% Haircut)
-- **Jito MEV Backrun Profit Streamed**: +62.64 XLM (80% Depositor Boost)
+- **Atomic MEV Backrun Profit Streamed**: +62.64 XLM (80% Depositor Boost)
 - **Audit Verification Status**: All 18 Soroban unit tests, 10,000 fuzz iterations, and 365-day stress tests passing with 0 invariant breaches.
 
 ---

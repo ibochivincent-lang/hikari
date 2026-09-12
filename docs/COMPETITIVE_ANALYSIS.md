@@ -12,7 +12,7 @@ Most existing yield solutions on Stellar fall into one of two extremes:
 1. **Passive / Curated Vaults (Upshift, Sentora, DeFindex)**: Static or manual committee rebalancing. Low adaptability to rapid DEX volatility, zero MEV capture, and slow response to market shifts.
 2. **Single-Protocol Depositing (Native Blend, Native Soroswap)**: Requires active user management, zero cross-protocol diversification, and exposed to protocol-specific bad debt or liquidation risk.
 
-**Hikari bridges this gap**: It is the first protocol on Stellar combining **autonomous multi-agent intelligence** with **deterministic on-chain policy guardrails**, **Jito-style MEV backrun capture**, and **machine payments (x402)**.
+**Hikari bridges this gap**: It is the first protocol on Stellar combining **autonomous multi-agent intelligence** with **deterministic on-chain policy guardrails**, **Soroban atomic MEV backrun capture**, and **machine payments (x402)**.
 
 ```
                   AUTONOMOUS EXECUTION
@@ -40,7 +40,7 @@ Most existing yield solutions on Stellar fall into one of two extremes:
 |---|---|---|---|---|---|
 | **Autonomous AI Multi-Agents** | **Yes (Orchestrated)** | No (Static/Admin) | No (Curated) | No (Rule-based) | No (None) |
 | **Deterministic Policy Guardrails** | **Yes (PolicyAccount 3/5)** | Multisig only | Multisig only | Strategy limits | Protocol rules only |
-| **Jito-Style MEV Backrunning** | **Yes (80% to Depositors)** | No | No | No | No |
+| **Atomic MEV Backrunning** | **Yes (80% to Depositors)** | No | No | No | No |
 | **Machine Payments Protocol (x402)** | **Yes (Native USDC)** | No | No | No | No |
 | **Emergency Circuit Breaker** | **GateSeal (1-Shot 7-Day)** | Manual pause | Manual pause | Strategy pause | None |
 | **Withdrawal Architecture** | **Turbo + Bunker Mode** | Standard Queue | Standard Queue | Instant / Delay | Instant |

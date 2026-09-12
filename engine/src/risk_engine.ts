@@ -67,7 +67,7 @@ export class RiskEngine {
     let triggersBunkerMode = false;
     let suggestedHaircutBps = 0;
 
-    // 1. Drawdown evaluation (Lido GateSeal & Bunker Mode patterns)
+    // 1. Drawdown evaluation (GateSeal & Bunker Mode protective patterns)
     if (effectiveDrawdown >= this.thresholds.maxDrawdownBps) {
       triggersGateSeal = true;
       triggersBunkerMode = true;

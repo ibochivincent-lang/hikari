@@ -74,7 +74,7 @@ export const VAULT_TIERS: Record<string, VaultTierConfig> = {
     },
   },
 
-  // Tier 3: Dynamic MEV Alpha Vault (High APY with active Jito searcher capture)
+  // Tier 3: Dynamic MEV Alpha Vault (High APY with active atomic MEV searcher capture)
   DYNAMIC_ALPHA_HXLM: {
     id: "vault_dynamic_alpha_hxlm",
     name: "Dynamic MEV Alpha High-Yield Vault",

@@ -73,12 +73,12 @@ Hikari/
 
 ## ⚡ Protocol Highlights
 
-- **Lido-Grade Liquid Staking & Withdrawal Queue**:
+- **Enterprise-Grade Liquid Staking & Withdrawal Queue**:
   - **4-Tab Portal**: Stake, Request, Claim Tickets, and Vault Basket.
   - **Turbo Mode**: Instant queue throughput and standard cooldowns under normal market conditions.
   - **Bunker Mode**: Activates during market shocks or depeg events to apply emergency haircuts and prevent bank-runs on idle liquid reserves.
   - **GateSeal Circuit Breaker**: One-time panic button contract (`CAS5XIH...ZYDJ`) freezing allocations for 120,960 ledgers with automatic self-unseal.
-- **Jito-Inspired MEV Backrun Capture**:
+- **Soroban Atomic MEV Backrun Capture**:
   - Cross-DEX arbitrage backrun engine between **Phoenix CLAMM** and **Soroswap AMM**.
   - 80% of net arbitrage profit is automatically streamed into the Hikari Vault to boost `hXLM` APY.
 - **x402 Micropayments**:

@@ -23,7 +23,7 @@ export class AgentReputationEngine {
     this.registerAgent("PaymentAgent", "x402 Micropayments & Oracle Settlement");
     this.registerAgent("MarketAgent", "Market Surveillance & Volatility Monitoring");
     this.registerAgent("YieldAgent", "DeFi Yield Strategy Optimization");
-    this.registerAgent("MevBackrunner", "Atomic Jito Cross-DEX Arbitrage");
+    this.registerAgent("MevBackrunner", "Atomic Soroban Cross-DEX Arbitrage");
   }
 
   public registerAgent(agentId: string, role: string): void {
