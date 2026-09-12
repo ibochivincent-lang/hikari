@@ -181,9 +181,10 @@ async function runMasterVerification() {
   };
   console.table(results.clientSdk);
 
-  // 10. Verify Zero Prohibited Terms / Project Originality
+  // 10. Verify Zero Prohibited External Terms / Project Originality
   console.log("\n[10/10] Scanning Repository for Prohibited External Terms...");
-  const gitGrep = spawnSync("git", ["grep", "-i", "-E", "lido|jito|voxr|templatemo"], { encoding: "utf-8" });
+  const forbidden = ["li" + "do", "ji" + "to", "vo" + "xr", "template" + "mo"].join("|");
+  const gitGrep = spawnSync("git", ["grep", "-i", "-E", forbidden, "--", ":(exclude)scripts/verify_hakiru_full_suite.js"], { encoding: "utf-8" });
 
   results.originality = {
     zeroProhibitedMatches: gitGrep.status === 1, // git grep exits with 1 when 0 matches found

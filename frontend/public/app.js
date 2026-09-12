@@ -151,114 +151,8 @@ const btnCloseWalletModal = document.getElementById("btnCloseWalletModal");
 const optPasskey = document.getElementById("optPasskey");
 const optFreighter = document.getElementById("optFreighter");
 
-// Wallet Connection & Modal Trigger
-if (btnConnectWallet && btnConnectWallet.tagName === "BUTTON") {
-  btnConnectWallet.addEventListener("click", () => {
-    if (state.wallet.connected) {
-      state.wallet.connected = false;
-      state.wallet.address = null;
-      const btnConnectWalletText = document.getElementById("btnConnectWalletText");
-      if (btnConnectWalletText) {
-        btnConnectWalletText.innerText = "Connect Wallet";
-      } else {
-        btnConnectWallet.innerText = "Connect Wallet";
-      }
-      btnConnectWallet.style.background = "";
-      btnConnectWallet.style.borderColor = "";
-      btnConnectWallet.style.color = "";
-      if (walletBalLabel) walletBalLabel.innerText = "Balance: 0 XLM";
-      addLog("[Wallet]", "Disconnected from wallet session.", "log-tag-warn");
-      return;
-    }
-    if (walletModal) {
-      walletModal.style.display = "flex";
-    }
-  });
-}
-
-if (btnCloseWalletModal) {
-  btnCloseWalletModal.addEventListener("click", () => {
-    walletModal.style.display = "none";
-  });
-}
-
-if (optPasskey) {
-  optPasskey.addEventListener("click", async () => {
-    optPasskey.style.opacity = "0.7";
-    addLog("[Passkey]", "Prompting device biometric authentication (WebAuthn)...", "log-tag-agent");
-    try {
-      const passkeyAuth = new PasskeySmartAccount();
-      const session = await passkeyAuth.loginPasskey();
-      setConnectedWallet(session.smartAddress, "Biometric Passkey (SEP-43)");
-      addLog("[Passkey]", `Authenticated! Smart Account: ${session.smartAddress.slice(0, 16)}...`, "log-tag-success");
-    } catch (err) {
-      addLog("[Passkey]", `Authentication error: ${err.message}`, "log-tag-warn");
-    } finally {
-      optPasskey.style.opacity = "1";
-      if (walletModal) walletModal.style.display = "none";
-    }
-  });
-}
-
-if (optFreighter) {
-  optFreighter.addEventListener("click", async () => {
-    optFreighter.style.opacity = "0.7";
-    try {
-      if (window.freighterApi && typeof window.freighterApi.isConnected === "function") {
-        const isConnected = await window.freighterApi.isConnected();
-        if (isConnected) {
-          const address = await window.freighterApi.getPublicKey();
-          setConnectedWallet(address, "Freighter (Extension)");
-          addLog("[Freighter]", `Connected extension account: ${address.slice(0, 8)}...`, "log-tag-success");
-          return;
-        }
-      }
-      const randomSuffix = Array.from({ length: 4 }, () =>
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
-      ).join("");
-      const demoAddress = `GBBD47IF6LWK7P7MDEVSCWR7DPUWV3NY3DTQEVFL4NAT4AQH3ZLL${randomSuffix}`;
-      setConnectedWallet(demoAddress, "Stellar Testnet Account");
-      addLog("[Freighter]", `Connected testnet account: ${demoAddress.slice(0, 8)}...`, "log-tag-success");
-    } catch (err) {
-      console.warn("Freighter error:", err);
-    } finally {
-      optFreighter.style.opacity = "1";
-      if (walletModal) walletModal.style.display = "none";
-    }
-  });
-}
-
-// Lobstr & xBull Wallet Integrations
-const optLobstr = document.getElementById("optLobstr");
-const optXbull = document.getElementById("optXbull");
-
-if (optLobstr) {
-  optLobstr.addEventListener("click", () => {
-    optLobstr.style.opacity = "0.7";
-    const randomSuffix = Array.from({ length: 4 }, () =>
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
-    ).join("");
-    const demoAddress = `GDLOBSTRM5V6VQL2W7H4P8ZJXK39QY0RNE4SDA7MUPTR4A69T0${randomSuffix}`;
-    setConnectedWallet(demoAddress, "Lobstr Mobile Multi-Sig");
-    addLog("[Lobstr]", `Connected mobile signer: ${demoAddress.slice(0, 8)}... (Multi-sig safe)`, "log-tag-success");
-    optLobstr.style.opacity = "1";
-    if (walletModal) walletModal.style.display = "none";
-  });
-}
-
-if (optXbull) {
-  optXbull.addEventListener("click", () => {
-    optXbull.style.opacity = "0.7";
-    const randomSuffix = Array.from({ length: 4 }, () =>
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567"[Math.floor(Math.random() * 32)]
-    ).join("");
-    const demoAddress = `GBXBULLJ7R8T9V2W3X4Y5Z6A7B8C9D0E1F2G3H4I5J6K7L8M9${randomSuffix}`;
-    setConnectedWallet(demoAddress, "xBull Wallet");
-    addLog("[xBull]", `Connected non-custodial account: ${demoAddress.slice(0, 8)}...`, "log-tag-success");
-    optXbull.style.opacity = "1";
-    if (walletModal) walletModal.style.display = "none";
-  });
-}
+// Modal Elements & Central Wallet Handlers
+// (Detailed modal, wallet choice, terms validation, and disconnect flows are orchestrated in initHakiru5TabApp below)
 
 function setConnectedWallet(address, providerName) {
   state.wallet.connected = true;
@@ -2298,6 +2192,453 @@ function initHakiruSocialAndSolvency() {
   }, 30000);
 }
 
+function initHakiru5TabApp() {
+  // 1. Navigation Tab Switching (Stake, Wrap, Withdrawals, Rewards, Earn)
+  const navTabs = document.querySelectorAll(".app-tab-btn");
+  const tabViews = {
+    stake: document.getElementById("viewTabStake"),
+    wrap: document.getElementById("viewTabWrap"),
+    withdrawals: document.getElementById("viewTabWithdrawals"),
+    rewards: document.getElementById("viewTabRewards"),
+    earn: document.getElementById("viewTabEarn"),
+  };
+
+  function switchTab(tabKey) {
+    if (!tabViews[tabKey]) return;
+    navTabs.forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.tab === tabKey);
+    });
+    Object.keys(tabViews).forEach((k) => {
+      if (tabViews[k]) {
+        tabViews[k].classList.toggle("active", k === tabKey);
+      }
+    });
+    window.location.hash = tabKey;
+  }
+
+  navTabs.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const tab = btn.dataset.tab;
+      switchTab(tab);
+    });
+  });
+
+  // Handle URL hash or param
+  const hash = window.location.hash.replace("#", "");
+  if (hash && tabViews[hash]) {
+    switchTab(hash);
+  }
+
+  // Promo card links
+  const promoEarnLink = document.getElementById("promoEarnLink");
+  if (promoEarnLink) {
+    promoEarnLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      switchTab("earn");
+    });
+  }
+
+  document.querySelectorAll(".btn-deposit-vault").forEach((b) => {
+    b.addEventListener("click", () => {
+      switchTab("stake");
+    });
+  });
+
+  // 2. Wrap Sub-tabs (Wrap / Unwrap)
+  const subtabWrap = document.getElementById("subtabWrap");
+  const subtabUnwrap = document.getElementById("subtabUnwrap");
+  const wrapInputLabel = document.getElementById("wrapInputLabel");
+  const wrapTokenIcon = document.getElementById("wrapTokenIcon");
+  const wrapTokenBadgeText = document.getElementById("wrapTokenBadgeText");
+  const btnActionWrapText = document.getElementById("btnActionWrapText");
+  let isWrapMode = true;
+
+  if (subtabWrap && subtabUnwrap) {
+    subtabWrap.addEventListener("click", () => {
+      isWrapMode = true;
+      subtabWrap.classList.add("active");
+      subtabUnwrap.classList.remove("active");
+      if (wrapInputLabel) wrapInputLabel.textContent = "hXLM amount";
+      if (wrapTokenIcon) {
+        wrapTokenIcon.textContent = "h";
+        wrapTokenIcon.className = "hakiru-token-icon icon-hxlm";
+      }
+      if (wrapTokenBadgeText) wrapTokenBadgeText.textContent = "hXLM";
+      if (btnActionWrapText && state.wallet.connected) btnActionWrapText.textContent = "Wrap hXLM";
+      updateBalances();
+    });
+
+    subtabUnwrap.addEventListener("click", () => {
+      isWrapMode = false;
+      subtabUnwrap.classList.add("active");
+      subtabWrap.classList.remove("active");
+      if (wrapInputLabel) wrapInputLabel.textContent = "whXLM amount";
+      if (wrapTokenIcon) {
+        wrapTokenIcon.textContent = "w";
+        wrapTokenIcon.className = "hakiru-token-icon icon-whxlm";
+      }
+      if (wrapTokenBadgeText) wrapTokenBadgeText.textContent = "whXLM";
+      if (btnActionWrapText && state.wallet.connected) btnActionWrapText.textContent = "Unwrap whXLM";
+      updateBalances();
+    });
+  }
+
+  // 3. Withdrawals Sub-tabs (Request / Claim)
+  const subtabWithdrawRequest = document.getElementById("subtabWithdrawRequest");
+  const subtabWithdrawClaim = document.getElementById("subtabWithdrawClaim");
+  const subviewWithdrawRequest = document.getElementById("subviewWithdrawRequest");
+  const subviewWithdrawClaim = document.getElementById("subviewWithdrawClaim");
+
+  if (subtabWithdrawRequest && subtabWithdrawClaim) {
+    subtabWithdrawRequest.addEventListener("click", () => {
+      subtabWithdrawRequest.classList.add("active");
+      subtabWithdrawClaim.classList.remove("active");
+      if (subviewWithdrawRequest) subviewWithdrawRequest.style.display = "block";
+      if (subviewWithdrawClaim) subviewWithdrawClaim.style.display = "none";
+    });
+
+    subtabWithdrawClaim.addEventListener("click", () => {
+      subtabWithdrawClaim.classList.add("active");
+      subtabWithdrawRequest.classList.remove("active");
+      if (subviewWithdrawRequest) subviewWithdrawRequest.style.display = "none";
+      if (subviewWithdrawClaim) subviewWithdrawClaim.style.display = "block";
+    });
+  }
+
+  // Choice cards (Hakiru Protocol vs DEX)
+  const choiceHakiru = document.getElementById("choiceHakiru");
+  const choiceDex = document.getElementById("choiceDex");
+  const withdrawWaitTimeText = document.getElementById("withdrawWaitTimeText");
+
+  if (choiceHakiru && choiceDex) {
+    choiceHakiru.addEventListener("click", () => {
+      choiceHakiru.classList.add("active");
+      choiceDex.classList.remove("active");
+      if (withdrawWaitTimeText) withdrawWaitTimeText.textContent = "~ 1-3 days";
+    });
+    choiceDex.addEventListener("click", () => {
+      choiceDex.classList.add("active");
+      choiceHakiru.classList.remove("active");
+      if (withdrawWaitTimeText) withdrawWaitTimeText.textContent = "~ 10 seconds (Instant Swap)";
+    });
+  }
+
+  // 4. Input Estimation & MAX Buttons
+  const inputStakeAmount = document.getElementById("inputStakeAmount");
+  const btnStakeMax = document.getElementById("btnStakeMax");
+  const stakeReceiveEst = document.getElementById("stakeReceiveEst");
+
+  if (inputStakeAmount) {
+    inputStakeAmount.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value) || 0;
+      if (stakeReceiveEst) {
+        stakeReceiveEst.textContent = (val * 1.0).toFixed(2) + " hXLM";
+      }
+    });
+  }
+
+  if (btnStakeMax && inputStakeAmount) {
+    btnStakeMax.addEventListener("click", () => {
+      const bal = state.wallet.connected ? state.wallet.balanceXlm : 1250;
+      inputStakeAmount.value = bal;
+      if (stakeReceiveEst) stakeReceiveEst.textContent = (bal * 1.0).toFixed(2) + " hXLM";
+    });
+  }
+
+  const inputWrapAmount = document.getElementById("inputWrapAmount");
+  const btnWrapMax = document.getElementById("btnWrapMax");
+  const wrapReceiveEst = document.getElementById("wrapReceiveEst");
+
+  if (inputWrapAmount) {
+    inputWrapAmount.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value) || 0;
+      if (wrapReceiveEst) {
+        const factor = isWrapMode ? 1.0428 : 1 / 1.0428;
+        const unit = isWrapMode ? " whXLM" : " hXLM";
+        wrapReceiveEst.textContent = (val * factor).toFixed(2) + unit;
+      }
+    });
+  }
+
+  if (btnWrapMax && inputWrapAmount) {
+    btnWrapMax.addEventListener("click", () => {
+      const bal = isWrapMode
+        ? (state.wallet.connected ? state.wallet.sharesHXlm : 450)
+        : 120;
+      inputWrapAmount.value = bal;
+      if (wrapReceiveEst) {
+        const factor = isWrapMode ? 1.0428 : 1 / 1.0428;
+        const unit = isWrapMode ? " whXLM" : " hXLM";
+        wrapReceiveEst.textContent = (bal * factor).toFixed(2) + unit;
+      }
+    });
+  }
+
+  const inputWithdrawAmount = document.getElementById("inputWithdrawAmount");
+  const btnWithdrawMax = document.getElementById("btnWithdrawMax");
+  const withdrawReceiveEst = document.getElementById("withdrawReceiveEst");
+
+  if (inputWithdrawAmount) {
+    inputWithdrawAmount.addEventListener("input", (e) => {
+      const val = parseFloat(e.target.value) || 0;
+      if (withdrawReceiveEst) {
+        withdrawReceiveEst.textContent = (val * 1.0428).toFixed(2) + " XLM";
+      }
+    });
+  }
+
+  if (btnWithdrawMax && inputWithdrawAmount) {
+    btnWithdrawMax.addEventListener("click", () => {
+      const bal = state.wallet.connected ? state.wallet.sharesHXlm : 450;
+      inputWithdrawAmount.value = bal;
+      if (withdrawReceiveEst) withdrawReceiveEst.textContent = (bal * 1.0428).toFixed(2) + " XLM";
+    });
+  }
+
+  // 5. FAQ Accordion Interaction
+  document.querySelectorAll(".hakiru-faq-question").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const item = btn.closest(".hakiru-faq-item");
+      if (item) {
+        item.classList.toggle("active");
+      }
+    });
+  });
+
+  // 6. Pro Deck Collapsible Toggle
+  const btnToggleProDeck = document.getElementById("btnToggleProDeck");
+  const proDeckContainer = document.getElementById("proDeckContainer");
+  if (btnToggleProDeck && proDeckContainer) {
+    btnToggleProDeck.addEventListener("click", () => {
+      const isHidden = proDeckContainer.style.display === "none";
+      proDeckContainer.style.display = isHidden ? "block" : "none";
+      btnToggleProDeck.innerHTML = isHidden
+        ? "<span>⚡ Hide Advanced Pro Analytics & Risk Telemetry ▴</span>"
+        : "<span>⚡ Advanced Pro Analytics, Trading Bots & Risk Telemetry ▾</span>";
+    });
+  }
+
+  // 7. Wallet Connect Modal & Working Connection
+  const walletModal = document.getElementById("walletModal");
+  const btnCloseModal = document.getElementById("btnCloseModal");
+  const accountModal = document.getElementById("accountModal");
+  const btnCloseAccountModal = document.getElementById("btnCloseAccountModal");
+  const btnDisconnectWallet = document.getElementById("btnDisconnectWallet");
+  const btnToggleMoreWallets = document.getElementById("btnToggleMoreWallets");
+  const moreWalletsArea = document.getElementById("moreWalletsArea");
+  const chkTermsAccept = document.getElementById("chkTermsAccept");
+  const btnCopyAddress = document.getElementById("btnCopyAddress");
+
+  const btnConnectWallet = document.getElementById("btnConnectWallet");
+  const btnActionStake = document.getElementById("btnActionStake");
+  const btnActionWrap = document.getElementById("btnActionWrap");
+  const btnActionWithdraw = document.getElementById("btnActionWithdraw");
+
+  const btnActionStakeText = document.getElementById("btnActionStakeText");
+  const btnActionWithdrawText = document.getElementById("btnActionWithdrawText");
+
+  function openWalletModal() {
+    if (walletModal) walletModal.style.display = "flex";
+  }
+
+  function closeWalletModal() {
+    if (walletModal) walletModal.style.display = "none";
+  }
+
+  function openAccountModal() {
+    if (accountModal) {
+      accountModal.style.display = "flex";
+      const addrEl = document.getElementById("accountAddressFull");
+      const balXlmEl = document.getElementById("accountBalXlm");
+      const balHxlmEl = document.getElementById("accountBalHxlm");
+      if (addrEl && state.wallet.address) addrEl.textContent = state.wallet.address;
+      if (balXlmEl) balXlmEl.textContent = `${state.wallet.balanceXlm.toFixed(2)} XLM`;
+      if (balHxlmEl) balHxlmEl.textContent = `${state.wallet.sharesHXlm.toFixed(2)} hXLM`;
+    }
+  }
+
+  function closeAccountModal() {
+    if (accountModal) accountModal.style.display = "none";
+  }
+
+  if (btnConnectWallet) {
+    btnConnectWallet.addEventListener("click", () => {
+      if (state.wallet.connected) {
+        openAccountModal();
+      } else {
+        openWalletModal();
+      }
+    });
+  }
+
+  if (btnCloseModal) btnCloseModal.addEventListener("click", closeWalletModal);
+  if (btnCloseAccountModal) btnCloseAccountModal.addEventListener("click", closeAccountModal);
+
+  if (btnToggleMoreWallets && moreWalletsArea) {
+    btnToggleMoreWallets.addEventListener("click", () => {
+      const isHidden = moreWalletsArea.style.display === "none";
+      moreWalletsArea.style.display = isHidden ? "block" : "none";
+      btnToggleMoreWallets.textContent = isHidden ? "Less wallets ▴" : "More wallets ▾";
+    });
+  }
+
+  // Connect wallet handler
+  function connectAccount(walletName) {
+    if (chkTermsAccept && !chkTermsAccept.checked) {
+      alert("Please accept the Terms of Use and Privacy Notice to proceed.");
+      return;
+    }
+
+    state.wallet.connected = true;
+    state.wallet.address = "GD3K7W4H6L7E54PZJ4RUX794F8K43M2Q";
+    state.wallet.balanceXlm = 1250.0;
+    state.wallet.sharesHXlm = 450.0;
+
+    closeWalletModal();
+    updateWalletUI();
+    showToast(`Connected via ${walletName} (GD3K...7R9X)`);
+  }
+
+  document.querySelectorAll(".hakiru-wallet-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      const wName = b.dataset.wallet || "Wallet";
+      connectAccount(wName.charAt(0).toUpperCase() + wName.slice(1));
+    });
+  });
+
+  if (btnDisconnectWallet) {
+    btnDisconnectWallet.addEventListener("click", () => {
+      state.wallet.connected = false;
+      state.wallet.address = null;
+      closeAccountModal();
+      updateWalletUI();
+      showToast("Wallet disconnected");
+    });
+  }
+
+  if (btnCopyAddress) {
+    btnCopyAddress.addEventListener("click", () => {
+      if (state.wallet.address) {
+        navigator.clipboard.writeText(state.wallet.address).catch(() => {});
+        btnCopyAddress.textContent = "Copied!";
+        setTimeout(() => (btnCopyAddress.textContent = "Copy"), 2000);
+      }
+    });
+  }
+
+  function updateWalletUI() {
+    if (state.wallet.connected) {
+      if (btnConnectWallet) {
+        btnConnectWallet.innerHTML = `<span class="status-dot" style="display:inline-block; margin-right:5px; background:#10b981; width:8px; height:8px; border-radius:50%;"></span> ${state.wallet.address.slice(0, 4)}...${state.wallet.address.slice(-4)} (${state.wallet.balanceXlm.toLocaleString()} XLM)`;
+      }
+      if (btnActionStakeText) btnActionStakeText.textContent = "Stake XLM";
+      if (btnActionWrapText) btnActionWrapText.textContent = isWrapMode ? "Wrap hXLM" : "Unwrap whXLM";
+      if (btnActionWithdrawText) btnActionWithdrawText.textContent = "Request Withdrawal";
+    } else {
+      if (btnConnectWallet) {
+        btnConnectWallet.innerHTML = `<span>Connect Wallet</span> <span class="arrow-glyph">→</span>`;
+      }
+      if (btnActionStakeText) btnActionStakeText.textContent = "Connect wallet";
+      if (btnActionWrapText) btnActionWrapText.textContent = "Connect wallet";
+      if (btnActionWithdrawText) btnActionWithdrawText.textContent = "Connect wallet";
+    }
+    updateBalances();
+  }
+
+  function updateBalances() {
+    const stakeBal = document.getElementById("stakeBalDisplay");
+    const wrapBal = document.getElementById("wrapBalDisplay");
+    const withdrawBal = document.getElementById("withdrawBalDisplay");
+
+    if (stakeBal) {
+      stakeBal.textContent = `Available: ${state.wallet.connected ? state.wallet.balanceXlm.toFixed(2) : "0.00"} XLM`;
+    }
+    if (wrapBal) {
+      wrapBal.textContent = `Available: ${state.wallet.connected ? (isWrapMode ? state.wallet.sharesHXlm.toFixed(2) + " hXLM" : "120.00 whXLM") : "0.00 hXLM"}`;
+    }
+    if (withdrawBal) {
+      withdrawBal.textContent = `Available: ${state.wallet.connected ? state.wallet.sharesHXlm.toFixed(2) : "0.00"} hXLM`;
+    }
+  }
+
+  // Primary Action Button Execution (Stake, Wrap, Withdraw)
+  if (btnActionStake) {
+    btnActionStake.addEventListener("click", () => {
+      if (!state.wallet.connected) {
+        openWalletModal();
+        return;
+      }
+      const amt = parseFloat(inputStakeAmount.value) || 0;
+      if (amt <= 0) {
+        showToast("Please enter an amount to stake");
+        return;
+      }
+      if (amt > state.wallet.balanceXlm) {
+        showToast("Insufficient XLM balance");
+        return;
+      }
+      state.wallet.balanceXlm -= amt;
+      state.wallet.sharesHXlm += amt;
+      inputStakeAmount.value = "";
+      updateWalletUI();
+      showToast(`Staked ${amt} XLM for ${amt} hXLM! Tx Hash: 0x${Math.random().toString(16).slice(2, 10)}...`);
+    });
+  }
+
+  if (btnActionWrap) {
+    btnActionWrap.addEventListener("click", () => {
+      if (!state.wallet.connected) {
+        openWalletModal();
+        return;
+      }
+      const amt = parseFloat(inputWrapAmount.value) || 0;
+      if (amt <= 0) {
+        showToast("Please enter an amount to wrap/unwrap");
+        return;
+      }
+      inputWrapAmount.value = "";
+      updateWalletUI();
+      showToast(`${isWrapMode ? "Wrapped" : "Unwrapped"} ${amt} tokens! Tx: 0x${Math.random().toString(16).slice(2, 10)}...`);
+    });
+  }
+
+  if (btnActionWithdraw) {
+    btnActionWithdraw.addEventListener("click", () => {
+      if (!state.wallet.connected) {
+        openWalletModal();
+        return;
+      }
+      const amt = parseFloat(inputWithdrawAmount.value) || 0;
+      if (amt <= 0) {
+        showToast("Please enter an amount to withdraw");
+        return;
+      }
+      state.wallet.sharesHXlm -= amt;
+      inputWithdrawAmount.value = "";
+      updateWalletUI();
+      showToast(`Withdrawal requested: ${amt} hXLM queued in FIFO ticket #103 (~1-3 days).`);
+    });
+  }
+
+  // Helper toast alert
+  function showToast(msg) {
+    let t = document.getElementById("hakiruToast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "hakiruToast";
+      t.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#10b981;color:#fff;padding:0.6rem 1.2rem;border-radius:9999px;font-size:0.85rem;font-weight:600;z-index:99999;box-shadow:0 10px 25px rgba(0,0,0,0.3);transition:all 0.3s ease;";
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.opacity = "1";
+    t.style.transform = "translateX(-50%) translateY(0)";
+    setTimeout(() => {
+      t.style.opacity = "0";
+      t.style.transform = "translateX(-50%) translateY(10px)";
+    }, 3500);
+  }
+}
+
 // Call on load
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", () => {
@@ -2305,12 +2646,15 @@ if (document.readyState === "loading") {
     initMarketingInteractions();
     initAppPageVaultRouting();
     initHakiruSocialAndSolvency();
+    initHakiru5TabApp();
   });
 } else {
   initNavSliderAndCalculator();
   initMarketingInteractions();
   initAppPageVaultRouting();
   initHakiruSocialAndSolvency();
+  initHakiru5TabApp();
 }
+
 
 

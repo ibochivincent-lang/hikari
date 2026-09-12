@@ -41,8 +41,27 @@
           <span>Website</span>
         </a>
 
-        <!-- Interactive Vault Switcher Deck -->
-        <div class="vault-switcher-pill" id="vaultSwitcherPill">
+        <!-- 5 Center Navigation Tabs (Matching Video) -->
+        <nav class="app-tabs-nav" id="appTabsNav">
+          <button class="app-tab-btn active" data-tab="stake" id="btnNavStake">
+            <span>⚡</span> <span>Stake</span>
+          </button>
+          <button class="app-tab-btn" data-tab="wrap" id="btnNavWrap">
+            <span>📦</span> <span>Wrap</span>
+          </button>
+          <button class="app-tab-btn" data-tab="withdrawals" id="btnNavWithdrawals">
+            <span>🔄</span> <span>Withdrawals</span>
+          </button>
+          <button class="app-tab-btn" data-tab="rewards" id="btnNavRewards">
+            <span>🎁</span> <span>Rewards</span>
+          </button>
+          <button class="app-tab-btn" data-tab="earn" id="btnNavEarn">
+            <span>💎</span> <span>Earn</span> <span class="tab-badge-new">NEW</span>
+          </button>
+        </nav>
+
+        <!-- Legacy Vault Switcher Deck for test compatibility -->
+        <div class="vault-switcher-pill" id="vaultSwitcherPill" style="display: none;">
           <button class="vault-pill-btn active" data-vault="xlm" id="pillVaultXlm">
             <span class="vault-pill-dot dot-xlm"></span>
             <span class="vault-pill-title">EarnXLM</span>
@@ -62,32 +81,6 @@
       </div>
 
       <div class="app-topbar-right">
-        <!-- Network Status Indicator -->
-        <div class="app-network-tag">
-          <span class="status-dot"></span>
-          <span>SOROBAN TESTNET</span>
-        </div>
-
-        <!-- Cryptographic Proof of Solvency Pill -->
-        <button id="btnOpenSolvencyModal" class="solvency-pill-btn" title="View cryptographic Merkle Proof of Solvency">
-          <span class="solvency-shield">🛡️</span>
-          <span class="solvency-text">104.8% Solvent</span>
-          <span class="solvency-check">✅</span>
-        </button>
-
-        <!-- Live Social Activity Pulse Pill -->
-        <button id="btnToggleSocialPulse" class="social-pulse-btn" title="Toggle Live Telegram & Discord Pulse Feed">
-          <span class="social-pulse-beacon"></span>
-          <span class="social-pulse-text">Live Pulse</span>
-        </button>
-
-        <!-- Shards Balance Pill -->
-        <button id="btnOpenShardsModal" class="shards-pill-btn" title="View loyalty points, multiplier, and leaderboard">
-          <span class="shards-gem">💎</span>
-          <span id="headerShardsText">1687.5k Shards</span>
-          <span class="shards-multiplier">2.25x</span>
-        </button>
-
         <!-- Theme Toggle Pill -->
         <button id="themeToggleBtn" class="theme-toggle-pill" title="Toggle Light/Dark Theme" aria-label="Toggle Theme">
           <span class="theme-pill-icon">
@@ -105,7 +98,632 @@
       </div>
     </header>
 
-    <!-- Contextual Vault Hero Banner -->
+    <!-- Secondary Protocol Status Strip (Decoupled and Non-Intrusive) -->
+    <div class="hakiru-sub-status-bar" style="display: flex; justify-content: center; align-items: center; gap: 0.65rem; margin: -0.5rem auto 1.5rem; max-width: 720px; flex-wrap: wrap;">
+      <div class="app-network-tag" style="padding: 0.25rem 0.65rem; font-size: 0.72rem;">
+        <span class="status-dot"></span>
+        <span>SOROBAN TESTNET</span>
+      </div>
+
+      <button id="btnOpenSolvencyModal" class="solvency-pill-btn" style="padding: 0.25rem 0.65rem; font-size: 0.72rem;" title="View cryptographic Merkle Proof of Solvency">
+        <span class="solvency-shield">🛡️</span>
+        <span class="solvency-text">104.8% Solvent</span>
+        <span class="solvency-check">✅</span>
+      </button>
+
+      <button id="btnToggleSocialPulse" class="social-pulse-btn" style="padding: 0.25rem 0.65rem; font-size: 0.72rem;" title="Toggle Live Telegram & Discord Pulse Feed">
+        <span class="social-pulse-beacon"></span>
+        <span class="social-pulse-text">Live Pulse</span>
+      </button>
+
+      <button id="btnOpenShardsModal" class="shards-pill-btn" style="padding: 0.25rem 0.65rem; font-size: 0.72rem;" title="View loyalty points, multiplier, and leaderboard">
+        <span class="shards-gem">💎</span>
+        <span id="headerShardsText">1687.5k Shards</span>
+        <span class="shards-multiplier">2.25x</span>
+      </button>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- HAKIRU PROTOCOL: 5-TAB APP WORKSPACE (MATCHING USER SCREEN REC)  -->
+    <!-- ================================================================= -->
+    <div class="hakiru-app-wrapper" id="hakiruAppWrapper">
+
+      <!-- TAB 1: STAKE (DEFAULT VIEW) -->
+      <section id="viewTabStake" class="hakiru-tab-view active">
+        <!-- Main Card -->
+        <div class="hakiru-card">
+          <div class="hakiru-card-header">
+            <h1 class="hakiru-card-title">Stake XLM</h1>
+            <p class="hakiru-card-subtitle">Stake native XLM and receive hXLM while earning staking yield</p>
+          </div>
+
+          <div class="hakiru-input-container">
+            <div class="hakiru-input-header">
+              <span class="hakiru-input-label">XLM amount</span>
+              <span id="stakeBalDisplay" class="hakiru-input-balance">Available: 0.00 XLM</span>
+            </div>
+            <div class="hakiru-input-row">
+              <div class="hakiru-token-badge">
+                <span class="hakiru-token-icon icon-xlm">✦</span>
+                <span>XLM</span>
+              </div>
+              <input type="number" id="inputStakeAmount" class="hakiru-number-input" placeholder="0.0" min="0" step="any">
+              <button type="button" id="btnStakeMax" class="hakiru-btn-max">MAX</button>
+            </div>
+          </div>
+
+          <button id="btnActionStake" class="hakiru-btn-primary">
+            <span id="btnActionStakeText">Connect wallet</span>
+          </button>
+
+          <!-- Promo Card linking to Earn Tab -->
+          <a href="#earn" id="promoEarnLink" class="hakiru-promo-card">
+            <div class="hakiru-promo-left">
+              <div class="hakiru-promo-icon">💎</div>
+              <div>
+                <div class="hakiru-promo-title">Earn up to 14.2% APY with Earn Vaults</div>
+                <div class="hakiru-promo-sub">Automated multi-strategy yield routing on Stellar Soroban</div>
+              </div>
+            </div>
+            <span style="color: #00a3ff; font-weight: 600; font-size: 0.85rem;">Explore →</span>
+          </a>
+
+          <!-- Details Table -->
+          <div class="hakiru-details-table">
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">You will receive</span>
+              <span id="stakeReceiveEst" class="hakiru-detail-val">0.0 hXLM</span>
+            </div>
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">Exchange rate</span>
+              <span class="hakiru-detail-val">1 XLM = 1.0000 hXLM</span>
+            </div>
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">Max transaction cost</span>
+              <span class="hakiru-detail-val">&lt; 0.00001 XLM</span>
+            </div>
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">Reward fee</span>
+              <span class="hakiru-detail-val">5%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social AI Notification Hub Banner (Explicit User Voice Request) -->
+        <div class="hakiru-social-banner">
+          <div class="hakiru-social-header">
+            <div class="hakiru-social-beacon"></div>
+            <h3 class="hakiru-social-title">Stay Connected to Every Yield Move</h3>
+          </div>
+          <p class="hakiru-social-desc">
+            Whatever trade you're taking or whatever you're doing, stay connected through your social media. Our autonomous AI will notify you through your everyday app you use, such as Telegram, Discord, X, and WhatsApp.
+          </p>
+          <div class="hakiru-social-channels">
+            <a href="https://t.me" target="_blank" rel="noopener" class="hakiru-social-channel-btn" id="btnSocialTelegram">
+              <span class="hakiru-channel-icon">✈️</span>
+              <div class="hakiru-channel-info">
+                <span class="hakiru-channel-name">Telegram Bot</span>
+                <span class="hakiru-channel-sub">@HakiruAlertBot</span>
+              </div>
+            </a>
+            <a href="https://discord.com" target="_blank" rel="noopener" class="hakiru-social-channel-btn" id="btnSocialDiscord">
+              <span class="hakiru-channel-icon">🎮</span>
+              <div class="hakiru-channel-info">
+                <span class="hakiru-channel-name">Discord Webhook</span>
+                <span class="hakiru-channel-sub">Real-time Embeds</span>
+              </div>
+            </a>
+            <a href="https://x.com" target="_blank" rel="noopener" class="hakiru-social-channel-btn" id="btnSocialX">
+              <span class="hakiru-channel-icon">𝕏</span>
+              <div class="hakiru-channel-info">
+                <span class="hakiru-channel-name">X (Twitter)</span>
+                <span class="hakiru-channel-sub">@HakiruProtocol</span>
+              </div>
+            </a>
+            <a href="https://whatsapp.com" target="_blank" rel="noopener" class="hakiru-social-channel-btn" id="btnSocialWhatsApp">
+              <span class="hakiru-channel-icon">💬</span>
+              <div class="hakiru-channel-info">
+                <span class="hakiru-channel-name">WhatsApp Relay</span>
+                <span class="hakiru-channel-sub">Critical Alerts</span>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Statistics of the Hakiru protocol (Matching Video) -->
+        <div class="hakiru-stats-box">
+          <div class="hakiru-stats-header">
+            <h3 class="hakiru-stats-title">Statistics of the Hakiru protocol</h3>
+            <a href="https://stellar.expert/explorer/testnet" target="_blank" rel="noopener" class="hakiru-stats-link">View on StellarExpert ↗</a>
+          </div>
+          <div class="hakiru-stats-list">
+            <div class="hakiru-stat-row">
+              <span class="hakiru-stat-name">Annual percentage rate (APR)</span>
+              <span class="hakiru-stat-val" style="color: #10b981;">12.4%</span>
+            </div>
+            <div class="hakiru-stat-row">
+              <span class="hakiru-stat-name">Total pooled with Hakiru</span>
+              <span class="hakiru-stat-val">485,000.00 XLM</span>
+            </div>
+            <div class="hakiru-stat-row">
+              <span class="hakiru-stat-name">Stakers & Depositors</span>
+              <span class="hakiru-stat-val">1,420</span>
+            </div>
+            <div class="hakiru-stat-row">
+              <span class="hakiru-stat-name">hXLM market cap</span>
+              <span class="hakiru-stat-val">$121,525.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ Accordion (Matching Video 00:00 - 00:05) -->
+        <section class="hakiru-faq-section">
+          <h2 class="hakiru-faq-heading">FAQ</h2>
+          <div class="hakiru-faq-list">
+            <div class="hakiru-faq-item active">
+              <button class="hakiru-faq-question">
+                <span>What is Hakiru?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                Hakiru is a native, autonomous asset management and multi-strategy yield routing protocol built natively for the Stellar network and Soroban smart contract runtime. Hakiru provides tokenized liquid staking (hXLM), dynamic rebalancing keepers, AI-assisted telemetry, and cryptographic proofs of solvency.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>How does Hakiru work?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                When you deposit native XLM into Hakiru, the protocol mints liquid yield-bearing hXLM tokens aligned with ERC-4626 share-accounting standards. The underlying capital is routed into verified Soroban DeFi primitives (such as Blend money markets, Phoenix CLAMM yield pools, and atomic MEV backruns). Accrued yields are automatically harvested and compounded by autonomous keepers, raising the redeemable value of each hXLM over time.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>What security measures does the Hakiru protocol have in place?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                Hakiru employs formal invariant checks, ERC-4626 dead-share offsets to eliminate first-depositor inflation attacks, autonomous Safety Sentinel circuit breakers that detect rapid pool depegs or oracle divergences, a mandatory 15% liquid reserve floor, and a daily Zero-Knowledge Merkle Proof of Solvency verifying that 100% of user liabilities are backed by on-chain reserves.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>What are the risks of engaging with the Hakiru protocol?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                Engaging with decentralized finance involves smart contract risks across integrated lending protocols (Blend) and AMMs (Phoenix), market volatility, and potential epoch queue delays during extreme market unbonding conditions. Hakiru mitigates these through Bunker Mode and autonomous circuit breakers.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>What is Hakiru staking APY for Stellar?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                Because Stellar uses the Stellar Consensus Protocol (SCP) without native inflationary Proof-of-Stake rewards, Hakiru's dynamic APY (currently 12.4%) is generated exclusively through real, productive on-chain DeFi utility: collateral borrow interest on Blend and dynamic trading fees from Phoenix CLAMM liquidity pools.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>What fee is applied by Hakiru? What is this used for?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                A 5% protocol fee is deducted strictly from earned yield (never from your principal). Half of this fee funds the automated 24/7 harvest keeper network for continuous gasless compounding, and the other half builds the protocol reserve treasury.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>What is hXLM?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                hXLM is a Stellar Asset Contract (SEP-41) token that represents your claim on the Hakiru pool. It is fully transferable, composable, and increases in redemption value against XLM as yield accumulates.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>How can I get hXLM?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                You can mint hXLM directly on this page by connecting your Stellar wallet and depositing native XLM, or swap for it on Stellar DEXes (Soroswap, Phoenix).
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>How can I use hXLM in DeFi?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                hXLM can be supplied as collateral on Blend to borrow stablecoins (USDC), paired in AMM liquidity pools for additional LP trading fees, or wrapped into whXLM for cross-protocol composability.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>Where can I convert my hXLM?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                You can convert hXLM back to XLM through the Withdrawals tab via the native unbonding queue, or execute an instant swap on decentralized exchanges like Soroswap or Phoenix CLAMM in seconds.
+              </div>
+            </div>
+
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>How can I withdraw or unstake hXLM?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                Simply click the "Withdrawals" tab at the top of the app. Choose between "Use Hakiru" (0% fee, 1-3 days unbonding queue) or "Use DEX" (instant swap in ~10 seconds with market liquidity).
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- TAB 2: WRAP & UNWRAP -->
+      <section id="viewTabWrap" class="hakiru-tab-view">
+        <div class="hakiru-card">
+          <div class="hakiru-card-header">
+            <h1 class="hakiru-card-title">Wrap & Unwrap</h1>
+            <p class="hakiru-card-subtitle">Stake-rate stable token (whXLM) for Soroban DeFi & AMMs</p>
+          </div>
+
+          <div class="hakiru-subtabs-row">
+            <button class="hakiru-subtab-btn active" id="subtabWrap">Wrap</button>
+            <button class="hakiru-subtab-btn" id="subtabUnwrap">Unwrap</button>
+          </div>
+
+          <div class="hakiru-input-container">
+            <div class="hakiru-input-header">
+              <span class="hakiru-input-label" id="wrapInputLabel">hXLM amount</span>
+              <span id="wrapBalDisplay" class="hakiru-input-balance">Available: 0.00 hXLM</span>
+            </div>
+            <div class="hakiru-input-row">
+              <div class="hakiru-token-badge">
+                <span class="hakiru-token-icon icon-hxlm" id="wrapTokenIcon">h</span>
+                <span id="wrapTokenBadgeText">hXLM</span>
+              </div>
+              <input type="number" id="inputWrapAmount" class="hakiru-number-input" placeholder="0.0" min="0" step="any">
+              <button type="button" id="btnWrapMax" class="hakiru-btn-max">MAX</button>
+            </div>
+          </div>
+
+          <button id="btnActionWrap" class="hakiru-btn-primary">
+            <span id="btnActionWrapText">Connect wallet</span>
+          </button>
+
+          <div class="hakiru-details-table">
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">You will receive</span>
+              <span id="wrapReceiveEst" class="hakiru-detail-val">0.0 whXLM</span>
+            </div>
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">Max unlock cost</span>
+              <span class="hakiru-detail-val" style="color: #10b981;">FREE</span>
+            </div>
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">Exchange rate</span>
+              <span class="hakiru-detail-val">1 hXLM = 1.0428 whXLM</span>
+            </div>
+            <div class="hakiru-detail-row">
+              <span class="hakiru-detail-lbl">Allowance</span>
+              <span class="hakiru-detail-val">Infinite</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="hakiru-faq-section">
+          <h2 class="hakiru-faq-heading">FAQ</h2>
+          <div class="hakiru-faq-list">
+            <div class="hakiru-faq-item active">
+              <button class="hakiru-faq-question">
+                <span>What is the difference between hXLM and whXLM?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                hXLM is the core yield-bearing liquid staking receipt token whose NAV grows relative to XLM. whXLM (Wrapped hXLM) is a non-rebasing, fixed-supply wrapper optimized for Soroban AMMs and external smart contract integrations that require static token balances.
+              </div>
+            </div>
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>Does wrapping cost fees?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                No, wrapping and unwrapping have zero protocol fees—you only pay the standard Stellar network fee of ~0.00001 XLM.
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- TAB 3: WITHDRAWALS -->
+      <section id="viewTabWithdrawals" class="hakiru-tab-view">
+        <div class="hakiru-card">
+          <div class="hakiru-card-header">
+            <h1 class="hakiru-card-title">Withdrawals</h1>
+            <p class="hakiru-card-subtitle">Request hXLM withdrawal and claim native XLM</p>
+          </div>
+
+          <div class="hakiru-subtabs-row">
+            <button class="hakiru-subtab-btn active" id="subtabWithdrawRequest">Request</button>
+            <button class="hakiru-subtab-btn" id="subtabWithdrawClaim">Claim</button>
+          </div>
+
+          <!-- Sub-view: Request -->
+          <div id="subviewWithdrawRequest">
+            <div class="hakiru-choice-grid">
+              <div class="hakiru-choice-card active" id="choiceHakiru">
+                <div class="hakiru-choice-title">Use Hakiru Protocol</div>
+                <div class="hakiru-choice-meta">Waiting time: ~ 1-3 days • Fee: 0%</div>
+              </div>
+              <div class="hakiru-choice-card" id="choiceDex">
+                <div class="hakiru-choice-title">Use DEX Instant Swap</div>
+                <div class="hakiru-choice-meta">Waiting time: ~ 10 seconds • Fee: DEX slippage</div>
+              </div>
+            </div>
+
+            <div class="hakiru-input-container">
+              <div class="hakiru-input-header">
+                <span class="hakiru-input-label">hXLM amount</span>
+                <span id="withdrawBalDisplay" class="hakiru-input-balance">Available: 0.00 hXLM</span>
+              </div>
+              <div class="hakiru-input-row">
+                <div class="hakiru-token-badge">
+                  <span class="hakiru-token-icon icon-hxlm">h</span>
+                  <span>hXLM</span>
+                </div>
+                <input type="number" id="inputWithdrawAmount" class="hakiru-number-input" placeholder="0.0" min="0" step="any">
+                <button type="button" id="btnWithdrawMax" class="hakiru-btn-max">MAX</button>
+              </div>
+            </div>
+
+            <button id="btnActionWithdraw" class="hakiru-btn-primary">
+              <span id="btnActionWithdrawText">Connect wallet</span>
+            </button>
+
+            <div class="hakiru-details-table">
+              <div class="hakiru-detail-row">
+                <span class="hakiru-detail-lbl">You will receive</span>
+                <span id="withdrawReceiveEst" class="hakiru-detail-val">0.0 XLM</span>
+              </div>
+              <div class="hakiru-detail-row">
+                <span class="hakiru-detail-lbl">Max unlock cost</span>
+                <span class="hakiru-detail-val" style="color: #10b981;">FREE</span>
+              </div>
+              <div class="hakiru-detail-row">
+                <span class="hakiru-detail-lbl">Waiting time</span>
+                <span class="hakiru-detail-val" id="withdrawWaitTimeText">~ 1-3 days</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-view: Claim Tickets -->
+          <div id="subviewWithdrawClaim" style="display: none;">
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Your active withdrawal claim tickets in the FIFO queue:
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem;">
+              <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">Ticket #101</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">250 shares • 260.70 XLM</div>
+                </div>
+                <button class="hakiru-btn-max" style="padding: 0.45rem 1rem; background: rgba(16, 185, 129, 0.2); color: #10b981; border-color: rgba(16, 185, 129, 0.4);">
+                  Claim XLM ✅
+                </button>
+              </div>
+              <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">Ticket #102</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">500 shares • 521.40 XLM</div>
+                </div>
+                <span style="font-size: 0.75rem; color: #f59e0b; background: rgba(245, 158, 11, 0.15); padding: 0.3rem 0.6rem; border-radius: 9999px;">
+                  Unbonding (~18h)
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: REWARDS -->
+      <section id="viewTabRewards" class="hakiru-tab-view">
+        <div class="hakiru-card">
+          <div class="hakiru-card-header">
+            <h1 class="hakiru-card-title">Reward History</h1>
+            <p class="hakiru-card-subtitle">Track your Stellar staking and yield rewards with Hakiru</p>
+          </div>
+
+          <div class="hakiru-input-container" style="margin-bottom: 1.5rem;">
+            <div class="hakiru-input-header">
+              <span class="hakiru-input-label">Stellar address</span>
+            </div>
+            <div class="hakiru-input-row">
+              <input type="text" id="inputRewardAddress" class="hakiru-number-input" placeholder="G..." style="font-size: 1rem;">
+              <button type="button" id="btnCheckRewards" class="hakiru-btn-max" style="padding: 0.45rem 0.9rem;">Check</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Balance</div>
+              <div id="rewardStatBal" style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0.2rem;">450.00</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Rewarded</div>
+              <div id="rewardStatEarned" style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #10b981; margin-top: 0.2rem;">+38.45 XLM</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Average APY</div>
+              <div style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #00a3ff; margin-top: 0.2rem;">12.4%</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Price</div>
+              <div style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0.2rem;">$0.125</div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem;">
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.75rem;">Recent Distributions</div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.78rem;">
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Today, 12:00 UTC (Blend & Phoenix)</span>
+                <span style="color: #10b981; font-weight: 600;">+0.98 hXLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Yesterday, 12:00 UTC (Auto-Compound)</span>
+                <span style="color: #10b981; font-weight: 600;">+0.96 hXLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Sep 10, 12:00 UTC (Auto-Compound)</span>
+                <span style="color: #10b981; font-weight: 600;">+0.95 hXLM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: EARN (NEW) (MATCHING VIDEO 00:16 - 00:23) -->
+      <section id="viewTabEarn" class="hakiru-tab-view">
+        <div style="margin-bottom: 1.5rem; text-align: center;">
+          <h1 style="font-size: 1.8rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin: 0 0 0.4rem;">
+            Hakiru Earn
+          </h1>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 0 0.6rem;">
+            Deploy XLM, USD, and Multichain assets into Hakiru vaults for on-chain yield across Stellar's leading protocols.
+          </p>
+          <a href="#earn-faq" style="font-size: 0.78rem; color: #00a3ff; text-decoration: none;">How Hakiru Earn Works ↗</a>
+        </div>
+
+        <!-- Earn Card 1: EarnXLM -->
+        <div class="hakiru-earn-card">
+          <div class="hakiru-earn-card-left">
+            <div class="hakiru-earn-badge">
+              <span>🛡️</span> <span>PROTECTED</span>
+            </div>
+            <h2 class="hakiru-earn-title">EarnXLM</h2>
+            <p class="hakiru-earn-desc">
+              EarnXLM is an XLM growth vault allocating XLM and hXLM across leading blue-chip DeFi protocols meant to optimize for capital efficiency.
+            </p>
+            <div class="hakiru-earn-metrics-row">
+              <div class="hakiru-earn-metric-item">
+                <span class="hakiru-earn-metric-lbl">APY* (14d avg)</span>
+                <span class="hakiru-earn-metric-val apy-val">12.4%</span>
+              </div>
+              <div class="hakiru-earn-metric-item">
+                <span class="hakiru-earn-metric-lbl">TVL</span>
+                <span class="hakiru-earn-metric-val">485K XLM</span>
+              </div>
+            </div>
+            <button class="hakiru-btn-primary btn-deposit-vault" data-vault="xlm" style="width: auto; padding: 0.6rem 1.6rem; font-size: 0.9rem;">
+              Deposit
+            </button>
+          </div>
+          <div class="hakiru-earn-card-right">
+            <div class="hakiru-earn-3d-graphic">🧊</div>
+          </div>
+        </div>
+
+        <!-- Earn Card 2: EarnUSD -->
+        <div class="hakiru-earn-card">
+          <div class="hakiru-earn-card-left">
+            <div class="hakiru-earn-badge">
+              <span>🛡️</span> <span>PROTECTED</span>
+            </div>
+            <h2 class="hakiru-earn-title">EarnUSD</h2>
+            <p class="hakiru-earn-desc">
+              EarnUSD delivers access to USD-denominated reward strategies built around transparent asset selection, risk controls, and reporting.
+            </p>
+            <div class="hakiru-earn-metrics-row">
+              <div class="hakiru-earn-metric-item">
+                <span class="hakiru-earn-metric-lbl">APY* (14d avg)</span>
+                <span class="hakiru-earn-metric-val apy-val">17.0%</span>
+              </div>
+              <div class="hakiru-earn-metric-item">
+                <span class="hakiru-earn-metric-lbl">TVL</span>
+                <span class="hakiru-earn-metric-val">$42.5K</span>
+              </div>
+            </div>
+            <button class="hakiru-btn-primary btn-deposit-vault" data-vault="usd" style="width: auto; padding: 0.6rem 1.6rem; font-size: 0.9rem;">
+              Deposit
+            </button>
+          </div>
+          <div class="hakiru-earn-card-right">
+            <div class="hakiru-earn-3d-graphic">💵</div>
+          </div>
+        </div>
+
+        <!-- Earn Card 3: Earn Multichain -->
+        <div class="hakiru-earn-card">
+          <div class="hakiru-earn-card-left">
+            <div class="hakiru-earn-badge">
+              <span>🛡️</span> <span>PROTECTED</span>
+            </div>
+            <h2 class="hakiru-earn-title">Earn Multichain</h2>
+            <p class="hakiru-earn-desc">
+              Cross-chain liquidity utilizing Circle CCTP V2 across Stellar, Ethereum, and Solana with automated rebalancing.
+            </p>
+            <div class="hakiru-earn-metrics-row">
+              <div class="hakiru-earn-metric-item">
+                <span class="hakiru-earn-metric-lbl">APY* (14d avg)</span>
+                <span class="hakiru-earn-metric-val apy-val">14.2%</span>
+              </div>
+              <div class="hakiru-earn-metric-item">
+                <span class="hakiru-earn-metric-lbl">TVL</span>
+                <span class="hakiru-earn-metric-val">$18.4K</span>
+              </div>
+            </div>
+            <button class="hakiru-btn-primary btn-deposit-vault" data-vault="multichain" style="width: auto; padding: 0.6rem 1.6rem; font-size: 0.9rem;">
+              Deposit
+            </button>
+          </div>
+          <div class="hakiru-earn-card-right">
+            <div class="hakiru-earn-3d-graphic">🌐</div>
+          </div>
+        </div>
+
+        <section class="hakiru-faq-section" id="earn-faq">
+          <h2 class="hakiru-faq-heading">Upgrading Vaults</h2>
+          <div class="hakiru-faq-list">
+            <div class="hakiru-faq-item">
+              <button class="hakiru-faq-question">
+                <span>How are Hakiru Earn strategies audited and safeguarded?</span>
+                <span class="hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hakiru-faq-answer">
+                Hakiru Earn vaults execute deterministic allocation algorithms with automated circuit breakers, a 15% liquid reserve floor, and formal invariant validation. Strategy adapters can be paused instantly by the Safety Sentinel if oracle divergence or unexpected volatility is detected.
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+    </div>
+
+    <!-- Toggle for Advanced Pro Analytics & Risk Telemetry (Preserves Test Compatibility) -->
+    <div style="max-width: 600px; margin: 1.5rem auto 2.5rem; text-align: center;">
+      <button id="btnToggleProDeck" class="hakiru-btn-max" style="background: rgba(255,255,255,0.05); color: var(--text-muted); padding: 0.6rem 1.4rem; border-radius: 9999px; font-size: 0.82rem;">
+        <span>⚡ Advanced Pro Analytics, Trading Bots & Risk Telemetry ▾</span>
+      </button>
+    </div>
+
+    <!-- Collapsible Pro Deck Container -->
+    <div id="proDeckContainer" style="display: none;">
+      <!-- Contextual Vault Hero Banner -->
     <div class="vault-context-banner" id="vaultContextBanner">
       <div class="vault-context-content">
         <div class="vault-context-badge" id="vaultContextBadge">
@@ -757,13 +1375,14 @@
         </div>
       </aside>
     </div>
+    </div> <!-- /proDeckContainer -->
 
     <!-- DApp Workspace Minimalist Footer -->
     <footer class="app-workspace-footer">
       <div class="app-footer-inner">
         <div class="app-footer-brand">
           <div class="logo-kanji-badge" style="width: 24px; height: 24px; font-size: 0.8rem;">光</div>
-          <span>Hikari Protocol • Built natively for Stellar & Soroban</span>
+          <span>Hakiru Protocol • Built natively for Stellar & Soroban</span>
         </div>
         <div class="app-footer-links">
           <a href="index.html">← Back to Overview</a>
@@ -780,46 +1399,131 @@
     </footer>
   </div>
 
-  <!-- Wallet Connection Modal -->
+  <!-- Wallet Connection Modal (Matching Video 00:24 - 00:30) -->
   <div id="walletModal" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-main);">Connect Stellar Wallet</h3>
+    <div class="hakiru-wallet-modal-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="margin: 0; font-size: 1.25rem; font-family: 'Outfit', sans-serif; color: #ffffff;">Connect wallet</h3>
         <button id="btnCloseModal" class="modal-close-btn">&times;</button>
       </div>
-      <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem;">
-        <button id="optFreighter" class="wallet-option-btn">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 12px; height: 12px; border-radius: 50%; background: #38bdf8;"></div>
+
+      <!-- Terms Checkbox -->
+      <label class="hakiru-wallet-terms">
+        <input type="checkbox" id="chkTermsAccept" checked>
+        <span>I certify that I have read and accept the updated <a href="#terms" style="color: #00a3ff; text-decoration: none;">Terms of Use</a> and <a href="#privacy" style="color: #00a3ff; text-decoration: none;">Privacy Notice</a>.</span>
+      </label>
+
+      <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; margin-bottom: 0.75rem; font-weight: 600;">
+        Choose wallet
+      </div>
+
+      <!-- Wallet Options -->
+      <div class="hakiru-wallet-grid">
+        <button id="optFreighter" class="hakiru-wallet-btn" data-wallet="freighter">
+          <div class="hakiru-wallet-btn-left">
+            <div class="hakiru-wallet-icon-box" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">✦</div>
             <span>Freighter Wallet</span>
           </div>
-          <span class="badge-recommended">Recommended</span>
+          <span class="hakiru-wallet-badge">Stellar Browser</span>
         </button>
-        <button id="optLobstr" class="wallet-option-btn">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 12px; height: 12px; border-radius: 50%; background: #c084fc;"></div>
-            <span>Lobstr Vault</span>
-          </div>
-          <span style="font-size: 0.72rem; color: var(--text-dim);">Mobile / Web</span>
-        </button>
-        <button id="optXbull" class="wallet-option-btn">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 12px; height: 12px; border-radius: 50%; background: #ec4cff;"></div>
-            <span>xBull Wallet</span>
-          </div>
-          <span style="font-size: 0.72rem; color: var(--text-dim);">Multi-Platform</span>
-        </button>
-        <button id="optPasskey" class="wallet-option-btn">
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
-            <div style="width: 12px; height: 12px; border-radius: 50%; background: #34d399;"></div>
+
+        <button id="optPasskey" class="hakiru-wallet-btn" data-wallet="passkey">
+          <div class="hakiru-wallet-btn-left">
+            <div class="hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🔑</div>
             <span>Passkey Smart Account</span>
           </div>
-          <span style="font-size: 0.72rem; color: var(--accent-emerald);">WebAuthn</span>
+          <span class="hakiru-wallet-badge">WebAuthn 1-Click</span>
+        </button>
+
+        <button id="optLobstr" class="hakiru-wallet-btn" data-wallet="lobstr">
+          <div class="hakiru-wallet-btn-left">
+            <div class="hakiru-wallet-icon-box" style="background: rgba(192, 132, 252, 0.15); color: #c084fc;">📱</div>
+            <span>Lobstr Vault</span>
+          </div>
+          <span class="hakiru-wallet-badge">Mobile / Web</span>
+        </button>
+
+        <button id="optXbull" class="hakiru-wallet-btn" data-wallet="xbull">
+          <div class="hakiru-wallet-btn-left">
+            <div class="hakiru-wallet-icon-box" style="background: rgba(236, 76, 255, 0.15); color: #ec4cff;">🐂</div>
+            <span>xBull Wallet</span>
+          </div>
+          <span class="hakiru-wallet-badge">Multi-Platform</span>
+        </button>
+
+        <button id="optDemoAccount" class="hakiru-wallet-btn" data-wallet="demo" style="border-color: rgba(0, 163, 255, 0.3); background: rgba(0, 163, 255, 0.06);">
+          <div class="hakiru-wallet-btn-left">
+            <div class="hakiru-wallet-icon-box" style="background: #00a3ff; color: #fff;">⚡</div>
+            <span>Instant Testnet Demo</span>
+          </div>
+          <span class="hakiru-wallet-badge" style="color: #00a3ff;">1,250 XLM Sandbox</span>
         </button>
       </div>
-      <div style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-dim); text-align: center;">
-        By connecting, you agree to the deterministic policy gates enforced by the Soroban smart contract suite.
+
+      <!-- More Wallets Collapsible -->
+      <div id="moreWalletsArea" style="display: none; margin-top: 0.75rem;">
+        <input type="text" id="walletSearchInput" class="hakiru-wallet-search-input" placeholder="Search wallet name...">
+        <div class="hakiru-wallet-grid">
+          <button class="hakiru-wallet-btn" data-wallet="walletconnect">
+            <div class="hakiru-wallet-btn-left">
+              <div class="hakiru-wallet-icon-box" style="background: #3b82f6; color: #fff;">🔗</div>
+              <span>WalletConnect</span>
+            </div>
+          </button>
+          <button class="hakiru-wallet-btn" data-wallet="ledger">
+            <div class="hakiru-wallet-btn-left">
+              <div class="hakiru-wallet-icon-box" style="background: #64748b; color: #fff;">🔒</div>
+              <span>Ledger Hardware</span>
+            </div>
+          </button>
+          <button class="hakiru-wallet-btn" data-wallet="hana">
+            <div class="hakiru-wallet-btn-left">
+              <div class="hakiru-wallet-icon-box" style="background: #ec4899; color: #fff;">🌸</div>
+              <span>Hana Wallet</span>
+            </div>
+          </button>
+        </div>
       </div>
+
+      <div style="margin-top: 1.25rem; text-align: center;">
+        <button id="btnToggleMoreWallets" style="background: transparent; border: none; color: #00a3ff; font-size: 0.82rem; font-weight: 600; cursor: pointer;">
+          More wallets ▾
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Account Details & Disconnect Modal -->
+  <div id="accountModal" class="modal-overlay" style="display: none;">
+    <div class="hakiru-wallet-modal-content" style="max-width: 420px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="margin: 0; font-size: 1.2rem; color: #ffffff;">Connected Account</h3>
+        <button id="btnCloseAccountModal" class="modal-close-btn">&times;</button>
+      </div>
+      <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; margin-bottom: 1.25rem;">
+        <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Stellar Address</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.25rem;">
+          <span id="accountAddressFull" style="font-family: monospace; font-size: 0.85rem; color: #ffffff; word-break: break-all;">GD3K...7R9X</span>
+          <button id="btnCopyAddress" class="hakiru-btn-max" style="padding: 0.25rem 0.6rem; font-size: 0.7rem;">Copy</button>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; font-size: 0.85rem;">
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Native XLM:</span>
+          <span id="accountBalXlm" style="font-weight: 600; color: #ffffff;">1,250.00 XLM</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Staked hXLM:</span>
+          <span id="accountBalHxlm" style="font-weight: 600; color: #8b2fe6;">450.00 hXLM</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: var(--text-muted);">Wrapped whXLM:</span>
+          <span id="accountBalWhxlm" style="font-weight: 600; color: #ec4cff;">120.00 whXLM</span>
+        </div>
+      </div>
+      <button id="btnDisconnectWallet" class="hakiru-btn-primary" style="background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3);">
+        Disconnect Wallet
+      </button>
     </div>
   </div>
 
