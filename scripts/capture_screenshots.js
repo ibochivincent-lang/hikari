@@ -67,9 +67,9 @@ async function capture() {
   await new Promise(r => setTimeout(r, 400));
   await page.screenshot({ path: path.join(artifactDir, 'screenshot_wallet_modal.png') });
 
-  // 7. Click "More" Tile to Expand Secondary Grid
-  console.log('Clicking "More" tile in wallet grid...');
-  await page.click('#btnTileMoreWallets');
+  // 7. Click "More wallets" to Expand into 1-Column List with Search Bar (Matching frame_030.png)
+  console.log('Clicking "#btnToggleMoreWallets" in wallet modal...');
+  await page.click('#btnToggleMoreWallets');
   await new Promise(r => setTimeout(r, 400));
   await page.screenshot({ path: path.join(artifactDir, 'screenshot_wallet_modal_expanded.png') });
 

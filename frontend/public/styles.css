@@ -6404,140 +6404,318 @@ footer {
   }
 }
 
-/* Wallet Modal Redesign: 3-Column Tabular Grid ("1, 2, 3 / 1, 2, and More") */
-.hakiru-wallet-modal-content {
-  background: rgba(18, 9, 36, 0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(192, 132, 252, 0.25);
+/* ==========================================================================
+   WALLET MODAL: EXACT PIXEL-PERFECT REPLICA OF VIDEO (frame_025.png & frame_030.png)
+   - Collapsed (Default): 2-Column Grid of 6 Top Horizontal Pill Cards, No Search Bar
+   - Expanded: 1-Column Vertical List with Custom Scrollbar, Search Bar Revealed
+   - Bottom Toggle: "More wallets" <-> "Less wallets" with Folder SVG
+   ========================================================================== */
+.hakiru-wallet-modal-content,
+.hikari-wallet-modal-content {
+  background: #171c26;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 24px;
-  padding: 1.75rem;
-  max-width: 490px;
+  padding: 1.75rem 2rem 1.5rem;
+  max-width: 520px;
   width: 92%;
   margin: 0 auto;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(121, 40, 202, 0.12);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
   color: #ffffff;
 }
 
-.hakiru-wallet-terms {
+.hakiru-wallet-terms,
+.hikari-wallet-terms {
   display: flex;
-  align-items: flex-start;
-  gap: 0.65rem;
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  line-height: 1.4;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.82rem;
+  color: #cbd5e1;
+  line-height: 1.45;
   margin-bottom: 1.25rem;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: #1f2533;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 14px;
+  padding: 0.85rem 1.1rem;
 }
 
 .hakiru-wallet-terms input[type="checkbox"] {
-  margin-top: 0.2rem;
+  width: 18px;
+  height: 18px;
   accent-color: #00a3ff;
   cursor: pointer;
+  flex-shrink: 0;
+  border-radius: 4px;
 }
 
-.hakiru-wallet-grid,
-.hikari-wallet-grid {
+/* 2-Column Collapsed Grid (Matching frame_025.png) */
+.wallet-grid-collapsed {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 0.65rem;
 }
 
+.wallet-grid-collapsed > button:nth-child(n+7) {
+  display: none !important;
+}
+
+/* 1-Column Expanded Scrollable List (Matching frame_030.png) */
+.wallet-grid-expanded {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-height: 290px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.wallet-grid-expanded::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wallet-grid-expanded::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 9999px;
+}
+
+.wallet-grid-expanded::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+}
+
+.wallet-grid-expanded::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 163, 255, 0.5);
+}
+
+/* Horizontal Pill Cards (Matching frame_025.png & frame_030.png) */
 .hakiru-wallet-btn,
 .hikari-wallet-btn {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 0.35rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  justify-content: flex-start;
+  text-align: left;
+  gap: 0.85rem;
+  background: #1f2533;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 14px;
-  padding: 0.85rem 0.4rem;
+  padding: 0.75rem 1rem;
   color: #ffffff;
-  font-size: 0.85rem;
-  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  min-height: 96px;
-  position: relative;
+  min-height: 56px;
+  height: 56px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .hakiru-wallet-btn:hover,
 .hikari-wallet-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(0, 163, 255, 0.5);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(0, 163, 255, 0.14);
+  background: #283042;
+  border-color: rgba(0, 163, 255, 0.4);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
 .wallet-btn-title {
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 500;
   color: #ffffff;
   line-height: 1.2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-.hakiru-wallet-btn-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.35rem;
-  width: 100%;
 }
 
 .hakiru-wallet-icon-box,
 .hikari-wallet-icon-box {
   width: 32px;
   height: 32px;
-  border-radius: 9px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  flex-shrink: 0;
+  font-size: 1.15rem;
 }
 
 .hakiru-wallet-badge,
 .hikari-wallet-badge {
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  font-weight: 500;
-  padding: 1px 6px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.05);
-  white-space: nowrap;
+  display: none !important; /* Video cards are pure horizontal pills with no badges */
 }
 
-.tile-more-wallets {
-  background: rgba(0, 163, 255, 0.05);
-  border-color: rgba(0, 163, 255, 0.22);
+.btn-toggle-more-wallets {
+  background: transparent;
+  border: none;
+  color: #00a3ff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  transition: opacity 0.2s ease;
 }
 
-.tile-more-wallets:hover {
-  background: rgba(0, 163, 255, 0.12);
-  border-color: #00a3ff;
+.btn-toggle-more-wallets:hover {
+  opacity: 0.85;
 }
 
-.hakiru-wallet-search-input {
+.hakiru-wallet-search-input,
+.hikari-wallet-search-input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #11151f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1rem 0.75rem 2.6rem;
   color: #ffffff;
-  font-size: 0.85rem;
-  margin-bottom: 0.85rem;
+  font-size: 0.9rem;
   outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
 }
 
-.hakiru-wallet-search-input:focus {
+.hakiru-wallet-search-input:focus,
+.hikari-wallet-search-input:focus {
   border-color: #00a3ff;
+}
+
+.hakiru-wallet-search-input::placeholder,
+.hikari-wallet-search-input::placeholder {
+  color: #64748b;
+}
+
+/* Pro Deck Integrated Header Banner (Before FAQs) */
+.pro-deck-banner-card {
+  max-width: 480px;
+  margin: 1.5rem auto;
+  border-radius: 18px;
+  background: rgba(18, 9, 36, 0.75);
+  border: 1px solid rgba(192, 132, 252, 0.22);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+
+.pro-deck-banner-card:hover {
+  border-color: rgba(192, 132, 252, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.pro-deck-banner-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 1.15rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  gap: 0.85rem;
+}
+
+.pro-deck-banner-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.pro-deck-banner-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(139, 47, 230, 0.2);
+  border: 1px solid rgba(192, 132, 252, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c084fc;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.pro-deck-banner-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.pro-deck-banner-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Outfit', sans-serif;
+}
+
+.pro-deck-banner-sub {
+  font-size: 0.72rem;
+  color: var(--text-dim);
+}
+
+.pro-deck-chevron {
+  font-size: 0.85rem;
+  color: #c084fc;
+  transition: transform 0.2s ease;
+}
+
+/* Light Mode Overrides for Wallet Modal & Pro Deck Banner */
+[data-theme="light"] .hakiru-wallet-modal-content,
+[data-theme="light"] .hikari-wallet-modal-content {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  color: #0f172a;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .hakiru-wallet-modal-content h3,
+[data-theme="light"] .hikari-wallet-modal-content h3 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .hakiru-wallet-terms,
+[data-theme="light"] .hikari-wallet-terms {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+[data-theme="light"] .hakiru-wallet-btn,
+[data-theme="light"] .hikari-wallet-btn {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #0f172a;
+}
+
+[data-theme="light"] .hakiru-wallet-btn:hover,
+[data-theme="light"] .hikari-wallet-btn:hover {
+  background: #e2e8f0;
+  border-color: #00a3ff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .wallet-btn-title {
+  color: #0f172a;
+}
+
+[data-theme="light"] .hakiru-wallet-search-input,
+[data-theme="light"] .hikari-wallet-search-input {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme="light"] .pro-deck-banner-card {
+  background: #ffffff;
+  border-color: #e5def5;
+  box-shadow: 0 4px 20px rgba(139, 47, 230, 0.06);
+}
+
+[data-theme="light"] .pro-deck-banner-title {
+  color: #140d24;
+}
+
+[data-theme="light"] .pro-deck-banner-sub {
+  color: #6c1dc4;
 }
 
 /* Light Theme Overrides (Matching Video 00:31 - 00:34) */

@@ -252,10 +252,19 @@
         <!-- Slot for Advanced Pro Analytics, Trading Bots & Risk Telemetry (Before FAQs) -->
         <div id="proDeckSlotStake" class="pro-deck-slot">
           <div id="proDeckWrapper" class="pro-deck-wrapper">
-<!-- Toggle for Advanced Pro Analytics & Risk Telemetry (Preserves Test Compatibility) -->
-    <div style="max-width: 600px; margin: 1.5rem auto 2.5rem; text-align: center;">
-      <button id="btnToggleProDeck" class="hakiru-btn-max" style="background: rgba(255,255,255,0.05); color: var(--text-muted); padding: 0.6rem 1.4rem; border-radius: 9999px; font-size: 0.82rem;">
-        <span>⚡ Advanced Pro Analytics, Trading Bots & Risk Telemetry ▾</span>
+    <!-- Collapsible Pro Deck Header Toggle (Integrated Card Style before FAQs) -->
+    <div class="pro-deck-banner-card">
+      <button id="btnToggleProDeck" class="pro-deck-banner-btn" type="button">
+        <div class="pro-deck-banner-left">
+          <div class="pro-deck-banner-icon">⚡</div>
+          <div class="pro-deck-banner-text">
+            <span class="pro-deck-banner-title">Advanced Pro Analytics &amp; Risk Telemetry</span>
+            <span class="pro-deck-banner-sub">Real-time Soroban keeper bots, risk telemetry, and invariant proofs</span>
+          </div>
+        </div>
+        <div class="pro-deck-banner-right">
+          <span class="pro-deck-chevron" id="proDeckChevron">▾</span>
+        </div>
       </button>
     </div>
 
@@ -1578,40 +1587,43 @@
         <span style="font-size: 0.82rem; color: #cbd5e1; line-height: 1.4;">I certify that I have read and accept the updated <a href="#terms" style="color: #00a3ff; text-decoration: none;">Terms of Use</a> and <a href="#privacy" style="color: #00a3ff; text-decoration: none;">Privacy Notice</a>.</span>
       </label>
 
-      <!-- Section Title & Search Box (Matching frame_015.png) -->
-      <div style="font-size: 0.85rem; color: #ffffff; margin-bottom: 0.6rem; font-weight: 600;">
+      <!-- Section Title (Matching frame_025.png) -->
+      <div style="font-size: 0.88rem; color: #ffffff; margin-bottom: 0.75rem; font-weight: 600;">
         Choose wallet
       </div>
 
-      <div style="position: relative; margin-bottom: 0.85rem;">
-        <svg style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2">
+      <!-- Search Box (Initially Hidden in Collapsed Mode, Revealed in Expanded Mode - Matching frame_030.png) -->
+      <div id="walletSearchBox" class="wallet-search-box" style="display: none; position: relative; margin-bottom: 0.85rem;">
+        <svg style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); pointer-events: none;" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="11" cy="11" r="8"/>
           <path d="M21 21l-4.35-4.35"/>
         </svg>
-        <input type="text" id="walletSearchInput" class="hikari-wallet-search-input hakiru-wallet-search-input" placeholder="Wallet name" style="padding-left: 2.5rem; margin-bottom: 0; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px;">
+        <input type="text" id="walletSearchInput" class="hikari-wallet-search-input hakiru-wallet-search-input" placeholder="Wallet name" style="padding-left: 2.6rem; margin-bottom: 0; background: #131722; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; height: 46px; width: 100%; box-sizing: border-box; color: #ffffff; font-size: 0.88rem;">
       </div>
 
-      <!-- Wallet Options Grid (Matching frame_015.png + MetaMask + Stellar Suite) -->
-      <!-- Wallet Options Grid: 3-Column Tabular Grid (Row 1: Lobstr, Freighter, MetaMask; Row 2: WalletConnect, Demo, More) -->
-      <div class="hikari-wallet-grid hakiru-wallet-grid" id="walletListGrid">
-        <!-- 1. Lobstr (Row 1, Item 1) -->
-        <button id="optLobstr" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="lobstr" data-name="Lobstr Vault">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(192, 132, 252, 0.15); color: #c084fc;">📱</div>
-          <span class="wallet-btn-title">Lobstr</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Stellar Vault</span>
+      <!-- Wallet Options (Collapsed: 2-Column Grid of 6 Pills; Expanded: 1-Column Scrollable List of 10 Pills) -->
+      <div class="wallet-items-container wallet-grid-collapsed" id="walletListGrid">
+        <!-- 1. Browser (Freighter & Injected) -->
+        <button id="optFreighter" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="freighter" data-name="Browser">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <circle cx="11" cy="11" r="5" fill="#3b82f6"/>
+              <circle cx="21" cy="11" r="5" fill="#8b5cf6"/>
+              <circle cx="11" cy="21" r="5" fill="#ec4899"/>
+              <circle cx="21" cy="21" r="5" fill="#f97316"/>
+              <text x="11" y="13.5" font-size="6" font-weight="bold" fill="#ffffff" text-anchor="middle">R</text>
+              <text x="21" y="13.5" font-size="6" font-weight="bold" fill="#ffffff" text-anchor="middle">✦</text>
+              <text x="11" y="23.5" font-size="6" font-weight="bold" fill="#ffffff" text-anchor="middle">⚡</text>
+              <text x="21" y="23.5" font-size="6" font-weight="bold" fill="#ffffff" text-anchor="middle">⬡</text>
+            </svg>
+          </div>
+          <span class="wallet-btn-title">Browser</span>
         </button>
 
-        <!-- 2. Freighter (Row 1, Item 2) -->
-        <button id="optFreighter" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="freighter" data-name="Freighter Wallet">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">✦</div>
-          <span class="wallet-btn-title">Freighter</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Stellar Native</span>
-        </button>
-
-        <!-- 3. MetaMask (Row 1, Item 3) -->
+        <!-- 2. MetaMask -->
         <button id="optMetaMask" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="metamask" data-name="MetaMask">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(246, 133, 27, 0.15); border: 1px solid rgba(246, 133, 27, 0.3);">
-            <svg width="20" height="20" viewBox="0 0 318.6 318.6" fill="none">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box">
+            <svg width="26" height="26" viewBox="0 0 318.6 318.6" fill="none">
               <path d="M274.1 35.5L174.6 109.4l19.3-46.3L274.1 35.5z" fill="#E2761B" stroke="#E2761B" stroke-width="1.5"/>
               <path d="M44.5 35.5l98.5 74.4-18.7-46.8L44.5 35.5z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
               <path d="M238.3 206.8l-26.4 40.8 56.7 15.6 16.3-55.3-46.6-1.1z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
@@ -1625,98 +1637,91 @@
             </svg>
           </div>
           <span class="wallet-btn-title">MetaMask</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge" style="color: #f6851b;">EVM &amp; Snaps</span>
         </button>
 
-        <!-- 4. WalletConnect (Row 2, Item 1) -->
+        <!-- 3. OKX Wallet -->
+        <button id="optOkx" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="okx" data-name="OKX Wallet">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #11141c; border: 1px solid rgba(255,255,255,0.12);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff">
+              <rect x="2" y="2" width="7" height="7" rx="1.5"/>
+              <rect x="15" y="2" width="7" height="7" rx="1.5"/>
+              <rect x="8.5" y="8.5" width="7" height="7" rx="1.5"/>
+              <rect x="2" y="15" width="7" height="7" rx="1.5"/>
+              <rect x="15" y="15" width="7" height="7" rx="1.5"/>
+            </svg>
+          </div>
+          <span class="wallet-btn-title">OKX Wallet</span>
+        </button>
+
+        <!-- 4. Ledger -->
+        <button id="optLedger" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="ledger" data-name="Ledger">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #1e293b;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 8V4h4M16 4h4v4M4 16v4h4M16 20h4v-4M9 9h6v6H9z"/>
+            </svg>
+          </div>
+          <span class="wallet-btn-title">Ledger</span>
+        </button>
+
+        <!-- 5. WalletConnect -->
         <button id="optWalletConnect" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="walletconnect" data-name="WalletConnect">
           <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #3b82f6;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round">
               <path d="M5 13c3.5-3.5 10.5-3.5 14 0M8 16c2-2 6-2 8 0"/>
             </svg>
           </div>
           <span class="wallet-btn-title">WalletConnect</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">QR / Mobile</span>
         </button>
 
-        <!-- 5. Instant Testnet Demo Sandbox (Row 2, Item 2) -->
-        <button id="optDemoAccount" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="demo" data-name="Instant Testnet Demo" style="border-color: rgba(0, 163, 255, 0.35); background: rgba(0, 163, 255, 0.08);">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #00a3ff; color: #fff;">⚡</div>
-          <span class="wallet-btn-title">Demo Sandbox</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge" style="color: #00a3ff;">1,250 XLM</span>
-        </button>
-
-        <!-- 6. 'and More' Tile (Row 2, Item 3) -->
-        <button id="btnTileMoreWallets" class="hikari-wallet-btn hakiru-wallet-btn tile-more-wallets" type="button">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" id="moreTileIconBox" style="background: rgba(255, 255, 255, 0.08); color: #00a3ff;">
-            <svg id="moreTileSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-          </div>
-          <span class="wallet-btn-title" id="moreTileTitle">More</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge" id="moreTileBadge" style="color: #00a3ff;">5 Wallets</span>
-        </button>
-      </div>
-
-      <!-- Expandable Secondary Wallets Grid (Initially hidden) -->
-      <div id="moreWalletsContainer" class="hikari-wallet-grid hakiru-wallet-grid more-wallets-grid" style="display: none; margin-top: 0.65rem;">
-        <!-- OKX Wallet -->
-        <button id="optOkx" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="okx" data-name="OKX Wallet">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #000; border: 1px solid rgba(255,255,255,0.2);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff">
-              <rect x="2" y="2" width="8" height="8" rx="2"/>
-              <rect x="14" y="2" width="8" height="8" rx="2"/>
-              <rect x="8" y="8" width="8" height="8" rx="2"/>
-              <rect x="2" y="14" width="8" height="8" rx="2"/>
-              <rect x="14" y="14" width="8" height="8" rx="2"/>
-            </svg>
-          </div>
-          <span class="wallet-btn-title">OKX</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Multi-Chain</span>
-        </button>
-
-        <!-- Ledger -->
-        <button id="optLedger" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="ledger" data-name="Ledger">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #1e293b; color: #ffffff;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
-              <path d="M4 7V4h3M17 4h3v3M4 17v3h3M17 20h3v-3M9 9h6v6H9z"/>
-            </svg>
-          </div>
-          <span class="wallet-btn-title">Ledger</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Hardware</span>
-        </button>
-
-        <!-- xBull Wallet -->
-        <button id="optXbull" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="xbull" data-name="xBull Wallet">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(236, 76, 255, 0.15); color: #ec4cff;">🐂</div>
-          <span class="wallet-btn-title">xBull</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Stellar Suite</span>
-        </button>
-
-        <!-- Passkey Smart Account -->
-        <button id="optPasskey" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="passkey" data-name="Passkey Smart Account">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🔑</div>
-          <span class="wallet-btn-title">Passkey</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">WebAuthn</span>
-        </button>
-
-        <!-- Bitget Wallet -->
+        <!-- 6. Bitget Wallet -->
         <button id="optBitget" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="bitget" data-name="Bitget Wallet">
-          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.18);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
               <path d="M9 18l6-6-6-6"/>
             </svg>
           </div>
-          <span class="wallet-btn-title">Bitget</span>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Web3 Multi</span>
+          <span class="wallet-btn-title">Bitget Wallet</span>
+        </button>
+
+        <!-- 7. Lobstr Vault (Preserves optLobstr for verify_ui.js) -->
+        <button id="optLobstr" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="lobstr" data-name="Lobstr Vault">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(192, 132, 252, 0.18); color: #c084fc;">
+            📱
+          </div>
+          <span class="wallet-btn-title">Lobstr Vault</span>
+        </button>
+
+        <!-- 8. xBull Wallet (Preserves optXbull for verify_ui.js) -->
+        <button id="optXbull" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="xbull" data-name="xBull Wallet">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(236, 76, 255, 0.18); color: #ec4cff;">
+            🐂
+          </div>
+          <span class="wallet-btn-title">xBull Wallet</span>
+        </button>
+
+        <!-- 9. Passkey Smart Account -->
+        <button id="optPasskey" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="passkey" data-name="Passkey Smart Account">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.18); color: #10b981;">
+            🔑
+          </div>
+          <span class="wallet-btn-title">Passkey Account</span>
+        </button>
+
+        <!-- 10. Instant Testnet Demo Sandbox -->
+        <button id="optDemoAccount" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="demo" data-name="Instant Testnet Demo">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #00a3ff; color: #ffffff;">
+            ⚡
+          </div>
+          <span class="wallet-btn-title">Demo Sandbox</span>
         </button>
       </div>
 
-      <!-- Bottom Toggle Button (Synchronized with More tile) -->
-      <div style="margin-top: 1rem; text-align: center;">
-        <button id="btnToggleMoreWallets" style="background: transparent; border: none; color: #00a3ff; font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.6rem;">
-          <span id="toggleMoreWalletsIcon">📁</span>
+      <!-- Bottom Toggle Button (Matching frame_025.png & frame_030.png) -->
+      <div style="margin-top: 1.25rem; text-align: center;">
+        <button id="btnToggleMoreWallets" class="btn-toggle-more-wallets" type="button">
+          <svg id="toggleMoreWalletsSvg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00a3ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+          </svg>
           <span id="toggleMoreWalletsText">More wallets</span>
         </button>
       </div>
