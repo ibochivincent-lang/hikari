@@ -33,5 +33,8 @@
     "keeper:harvest": "node services/automation/dist/harvest-keeper.js",
     "solvency:proof": "node services/automation/dist/merkle-solvency.js",
     "test:hakiru": "node scripts/verify_hakiru_full_suite.js"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.10.0"
   }
 }

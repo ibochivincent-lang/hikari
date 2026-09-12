@@ -2283,29 +2283,99 @@ function initHakiru5TabApp() {
     });
   }
 
-  // 3. Withdrawals Sub-tabs (Request / Claim)
+  // 3. Withdrawals Sub-tabs (Request / Claim / Direct to Bank)
   const subtabWithdrawRequest = document.getElementById("subtabWithdrawRequest");
   const subtabWithdrawClaim = document.getElementById("subtabWithdrawClaim");
+  const subtabWithdrawDirectBank = document.getElementById("subtabWithdrawDirectBank");
   const subviewWithdrawRequest = document.getElementById("subviewWithdrawRequest");
   const subviewWithdrawClaim = document.getElementById("subviewWithdrawClaim");
+  const subviewWithdrawDirectBank = document.getElementById("subviewWithdrawDirectBank");
 
-  if (subtabWithdrawRequest && subtabWithdrawClaim) {
-    subtabWithdrawRequest.addEventListener("click", () => {
-      subtabWithdrawRequest.classList.add("active");
-      subtabWithdrawClaim.classList.remove("active");
-      if (subviewWithdrawRequest) subviewWithdrawRequest.style.display = "block";
-      if (subviewWithdrawClaim) subviewWithdrawClaim.style.display = "none";
-    });
+  function setWithdrawSubtab(activeTab) {
+    if (subtabWithdrawRequest) subtabWithdrawRequest.classList.toggle("active", activeTab === "request");
+    if (subtabWithdrawClaim) subtabWithdrawClaim.classList.toggle("active", activeTab === "claim");
+    if (subtabWithdrawDirectBank) subtabWithdrawDirectBank.classList.toggle("active", activeTab === "bank");
 
-    subtabWithdrawClaim.addEventListener("click", () => {
-      subtabWithdrawClaim.classList.add("active");
-      subtabWithdrawRequest.classList.remove("active");
-      if (subviewWithdrawRequest) subviewWithdrawRequest.style.display = "none";
-      if (subviewWithdrawClaim) subviewWithdrawClaim.style.display = "block";
+    if (subviewWithdrawRequest) subviewWithdrawRequest.style.display = activeTab === "request" ? "block" : "none";
+    if (subviewWithdrawClaim) subviewWithdrawClaim.style.display = activeTab === "claim" ? "block" : "none";
+    if (subviewWithdrawDirectBank) subviewWithdrawDirectBank.style.display = activeTab === "bank" ? "block" : "none";
+  }
+
+  if (subtabWithdrawRequest) {
+    subtabWithdrawRequest.addEventListener("click", () => setWithdrawSubtab("request"));
+  }
+  if (subtabWithdrawClaim) {
+    subtabWithdrawClaim.addEventListener("click", () => setWithdrawSubtab("claim"));
+  }
+  if (subtabWithdrawDirectBank) {
+    subtabWithdrawDirectBank.addEventListener("click", () => {
+      setWithdrawSubtab("bank");
+      updateBankPayoutEst();
     });
   }
 
-  // Choice cards (Hakiru Protocol vs DEX)
+  // Direct to Bank Off-Ramp Calculations & Actions
+  const bankCurrencySelect = document.getElementById("bankCurrencySelect");
+  const bankAssetSelect = document.getElementById("bankAssetSelect");
+  const inputBankAmount = document.getElementById("inputBankAmount");
+  const btnBankMax = document.getElementById("btnBankMax");
+  const bankPayoutEst = document.getElementById("bankPayoutEst");
+  const bankFxRateDisplay = document.getElementById("bankFxRateDisplay");
+  const btnActionDirectBank = document.getElementById("btnActionDirectBank");
+  const btnActionDirectBankText = document.getElementById("btnActionDirectBankText");
+
+  const fiatRates = {
+    USD: { rate: 0.125, symbol: "$", code: "USD" },
+    EUR: { rate: 0.115, symbol: "€", code: "EUR" },
+    NGN: { rate: 195.0, symbol: "₦", code: "NGN" },
+    GBP: { rate: 0.098, symbol: "£", code: "GBP" },
+    BRL: { rate: 0.69, symbol: "R$", code: "BRL" },
+  };
+
+  function updateBankPayoutEst() {
+    const curKey = bankCurrencySelect ? bankCurrencySelect.value : "USD";
+    const cur = fiatRates[curKey] || fiatRates.USD;
+    const amt = parseFloat(inputBankAmount ? inputBankAmount.value : 0) || 0;
+    const totalFiat = Math.max(0, amt * cur.rate);
+
+    if (bankPayoutEst) {
+      bankPayoutEst.textContent = `${cur.symbol}${totalFiat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${cur.code}`;
+    }
+    if (bankFxRateDisplay) {
+      bankFxRateDisplay.textContent = `1 XLM ≈ ${cur.symbol}${cur.rate.toLocaleString()} ${cur.code}`;
+    }
+  }
+
+  if (bankCurrencySelect) {
+    bankCurrencySelect.addEventListener("change", updateBankPayoutEst);
+  }
+  if (inputBankAmount) {
+    inputBankAmount.addEventListener("input", updateBankPayoutEst);
+  }
+  if (btnBankMax && inputBankAmount) {
+    btnBankMax.addEventListener("click", () => {
+      const isHxlm = bankAssetSelect && bankAssetSelect.value === "hXLM";
+      const bal = state.wallet.connected
+        ? (isHxlm ? state.wallet.sharesHXlm : state.wallet.balanceXlm)
+        : (isHxlm ? 450 : 1250);
+      inputBankAmount.value = bal;
+      updateBankPayoutEst();
+    });
+  }
+  if (bankAssetSelect) {
+    bankAssetSelect.addEventListener("change", () => {
+      const isHxlm = bankAssetSelect.value === "hXLM";
+      const bankBal = document.getElementById("bankBalDisplay");
+      if (bankBal) {
+        const bal = state.wallet.connected
+          ? (isHxlm ? state.wallet.sharesHXlm : state.wallet.balanceXlm)
+          : (isHxlm ? 450 : 1250);
+        bankBal.textContent = `Available: ${bal.toFixed(2)} ${isHxlm ? "hXLM" : "XLM"}`;
+      }
+    });
+  }
+
+  // Choice cards (Hikari Protocol vs DEX)
   const choiceHakiru = document.getElementById("choiceHakiru");
   const choiceDex = document.getElementById("choiceDex");
   const withdrawWaitTimeText = document.getElementById("withdrawWaitTimeText");
@@ -2395,10 +2465,97 @@ function initHakiru5TabApp() {
     });
   }
 
+  // Multichain Interactive Converter (Requested in Voice Note)
+  const chainPills = document.querySelectorAll(".hikari-chain-pill");
+  const bridgeInputLabel = document.getElementById("bridgeInputLabel");
+  const bridgeBalDisplay = document.getElementById("bridgeBalDisplay");
+  const inputBridgeAmount = document.getElementById("inputBridgeAmount");
+  const btnBridgeMax = document.getElementById("btnBridgeMax");
+  const bridgeRouteDisplay = document.getElementById("bridgeRouteDisplay");
+  const bridgeXlmEst = document.getElementById("bridgeXlmEst");
+  const bridgeHxlmEst = document.getElementById("bridgeHxlmEst");
+  const btnActionBridgeStake = document.getElementById("btnActionBridgeStake");
+
+  let activeChainData = {
+    chain: "sol",
+    token: "SOL",
+    rate: 1216,
+    bal: "5.20 SOL",
+    route: "Solana ➔ Stellar Anchor ➔ XLM",
+  };
+
+  const chainConfigs = {
+    sol: { name: "Solana (SOL)", token: "SOL", rate: 1216, bal: "5.20 SOL", route: "Solana ➔ Stellar Anchor ➔ XLM" },
+    eth: { name: "Ethereum (ETH)", token: "ETH", rate: 21500, bal: "1.45 ETH", route: "Ethereum ➔ Circle CCTP ➔ Stellar XLM" },
+    arb: { name: "Arbitrum (USDC)", token: "USDC", rate: 8.0, bal: "1,250.00 USDC", route: "Arbitrum ➔ CCTP V2 ➔ Stellar DEX ➔ XLM" },
+    pol: { name: "Polygon (POL)", token: "POL", rate: 3.2, bal: "850.00 POL", route: "Polygon ➔ Axelar Bridge ➔ Stellar XLM" },
+    base: { name: "Base (ETH)", token: "ETH", rate: 21500, bal: "0.85 ETH", route: "Base ➔ Circle CCTP ➔ Stellar XLM" },
+  };
+
+  function updateBridgeCalculations() {
+    const amt = parseFloat(inputBridgeAmount ? inputBridgeAmount.value : 0) || 0;
+    const xlmAmt = amt * activeChainData.rate;
+    const hxlmAmt = xlmAmt / 1.0428;
+
+    if (bridgeXlmEst) {
+      bridgeXlmEst.textContent = `≈ ${xlmAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} XLM`;
+    }
+    if (bridgeHxlmEst) {
+      bridgeHxlmEst.textContent = `≈ ${hxlmAmt.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} hXLM`;
+    }
+  }
+
+  chainPills.forEach((pill) => {
+    pill.addEventListener("click", () => {
+      chainPills.forEach((p) => p.classList.remove("active"));
+      pill.classList.add("active");
+      const cKey = pill.dataset.chain;
+      const conf = chainConfigs[cKey] || chainConfigs.sol;
+      activeChainData = conf;
+
+      if (bridgeInputLabel) bridgeInputLabel.textContent = `Deposit ${conf.name}`;
+      if (bridgeBalDisplay) bridgeBalDisplay.textContent = `Balance: ${conf.bal}`;
+      if (bridgeRouteDisplay) bridgeRouteDisplay.textContent = conf.route;
+
+      updateBridgeCalculations();
+    });
+  });
+
+  if (inputBridgeAmount) {
+    inputBridgeAmount.addEventListener("input", updateBridgeCalculations);
+  }
+
+  if (btnBridgeMax && inputBridgeAmount) {
+    btnBridgeMax.addEventListener("click", () => {
+      const rawBal = parseFloat(activeChainData.bal) || 1.0;
+      inputBridgeAmount.value = rawBal;
+      updateBridgeCalculations();
+    });
+  }
+
+  if (btnActionBridgeStake) {
+    btnActionBridgeStake.addEventListener("click", () => {
+      if (!state.wallet.connected) {
+        openWalletModal();
+        return;
+      }
+      const amt = parseFloat(inputBridgeAmount.value) || 0;
+      if (amt <= 0) {
+        showToast("Please enter an amount to bridge and stake");
+        return;
+      }
+      const xlmAmt = amt * activeChainData.rate;
+      const hxlmAmt = xlmAmt / 1.0428;
+      state.wallet.sharesHXlm += hxlmAmt;
+      updateWalletUI();
+      showToast(`Hikari: Bridged ${amt} ${activeChainData.token} and auto-staked ${hxlmAmt.toFixed(2)} hXLM! (14.2% APY)`);
+    });
+  }
+
   // 5. FAQ Accordion Interaction
-  document.querySelectorAll(".hakiru-faq-question").forEach((btn) => {
+  document.querySelectorAll(".hikari-faq-question, .hakiru-faq-question").forEach((btn) => {
     btn.addEventListener("click", () => {
-      const item = btn.closest(".hakiru-faq-item");
+      const item = btn.closest(".hikari-faq-item, .hakiru-faq-item");
       if (item) {
         item.classList.toggle("active");
       }
@@ -2425,7 +2582,8 @@ function initHakiru5TabApp() {
   const btnCloseAccountModal = document.getElementById("btnCloseAccountModal");
   const btnDisconnectWallet = document.getElementById("btnDisconnectWallet");
   const btnToggleMoreWallets = document.getElementById("btnToggleMoreWallets");
-  const moreWalletsArea = document.getElementById("moreWalletsArea");
+  const toggleMoreWalletsText = document.getElementById("toggleMoreWalletsText");
+  const walletSearchInput = document.getElementById("walletSearchInput");
   const chkTermsAccept = document.getElementById("chkTermsAccept");
   const btnCopyAddress = document.getElementById("btnCopyAddress");
 
@@ -2474,11 +2632,36 @@ function initHakiru5TabApp() {
   if (btnCloseModal) btnCloseModal.addEventListener("click", closeWalletModal);
   if (btnCloseAccountModal) btnCloseAccountModal.addEventListener("click", closeAccountModal);
 
-  if (btnToggleMoreWallets && moreWalletsArea) {
+  // Live Wallet Search Filtering
+  if (walletSearchInput) {
+    walletSearchInput.addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const btns = document.querySelectorAll(".hikari-wallet-btn, .hakiru-wallet-btn");
+      btns.forEach((btn) => {
+        const name = (btn.dataset.name || btn.textContent || "").toLowerCase();
+        const matches = !q || name.includes(q);
+        btn.style.display = matches ? "flex" : "none";
+      });
+    });
+  }
+
+  // Toggle More / Less Wallets
+  let isWalletsExpanded = true;
+  if (btnToggleMoreWallets) {
     btnToggleMoreWallets.addEventListener("click", () => {
-      const isHidden = moreWalletsArea.style.display === "none";
-      moreWalletsArea.style.display = isHidden ? "block" : "none";
-      btnToggleMoreWallets.textContent = isHidden ? "Less wallets ▴" : "More wallets ▾";
+      isWalletsExpanded = !isWalletsExpanded;
+      const allWalletBtns = document.querySelectorAll(".hikari-wallet-btn, .hakiru-wallet-btn");
+      allWalletBtns.forEach((btn, idx) => {
+        // Show first 5 in collapsed mode, or all in expanded mode
+        if (isWalletsExpanded || idx < 5) {
+          btn.style.display = "flex";
+        } else {
+          btn.style.display = "none";
+        }
+      });
+      if (toggleMoreWalletsText) {
+        toggleMoreWalletsText.textContent = isWalletsExpanded ? "Less wallets" : "More wallets";
+      }
     });
   }
 
@@ -2496,13 +2679,13 @@ function initHakiru5TabApp() {
 
     closeWalletModal();
     updateWalletUI();
-    showToast(`Connected via ${walletName} (GD3K...7R9X)`);
+    showToast(`Hikari: Connected via ${walletName} (GD3K...7R9X)`);
   }
 
-  document.querySelectorAll(".hakiru-wallet-btn").forEach((b) => {
+  document.querySelectorAll(".hikari-wallet-btn, .hakiru-wallet-btn").forEach((b) => {
     b.addEventListener("click", () => {
-      const wName = b.dataset.wallet || "Wallet";
-      connectAccount(wName.charAt(0).toUpperCase() + wName.slice(1));
+      const wName = b.dataset.name || b.dataset.wallet || "Wallet";
+      connectAccount(wName);
     });
   });
 
@@ -2512,7 +2695,7 @@ function initHakiru5TabApp() {
       state.wallet.address = null;
       closeAccountModal();
       updateWalletUI();
-      showToast("Wallet disconnected");
+      showToast("Hikari: Wallet disconnected");
     });
   }
 
@@ -2534,21 +2717,25 @@ function initHakiru5TabApp() {
       if (btnActionStakeText) btnActionStakeText.textContent = "Stake XLM";
       if (btnActionWrapText) btnActionWrapText.textContent = isWrapMode ? "Wrap hXLM" : "Unwrap whXLM";
       if (btnActionWithdrawText) btnActionWithdrawText.textContent = "Request Withdrawal";
+      if (btnActionDirectBankText) btnActionDirectBankText.textContent = "Withdraw to Bank";
     } else {
       if (btnConnectWallet) {
-        btnConnectWallet.innerHTML = `<span>Connect Wallet</span> <span class="arrow-glyph">→</span>`;
+        btnConnectWallet.innerHTML = `<span>Connect wallet</span> <span class="arrow-glyph">→</span>`;
       }
       if (btnActionStakeText) btnActionStakeText.textContent = "Connect wallet";
       if (btnActionWrapText) btnActionWrapText.textContent = "Connect wallet";
       if (btnActionWithdrawText) btnActionWithdrawText.textContent = "Connect wallet";
+      if (btnActionDirectBankText) btnActionDirectBankText.textContent = "Connect wallet";
     }
     updateBalances();
+    updateBankPayoutEst();
   }
 
   function updateBalances() {
     const stakeBal = document.getElementById("stakeBalDisplay");
     const wrapBal = document.getElementById("wrapBalDisplay");
     const withdrawBal = document.getElementById("withdrawBalDisplay");
+    const bankBal = document.getElementById("bankBalDisplay");
 
     if (stakeBal) {
       stakeBal.textContent = `Available: ${state.wallet.connected ? state.wallet.balanceXlm.toFixed(2) : "0.00"} XLM`;
@@ -2559,9 +2746,16 @@ function initHakiru5TabApp() {
     if (withdrawBal) {
       withdrawBal.textContent = `Available: ${state.wallet.connected ? state.wallet.sharesHXlm.toFixed(2) : "0.00"} hXLM`;
     }
+    if (bankBal) {
+      const isHxlm = bankAssetSelect && bankAssetSelect.value === "hXLM";
+      const bal = state.wallet.connected
+        ? (isHxlm ? state.wallet.sharesHXlm : state.wallet.balanceXlm)
+        : (isHxlm ? 450 : 1250);
+      bankBal.textContent = `Available: ${bal.toFixed(2)} ${isHxlm ? "hXLM" : "XLM"}`;
+    }
   }
 
-  // Primary Action Button Execution (Stake, Wrap, Withdraw)
+  // Primary Action Button Execution (Stake, Wrap, Withdraw, Direct to Bank)
   if (btnActionStake) {
     btnActionStake.addEventListener("click", () => {
       if (!state.wallet.connected) {
@@ -2581,7 +2775,7 @@ function initHakiru5TabApp() {
       state.wallet.sharesHXlm += amt;
       inputStakeAmount.value = "";
       updateWalletUI();
-      showToast(`Staked ${amt} XLM for ${amt} hXLM! Tx Hash: 0x${Math.random().toString(16).slice(2, 10)}...`);
+      showToast(`Hikari: Staked ${amt} XLM for ${amt} hXLM! Tx Hash: 0x${Math.random().toString(16).slice(2, 10)}...`);
     });
   }
 
@@ -2598,7 +2792,7 @@ function initHakiru5TabApp() {
       }
       inputWrapAmount.value = "";
       updateWalletUI();
-      showToast(`${isWrapMode ? "Wrapped" : "Unwrapped"} ${amt} tokens! Tx: 0x${Math.random().toString(16).slice(2, 10)}...`);
+      showToast(`Hikari: ${isWrapMode ? "Wrapped" : "Unwrapped"} ${amt} tokens! Tx: 0x${Math.random().toString(16).slice(2, 10)}...`);
     });
   }
 
@@ -2616,16 +2810,44 @@ function initHakiru5TabApp() {
       state.wallet.sharesHXlm -= amt;
       inputWithdrawAmount.value = "";
       updateWalletUI();
-      showToast(`Withdrawal requested: ${amt} hXLM queued in FIFO ticket #103 (~1-3 days).`);
+      showToast(`Hikari: Withdrawal requested: ${amt} hXLM queued in FIFO ticket #103 (~1-3 days).`);
+    });
+  }
+
+  if (btnActionDirectBank) {
+    btnActionDirectBank.addEventListener("click", () => {
+      if (!state.wallet.connected) {
+        openWalletModal();
+        return;
+      }
+      const amt = parseFloat(inputBankAmount ? inputBankAmount.value : 0) || 0;
+      if (amt <= 0) {
+        showToast("Please enter an amount to withdraw to bank");
+        return;
+      }
+      const isHxlm = bankAssetSelect && bankAssetSelect.value === "hXLM";
+      if (isHxlm) {
+        state.wallet.sharesHXlm = Math.max(0, state.wallet.sharesHXlm - amt);
+      } else {
+        state.wallet.balanceXlm = Math.max(0, state.wallet.balanceXlm - amt);
+      }
+      const curKey = bankCurrencySelect ? bankCurrencySelect.value : "USD";
+      const cur = fiatRates[curKey] || fiatRates.USD;
+      const fiatPayout = (amt * cur.rate).toFixed(2);
+      const bankName = (document.getElementById("inputBankName")?.value || "Bank").trim();
+
+      if (inputBankAmount) inputBankAmount.value = "";
+      updateWalletUI();
+      showToast(`Hikari: Fiat payout of ${cur.symbol}${fiatPayout} initiated to ${bankName}! Wire arrival in ~2-5 mins.`);
     });
   }
 
   // Helper toast alert
   function showToast(msg) {
-    let t = document.getElementById("hakiruToast");
+    let t = document.getElementById("hikariToast") || document.getElementById("hakiruToast");
     if (!t) {
       t = document.createElement("div");
-      t.id = "hakiruToast";
+      t.id = "hikariToast";
       t.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#10b981;color:#fff;padding:0.6rem 1.2rem;border-radius:9999px;font-size:0.85rem;font-weight:600;z-index:99999;box-shadow:0 10px 25px rgba(0,0,0,0.3);transition:all 0.3s ease;";
       document.body.appendChild(t);
     }
