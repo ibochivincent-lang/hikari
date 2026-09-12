@@ -6375,16 +6375,47 @@ footer {
   50% { transform: translateY(-6px); }
 }
 
-/* Wallet Modal Redesign (Matching Video 00:24) */
+/* Pro Deck In-Tab Integration (Placed before FAQs in Stake and Wrap) */
+.pro-deck-slot {
+  width: 100%;
+  margin: 1.5rem 0 2rem;
+}
+
+.pro-deck-wrapper {
+  width: 100%;
+  transition: opacity 0.25s ease;
+}
+
+.pro-deck-wrapper .main-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.pro-deck-wrapper .metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+@media (max-width: 480px) {
+  .pro-deck-wrapper .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Wallet Modal Redesign: 3-Column Tabular Grid ("1, 2, 3 / 1, 2, and More") */
 .hakiru-wallet-modal-content {
-  background: #111724;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(18, 9, 36, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(192, 132, 252, 0.25);
   border-radius: 24px;
-  padding: 2rem;
-  max-width: 440px;
-  width: 90%;
+  padding: 1.75rem;
+  max-width: 490px;
+  width: 92%;
   margin: 0 auto;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(121, 40, 202, 0.12);
   color: #ffffff;
 }
 
@@ -6395,8 +6426,8 @@ footer {
   font-size: 0.78rem;
   color: var(--text-muted);
   line-height: 1.4;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -6406,53 +6437,91 @@ footer {
   cursor: pointer;
 }
 
-.hakiru-wallet-grid {
-  display: flex;
-  flex-direction: column;
+.hakiru-wallet-grid,
+.hikari-wallet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 0.65rem;
 }
 
-.hakiru-wallet-btn {
+.hakiru-wallet-btn,
+.hikari-wallet-btn {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.35rem;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 14px;
-  padding: 0.85rem 1.1rem;
+  padding: 0.85rem 0.4rem;
   color: #ffffff;
-  font-size: 0.92rem;
+  font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 96px;
+  position: relative;
 }
 
-.hakiru-wallet-btn:hover {
+.hakiru-wallet-btn:hover,
+.hikari-wallet-btn:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(0, 163, 255, 0.4);
-  transform: translateY(-1px);
+  border-color: rgba(0, 163, 255, 0.5);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0, 163, 255, 0.14);
+}
+
+.wallet-btn-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }
 
 .hakiru-wallet-btn-left {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.35rem;
+  width: 100%;
 }
 
-.hakiru-wallet-icon-box {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+.hakiru-wallet-icon-box,
+.hikari-wallet-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
-.hakiru-wallet-badge {
-  font-size: 0.72rem;
+.hakiru-wallet-badge,
+.hikari-wallet-badge {
+  font-size: 0.65rem;
   color: var(--text-dim);
   font-weight: 500;
+  padding: 1px 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+}
+
+.tile-more-wallets {
+  background: rgba(0, 163, 255, 0.05);
+  border-color: rgba(0, 163, 255, 0.22);
+}
+
+.tile-more-wallets:hover {
+  background: rgba(0, 163, 255, 0.12);
+  border-color: #00a3ff;
 }
 
 .hakiru-wallet-search-input {
@@ -7056,6 +7125,15 @@ footer {
   background: #fbf9ff;
   border-color: #e5def5;
   color: #140d24;
+}
+
+[data-theme="light"] .wallet-btn-title {
+  color: #140d24;
+}
+
+[data-theme="light"] .tile-more-wallets {
+  background: rgba(0, 163, 255, 0.05);
+  border-color: rgba(0, 163, 255, 0.25);
 }
 
 [data-theme="light"] .hakiru-choice-card,

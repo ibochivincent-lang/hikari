@@ -2203,6 +2203,26 @@ function initHakiru5TabApp() {
     earn: document.getElementById("viewTabEarn"),
   };
 
+  function updateProDeckPlacement(tabKey) {
+    const proDeckWrapper = document.getElementById("proDeckWrapper");
+    if (!proDeckWrapper) return;
+    if (tabKey === "stake") {
+      const slot = document.getElementById("proDeckSlotStake");
+      if (slot && !slot.contains(proDeckWrapper)) {
+        slot.appendChild(proDeckWrapper);
+      }
+      proDeckWrapper.style.display = "block";
+    } else if (tabKey === "wrap") {
+      const slot = document.getElementById("proDeckSlotWrap");
+      if (slot && !slot.contains(proDeckWrapper)) {
+        slot.appendChild(proDeckWrapper);
+      }
+      proDeckWrapper.style.display = "block";
+    } else {
+      proDeckWrapper.style.display = "none";
+    }
+  }
+
   function switchTab(tabKey) {
     if (!tabViews[tabKey]) return;
     navTabs.forEach((btn) => {
@@ -2213,6 +2233,7 @@ function initHakiru5TabApp() {
         tabViews[k].classList.toggle("active", k === tabKey);
       }
     });
+    updateProDeckPlacement(tabKey);
     window.location.hash = tabKey;
   }
 
@@ -2227,6 +2248,8 @@ function initHakiru5TabApp() {
   const hash = window.location.hash.replace("#", "");
   if (hash && tabViews[hash]) {
     switchTab(hash);
+  } else {
+    updateProDeckPlacement("stake");
   }
 
   // Promo card links
@@ -2632,36 +2655,66 @@ function initHakiru5TabApp() {
   if (btnCloseModal) btnCloseModal.addEventListener("click", closeWalletModal);
   if (btnCloseAccountModal) btnCloseAccountModal.addEventListener("click", closeAccountModal);
 
-  // Live Wallet Search Filtering
+  // 3-Column Wallet Grid & Expandable Secondary Grid Logic
+  const moreWalletsContainer = document.getElementById("moreWalletsContainer");
+  const btnTileMoreWallets = document.getElementById("btnTileMoreWallets");
+  const moreTileTitle = document.getElementById("moreTileTitle");
+  const moreTileBadge = document.getElementById("moreTileBadge");
+  const moreTileIconBox = document.getElementById("moreTileIconBox");
+
+  let isWalletsExpanded = false;
+
+  function setWalletsExpanded(expanded) {
+    isWalletsExpanded = expanded;
+    if (moreWalletsContainer) {
+      moreWalletsContainer.style.display = isWalletsExpanded ? "grid" : "none";
+    }
+    if (moreTileTitle) moreTileTitle.textContent = isWalletsExpanded ? "Less" : "More";
+    if (moreTileBadge) moreTileBadge.textContent = isWalletsExpanded ? "Collapse" : "5 Wallets";
+    if (moreTileIconBox) {
+      moreTileIconBox.innerHTML = isWalletsExpanded
+        ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>`
+        : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>`;
+    }
+    if (toggleMoreWalletsText) {
+      toggleMoreWalletsText.textContent = isWalletsExpanded ? "Less wallets" : "More wallets";
+    }
+    const iconSpan = document.getElementById("toggleMoreWalletsIcon");
+    if (iconSpan) iconSpan.textContent = isWalletsExpanded ? "📂" : "📁";
+  }
+
+  if (btnTileMoreWallets) {
+    btnTileMoreWallets.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setWalletsExpanded(!isWalletsExpanded);
+    });
+  }
+
+  if (btnToggleMoreWallets) {
+    btnToggleMoreWallets.addEventListener("click", () => {
+      setWalletsExpanded(!isWalletsExpanded);
+    });
+  }
+
+  // Live Wallet Search Filtering (Auto-opens expandable grid on query)
   if (walletSearchInput) {
     walletSearchInput.addEventListener("input", (e) => {
       const q = e.target.value.toLowerCase().trim();
+      if (q) {
+        if (moreWalletsContainer) moreWalletsContainer.style.display = "grid";
+      } else {
+        if (moreWalletsContainer) moreWalletsContainer.style.display = isWalletsExpanded ? "grid" : "none";
+      }
       const btns = document.querySelectorAll(".hikari-wallet-btn, .hakiru-wallet-btn");
       btns.forEach((btn) => {
+        if (btn.id === "btnTileMoreWallets") {
+          btn.style.display = q ? "none" : "flex";
+          return;
+        }
         const name = (btn.dataset.name || btn.textContent || "").toLowerCase();
         const matches = !q || name.includes(q);
         btn.style.display = matches ? "flex" : "none";
       });
-    });
-  }
-
-  // Toggle More / Less Wallets
-  let isWalletsExpanded = true;
-  if (btnToggleMoreWallets) {
-    btnToggleMoreWallets.addEventListener("click", () => {
-      isWalletsExpanded = !isWalletsExpanded;
-      const allWalletBtns = document.querySelectorAll(".hikari-wallet-btn, .hakiru-wallet-btn");
-      allWalletBtns.forEach((btn, idx) => {
-        // Show first 5 in collapsed mode, or all in expanded mode
-        if (isWalletsExpanded || idx < 5) {
-          btn.style.display = "flex";
-        } else {
-          btn.style.display = "none";
-        }
-      });
-      if (toggleMoreWalletsText) {
-        toggleMoreWalletsText.textContent = isWalletsExpanded ? "Less wallets" : "More wallets";
-      }
     });
   }
 
@@ -2683,6 +2736,7 @@ function initHakiru5TabApp() {
   }
 
   document.querySelectorAll(".hikari-wallet-btn, .hakiru-wallet-btn").forEach((b) => {
+    if (b.id === "btnTileMoreWallets") return; // Handled by toggle listener
     b.addEventListener("click", () => {
       const wName = b.dataset.name || b.dataset.wallet || "Wallet";
       connectAccount(wName);

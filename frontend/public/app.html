@@ -249,628 +249,10 @@
           </div>
         </div>
 
-        <!-- FAQ Accordion (Matching Video 00:00 - 00:05) -->
-        <section class="hikari-faq-section hakiru-faq-section">
-          <h2 class="hikari-faq-heading hakiru-faq-heading">FAQ</h2>
-          <div class="hikari-faq-list hakiru-faq-list">
-            <div class="hikari-faq-item hakiru-faq-item active">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>What is Hikari?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                Hikari is a native, autonomous asset management and multi-strategy yield routing protocol built natively for the Stellar network and Soroban smart contract runtime. Hikari provides tokenized liquid staking (hXLM), dynamic rebalancing keepers, AI-assisted telemetry, and cryptographic proofs of solvency.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>How does Hikari work?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                When you deposit native XLM into Hikari, the protocol mints liquid yield-bearing hXLM tokens aligned with ERC-4626 share-accounting standards. The underlying capital is routed into verified Soroban DeFi primitives (such as Blend money markets, Phoenix CLAMM yield pools, and atomic MEV backruns). Accrued yields are automatically harvested and compounded by autonomous keepers, raising the redeemable value of each hXLM over time.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>What security measures does the Hikari protocol have in place?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                Hikari employs formal invariant checks, ERC-4626 dead-share offsets to eliminate first-depositor inflation attacks, autonomous Safety Sentinel circuit breakers that detect rapid pool depegs or oracle divergences, a mandatory 15% liquid reserve floor, and a daily Zero-Knowledge Merkle Proof of Solvency verifying that 100% of user liabilities are backed by on-chain reserves.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>What are the risks of engaging with the Hikari protocol?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                Engaging with decentralized finance involves smart contract risks across integrated lending protocols (Blend) and AMMs (Phoenix), market volatility, and potential epoch queue delays during extreme market unbonding conditions. Hikari mitigates these through Bunker Mode and autonomous circuit breakers.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>What is Hikari staking APY for Stellar?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                Because Stellar uses the Stellar Consensus Protocol (SCP) without native inflationary Proof-of-Stake rewards, Hikari's dynamic APY (currently 12.4%) is generated exclusively through real, productive on-chain DeFi utility: collateral borrow interest on Blend and dynamic trading fees from Phoenix CLAMM liquidity pools.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>What fee is applied by Hikari? What is this used for?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                A 5% protocol fee is deducted strictly from earned yield (never from your principal). Half of this fee funds the automated 24/7 harvest keeper network for continuous gasless compounding, and the other half builds the protocol reserve treasury.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>What is hXLM?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                hXLM is a Stellar Asset Contract (SEP-41) token that represents your claim on the Hikari pool. It is fully transferable, composable, and increases in redemption value against XLM as yield accumulates.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>How can I get hXLM?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                You can mint hXLM directly on this page by connecting your Stellar wallet and depositing native XLM, or swap for it on Stellar DEXes (Soroswap, Phoenix).
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>How can I use hXLM in DeFi?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                hXLM can be supplied as collateral on Blend to borrow stablecoins (USDC), paired in AMM liquidity pools for additional LP trading fees, or wrapped into whXLM for cross-protocol composability.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>Where can I convert my hXLM?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                You can convert hXLM back to XLM through the Withdrawals tab via the native unbonding queue, or execute an instant swap on decentralized exchanges like Soroswap or Phoenix CLAMM in seconds.
-              </div>
-            </div>
-
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>How can I withdraw or unstake hXLM?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                Simply click the "Withdrawals" tab at the top of the app. Choose between "Use Hikari" (0% fee, 1-3 days unbonding queue) or "Use DEX" (instant swap in ~10 seconds with market liquidity).
-              </div>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <!-- TAB 2: WRAP & UNWRAP -->
-      <section id="viewTabWrap" class="hikari-tab-view hakiru-tab-view">
-        <div class="hikari-card hakiru-card">
-          <div class="hikari-card-header hakiru-card-header">
-            <h1 class="hikari-card-title hakiru-card-title">Wrap &amp; Unwrap</h1>
-            <p class="hikari-card-subtitle hakiru-card-subtitle">Stake-rate stable token (whXLM) for Soroban DeFi &amp; AMMs</p>
-          </div>
-
-          <div class="hikari-subtabs-row hakiru-subtabs-row">
-            <button class="hikari-subtab-btn hakiru-subtab-btn active" id="subtabWrap">Wrap</button>
-            <button class="hikari-subtab-btn hakiru-subtab-btn" id="subtabUnwrap">Unwrap</button>
-          </div>
-
-          <div class="hikari-input-container hakiru-input-container">
-            <div class="hikari-input-header hakiru-input-header">
-              <span class="hikari-input-label hakiru-input-label" id="wrapInputLabel">hXLM amount</span>
-              <span id="wrapBalDisplay" class="hikari-input-balance hakiru-input-balance">Available: 0.00 hXLM</span>
-            </div>
-            <div class="hikari-input-row hakiru-input-row">
-              <div class="hikari-token-icon-wrap" title="Stellar hXLM">
-                <svg class="hikari-token-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="11" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="1.5"/>
-                  <text x="12" y="16" font-size="12" font-family="'Outfit', sans-serif" font-weight="700" fill="#a78bfa" text-anchor="middle">h</text>
-                </svg>
-              </div>
-              <input type="number" id="inputWrapAmount" class="hikari-number-input hakiru-number-input" placeholder="0.0" min="0" step="any">
-              <button type="button" id="btnWrapMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
-            </div>
-          </div>
-
-          <button id="btnActionWrap" class="hikari-btn-primary hakiru-btn-primary">
-            <svg class="wallet-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><circle cx="18" cy="14" r="1" fill="currentColor"></circle></svg>
-            <span id="btnActionWrapText">Connect wallet</span>
-          </button>
-
-          <div class="hikari-details-table hakiru-details-table">
-            <div class="hikari-detail-row hakiru-detail-row">
-              <span class="hikari-detail-lbl hakiru-detail-lbl">You will receive</span>
-              <span id="wrapReceiveEst" class="hikari-detail-val hakiru-detail-val">0.0 whXLM</span>
-            </div>
-            <div class="hikari-detail-row hakiru-detail-row">
-              <span class="hikari-detail-lbl hakiru-detail-lbl">Max unlock cost</span>
-              <span class="hikari-detail-val hakiru-detail-val" style="color: #10b981;">FREE</span>
-            </div>
-            <div class="hikari-detail-row hakiru-detail-row">
-              <span class="hikari-detail-lbl hakiru-detail-lbl">Exchange rate</span>
-              <span class="hikari-detail-val hakiru-detail-val">1 hXLM = 1.0428 whXLM</span>
-            </div>
-            <div class="hikari-detail-row hakiru-detail-row">
-              <span class="hikari-detail-lbl hakiru-detail-lbl">Allowance</span>
-              <span class="hikari-detail-val hakiru-detail-val">Infinite</span>
-            </div>
-          </div>
-        </div>
-
-        <section class="hikari-faq-section hakiru-faq-section">
-          <h2 class="hikari-faq-heading hakiru-faq-heading">FAQ</h2>
-          <div class="hikari-faq-list hakiru-faq-list">
-            <div class="hikari-faq-item hakiru-faq-item active">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>What is the difference between hXLM and whXLM?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                hXLM is the core yield-bearing liquid staking receipt token whose NAV grows relative to XLM. whXLM (Wrapped hXLM) is a non-rebasing, fixed-supply wrapper optimized for Soroban AMMs and external smart contract integrations that require static token balances.
-              </div>
-            </div>
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>Does wrapping cost fees?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                No, wrapping and unwrapping have zero protocol fees—you only pay the standard Stellar network fee of ~0.00001 XLM.
-              </div>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <!-- TAB 3: WITHDRAWALS (MATCHING VIDEO 00:07 + VOICE SPEC: DIRECT TO BANK) -->
-      <section id="viewTabWithdrawals" class="hikari-tab-view hakiru-tab-view">
-        <div class="hikari-card hakiru-card">
-          <div class="hikari-card-header hakiru-card-header">
-            <h1 class="hikari-card-title hakiru-card-title">Withdrawals</h1>
-            <p class="hikari-card-subtitle hakiru-card-subtitle">Request hXLM withdrawal, claim native XLM, or withdraw directly to bank</p>
-          </div>
-
-          <div class="hikari-subtabs-row hakiru-subtabs-row">
-            <button class="hikari-subtab-btn hakiru-subtab-btn active" id="subtabWithdrawRequest">Request</button>
-            <button class="hikari-subtab-btn hakiru-subtab-btn" id="subtabWithdrawClaim">Claim</button>
-            <button class="hikari-subtab-btn hakiru-subtab-btn" id="subtabWithdrawDirectBank">Direct to Bank</button>
-          </div>
-
-          <!-- Sub-view 1: Request Unbonding (Matching Video 00:07) -->
-          <div id="subviewWithdrawRequest">
-            <div class="hikari-choice-grid hakiru-choice-grid">
-              <div class="hikari-choice-card hakiru-choice-card active" id="choiceHakiru">
-                <div class="hikari-choice-title hakiru-choice-title">Use Hikari Protocol</div>
-                <div class="hikari-choice-meta hakiru-choice-meta">Waiting time: ~ 1-3 days • Fee: 0%</div>
-              </div>
-              <div class="hikari-choice-card hakiru-choice-card" id="choiceDex">
-                <div class="hikari-choice-title hakiru-choice-title">Use DEX Instant Swap</div>
-                <div class="hikari-choice-meta hakiru-choice-meta">Waiting time: ~ 10 seconds • Fee: DEX slippage</div>
-              </div>
-            </div>
-
-            <div class="hikari-input-container hakiru-input-container">
-              <div class="hikari-input-header hakiru-input-header">
-                <span class="hikari-input-label hakiru-input-label">hXLM amount</span>
-                <span id="withdrawBalDisplay" class="hikari-input-balance hakiru-input-balance">Available: 0.00 hXLM</span>
-              </div>
-              <div class="hikari-input-row hakiru-input-row">
-                <div class="hikari-token-icon-wrap" title="Stellar hXLM">
-                  <svg class="hikari-token-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="11" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="1.5"/>
-                    <text x="12" y="16" font-size="12" font-family="'Outfit', sans-serif" font-weight="700" fill="#a78bfa" text-anchor="middle">h</text>
-                  </svg>
-                </div>
-                <input type="number" id="inputWithdrawAmount" class="hikari-number-input hakiru-number-input" placeholder="0.0" min="0" step="any">
-                <button type="button" id="btnWithdrawMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
-              </div>
-            </div>
-
-            <button id="btnActionWithdraw" class="hikari-btn-primary hakiru-btn-primary">
-              <svg class="wallet-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><circle cx="18" cy="14" r="1" fill="currentColor"></circle></svg>
-              <span id="btnActionWithdrawText">Connect wallet</span>
-            </button>
-
-            <div class="hikari-details-table hakiru-details-table">
-              <div class="hikari-detail-row hakiru-detail-row">
-                <span class="hikari-detail-lbl hakiru-detail-lbl">You will receive</span>
-                <span id="withdrawReceiveEst" class="hikari-detail-val hakiru-detail-val">0.0 XLM</span>
-              </div>
-              <div class="hikari-detail-row hakiru-detail-row">
-                <span class="hikari-detail-lbl hakiru-detail-lbl">Max unlock cost</span>
-                <span class="hikari-detail-val hakiru-detail-val" style="color: #10b981;">FREE</span>
-              </div>
-              <div class="hikari-detail-row hakiru-detail-row">
-                <span class="hikari-detail-lbl hakiru-detail-lbl">Waiting time</span>
-                <span class="hikari-detail-val hakiru-detail-val" id="withdrawWaitTimeText">~ 1-3 days</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sub-view 2: Claim Tickets -->
-          <div id="subviewWithdrawClaim" style="display: none;">
-            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
-              Your active withdrawal claim tickets in the FIFO queue:
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem;">
-              <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">Ticket #101</div>
-                  <div style="font-size: 0.75rem; color: var(--text-muted);">250 shares • 260.70 XLM</div>
-                </div>
-                <button class="hikari-btn-max hakiru-btn-max" style="padding: 0.45rem 1rem; background: rgba(16, 185, 129, 0.2); color: #10b981; border-color: rgba(16, 185, 129, 0.4);">
-                  Claim XLM
-                </button>
-              </div>
-              <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                <div>
-                  <div style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">Ticket #102</div>
-                  <div style="font-size: 0.75rem; color: var(--text-muted);">500 shares • 521.40 XLM</div>
-                </div>
-                <span style="font-size: 0.75rem; color: #f59e0b; background: rgba(245, 158, 11, 0.15); padding: 0.3rem 0.6rem; border-radius: 9999px;">
-                  Unbonding (~18h)
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Sub-view 3: Direct to Bank Off-Ramp (Requested in Voice Note) -->
-          <div id="subviewWithdrawDirectBank" style="display: none;">
-            <div style="background: rgba(0, 163, 255, 0.06); border: 1px solid rgba(0, 163, 255, 0.2); border-radius: 14px; padding: 0.9rem 1rem; margin-bottom: 1.2rem; font-size: 0.8rem; color: #bae6fd; line-height: 1.4;">
-              <strong>Instant Fiat Off-Ramp:</strong> Convert hXLM / XLM directly into your local bank account via Stellar Anchor rails (SEP-24 / SEP-6) with automatic liquidation and fast local bank wire.
-            </div>
-
-            <div class="hikari-input-container hakiru-input-container">
-              <div class="hikari-input-header hakiru-input-header">
-                <span class="hikari-input-label hakiru-input-label">Withdrawal Asset</span>
-                <span id="bankBalDisplay" class="hikari-input-balance hakiru-input-balance">Available: 0.00 hXLM</span>
-              </div>
-              <div class="hikari-input-row hakiru-input-row">
-                <select id="bankAssetSelect" class="hikari-select-input" style="width: 140px; padding: 0.4rem 0.6rem;">
-                  <option value="hXLM">hXLM (Liquid)</option>
-                  <option value="XLM">Native XLM</option>
-                </select>
-                <input type="number" id="inputBankAmount" class="hikari-number-input hakiru-number-input" placeholder="0.0" min="0" step="any">
-                <button type="button" id="btnBankMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
-              </div>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-              <div>
-                <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Destination Currency</label>
-                <select id="bankCurrencySelect" class="hikari-select-input">
-                  <option value="USD">USD — US Dollar ($)</option>
-                  <option value="EUR">EUR — Euro (€)</option>
-                  <option value="NGN">NGN — Nigerian Naira (₦)</option>
-                  <option value="GBP">GBP — British Pound (£)</option>
-                  <option value="BRL">BRL — Brazilian Real (R$)</option>
-                </select>
-              </div>
-              <div>
-                <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Bank / Institution Name</label>
-                <input type="text" id="inputBankName" class="hikari-select-input" placeholder="e.g. Chase / Revolut / Kuda">
-              </div>
-            </div>
-
-            <div style="margin-bottom: 1.25rem;">
-              <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Account Number / IBAN</label>
-              <input type="text" id="inputBankAccountNumber" class="hikari-select-input" placeholder="e.g. 0123456789 or GB82 WEST 123456">
-            </div>
-
-            <button id="btnActionDirectBank" class="hikari-btn-primary hakiru-btn-primary">
-              <svg class="wallet-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><circle cx="18" cy="14" r="1" fill="currentColor"></circle></svg>
-              <span id="btnActionDirectBankText">Connect wallet</span>
-            </button>
-
-            <div class="hikari-details-table hakiru-details-table">
-              <div class="hikari-detail-row hakiru-detail-row">
-                <span class="hikari-detail-lbl hakiru-detail-lbl">Estimated Bank Payout</span>
-                <span id="bankPayoutEst" class="hikari-detail-val hakiru-detail-val" style="color: #10b981; font-size: 0.95rem;">$0.00 USD</span>
-              </div>
-              <div class="hikari-detail-row hakiru-detail-row">
-                <span class="hikari-detail-lbl hakiru-detail-lbl">Anchor FX Rate</span>
-                <span id="bankFxRateDisplay" class="hikari-detail-val hakiru-detail-val">1 XLM ≈ $0.125 USD</span>
-              </div>
-              <div class="hikari-detail-row hakiru-detail-row">
-                <span class="hikari-detail-lbl hakiru-detail-lbl">Network &amp; Wire Fee</span>
-                <span class="hikari-detail-val hakiru-detail-val">0.1% ($0.25 min)</span>
-              </div>
-              <div class="hikari-detail-row hakiru-detail-row">
-                <span class="hikari-detail-lbl hakiru-detail-lbl">Estimated Settlement</span>
-                <span class="hikari-detail-val hakiru-detail-val" style="color: #00a3ff;">~2-5 mins (Direct Wire)</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 4: REWARDS -->
-      <section id="viewTabRewards" class="hikari-tab-view hakiru-tab-view">
-        <div class="hikari-card hakiru-card">
-          <div class="hikari-card-header hakiru-card-header">
-            <h1 class="hikari-card-title hakiru-card-title">Reward History</h1>
-            <p class="hikari-card-subtitle hakiru-card-subtitle">Track your Stellar staking and yield rewards with Hikari</p>
-          </div>
-
-          <div class="hikari-input-container hakiru-input-container" style="margin-bottom: 1.5rem;">
-            <div class="hikari-input-header hakiru-input-header">
-              <span class="hakiru-input-label">Stellar address</span>
-            </div>
-            <div class="hakiru-input-row">
-              <input type="text" id="inputRewardAddress" class="hakiru-number-input" placeholder="G..." style="font-size: 1rem;">
-              <button type="button" id="btnCheckRewards" class="hakiru-btn-max" style="padding: 0.45rem 0.9rem;">Check</button>
-            </div>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
-              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Balance</div>
-              <div id="rewardStatBal" style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0.2rem;">450.00</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
-              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Rewarded</div>
-              <div id="rewardStatEarned" style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #10b981; margin-top: 0.2rem;">+38.45 XLM</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
-              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Average APY</div>
-              <div style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #00a3ff; margin-top: 0.2rem;">12.4%</div>
-            </div>
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
-              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Price</div>
-              <div style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0.2rem;">$0.125</div>
-            </div>
-          </div>
-
-          <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem;">
-            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.75rem;">Recent Distributions</div>
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.78rem;">
-              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-                <span>Today, 12:00 UTC (Blend & Phoenix)</span>
-                <span style="color: #10b981; font-weight: 600;">+0.98 hXLM</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-                <span>Yesterday, 12:00 UTC (Auto-Compound)</span>
-                <span style="color: #10b981; font-weight: 600;">+0.96 hXLM</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-                <span>Sep 10, 12:00 UTC (Auto-Compound)</span>
-                <span style="color: #10b981; font-weight: 600;">+0.95 hXLM</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 5: EARN (NEW) (MATCHING VIDEO 00:10 - 00:23 + VOICE SPEC: CROSS-CHAIN) -->
-      <section id="viewTabEarn" class="hikari-tab-view hakiru-tab-view">
-        <div style="margin-bottom: 1.5rem; text-align: center;">
-          <h1 style="font-size: 1.8rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin: 0 0 0.4rem;">
-            Hikari Earn
-          </h1>
-          <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 0 0.6rem;">
-            Deploy XLM, USD, and Multichain assets into Hikari vaults for on-chain yield across Stellar's leading protocols.
-          </p>
-          <a href="#earn-faq" style="font-size: 0.78rem; color: #00a3ff; text-decoration: none;">How Hikari Earn Works ↗</a>
-        </div>
-
-        <!-- Earn Card 1: EarnXLM (Matching Video 00:10) -->
-        <div class="hikari-earn-card hakiru-earn-card">
-          <div class="hikari-earn-card-left hakiru-earn-card-left">
-            <div class="hikari-earn-badge hakiru-earn-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span>PROTECTED</span>
-            </div>
-            <h2 class="hikari-earn-title hakiru-earn-title">EarnXLM</h2>
-            <p class="hikari-earn-desc hakiru-earn-desc">
-              EarnXLM is an XLM growth vault allocating XLM and hXLM across leading blue-chip DeFi protocols meant to optimize for capital efficiency.
-            </p>
-            <div class="hikari-earn-metrics-row hakiru-earn-metrics-row">
-              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
-                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">APY* (14d avg)</span>
-                <span class="hikari-earn-metric-val apy-val hakiru-earn-metric-val">12.4%</span>
-              </div>
-              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
-                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">TVL</span>
-                <span class="hikari-earn-metric-val hakiru-earn-metric-val">485K XLM</span>
-              </div>
-            </div>
-            <button class="hikari-btn-primary hakiru-btn-primary btn-deposit-vault" data-vault="xlm" style="width: auto; padding: 0.6rem 1.6rem; font-size: 0.9rem; margin-bottom: 0;">
-              Deposit
-            </button>
-          </div>
-          <div class="hikari-earn-card-right hakiru-earn-card-right">
-            <div class="hikari-iso-cube-container">
-              <div class="hikari-iso-cube">
-                <div class="cube-face face-top">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" fill="#00a3ff" fill-opacity="0.3" stroke="#00a3ff" stroke-width="1.5"/>
-                    <path d="M12 4L13.8 9.2L19.2 10.5L15 14.2L16.2 19.5L12 16.5L7.8 19.5L9 14.2L4.8 10.5L10.2 9.2L12 4Z" fill="#00a3ff"/>
-                  </svg>
-                </div>
-                <div class="cube-face face-front"></div>
-                <div class="cube-face face-right"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Earn Card 2: EarnUSD (Matching Video 00:18) -->
-        <div class="hikari-earn-card hakiru-earn-card">
-          <div class="hikari-earn-card-left hakiru-earn-card-left">
-            <div class="hikari-earn-badge hakiru-earn-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span>PROTECTED</span>
-            </div>
-            <h2 class="hikari-earn-title hakiru-earn-title">EarnUSD</h2>
-            <p class="hikari-earn-desc hakiru-earn-desc">
-              EarnUSD delivers access to USD-denominated reward strategies built around transparent asset selection, risk controls, and reporting.
-            </p>
-            <div class="hikari-earn-metrics-row hakiru-earn-metrics-row">
-              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
-                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">APY* (14d avg)</span>
-                <span class="hikari-earn-metric-val apy-val hakiru-earn-metric-val">17.0%</span>
-              </div>
-              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
-                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">TVL</span>
-                <span class="hikari-earn-metric-val hakiru-earn-metric-val">$42.5K</span>
-              </div>
-            </div>
-            <button class="hikari-btn-primary hakiru-btn-primary btn-deposit-vault" data-vault="usd" style="width: auto; padding: 0.6rem 1.6rem; font-size: 0.9rem; margin-bottom: 0;">
-              Deposit
-            </button>
-          </div>
-          <div class="hikari-earn-card-right hakiru-earn-card-right">
-            <div class="hikari-iso-cube-container">
-              <div class="hikari-iso-cube" style="animation-delay: -2s;">
-                <div class="cube-face face-top" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.7) 0%, rgba(6, 182, 212, 0.7) 100%);">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" fill="#10b981" fill-opacity="0.3" stroke="#10b981" stroke-width="1.5"/>
-                    <text x="12" y="16" font-size="12" font-family="'Outfit', sans-serif" font-weight="700" fill="#10b981" text-anchor="middle">$</text>
-                  </svg>
-                </div>
-                <div class="cube-face face-front" style="background: linear-gradient(180deg, rgba(16, 185, 129, 0.8) 0%, rgba(6, 78, 59, 0.9) 100%);"></div>
-                <div class="cube-face face-right" style="background: linear-gradient(180deg, rgba(6, 182, 212, 0.7) 0%, rgba(21, 94, 117, 0.9) 100%);"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Earn Card 3: Earn Multichain with Interactive Cross-Chain Converter (Requested in Voice Note) -->
-        <div class="hikari-earn-card hakiru-earn-card" style="flex-direction: column; align-items: stretch;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
-            <div>
-              <div class="hikari-earn-badge hakiru-earn-badge">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span>MULTI-CHAIN VAULT</span>
-              </div>
-              <h2 class="hikari-earn-title hakiru-earn-title">Earn Multichain</h2>
-              <p class="hikari-earn-desc hakiru-earn-desc">
-                Convert and stake assets from Solana, Ethereum, Arbitrum, or Polygon directly into yield-bearing hXLM in one seamless cross-chain step.
-              </p>
-            </div>
-            <div class="hikari-earn-metrics-row hakiru-earn-metrics-row" style="margin-bottom: 0;">
-              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
-                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">APY*</span>
-                <span class="hikari-earn-metric-val apy-val hakiru-earn-metric-val">14.2%</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Interactive Multichain Swap & Auto-Stake Panel -->
-          <div class="hikari-multichain-card">
-            <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600;">Select Origin Network</div>
-            <div class="hikari-chain-selector" id="multichainSelector">
-              <button type="button" class="hikari-chain-pill active" data-chain="sol" data-token="SOL" data-rate="1216">
-                <span>🟣</span> <span>Solana (SOL)</span>
-              </button>
-              <button type="button" class="hikari-chain-pill" data-chain="eth" data-token="ETH" data-rate="21500">
-                <span>🔷</span> <span>Ethereum (ETH)</span>
-              </button>
-              <button type="button" class="hikari-chain-pill" data-chain="arb" data-token="USDC" data-rate="8.0">
-                <span>🔵</span> <span>Arbitrum (USDC)</span>
-              </button>
-              <button type="button" class="hikari-chain-pill" data-chain="pol" data-token="POL" data-rate="3.2">
-                <span>🟣</span> <span>Polygon (POL)</span>
-              </button>
-              <button type="button" class="hikari-chain-pill" data-chain="base" data-token="ETH" data-rate="21500">
-                <span>🔵</span> <span>Base (ETH)</span>
-              </button>
-            </div>
-
-            <div class="hikari-input-container hakiru-input-container">
-              <div class="hikari-input-header hakiru-input-header">
-                <span class="hikari-input-label hakiru-input-label" id="bridgeInputLabel">Deposit Solana (SOL)</span>
-                <span id="bridgeBalDisplay" class="hikari-input-balance hakiru-input-balance">Balance: 5.20 SOL</span>
-              </div>
-              <div class="hikari-input-row hakiru-input-row">
-                <input type="number" id="inputBridgeAmount" class="hikari-number-input hakiru-number-input" placeholder="1.0" min="0" step="any" value="1.0">
-                <button type="button" id="btnBridgeMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
-              </div>
-            </div>
-
-            <!-- Conversion Route Info -->
-            <div style="background: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 0.8rem 1rem; margin-bottom: 1.25rem; font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem;">
-              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-                <span>Bridge &amp; Swap Route:</span>
-                <span id="bridgeRouteDisplay" style="color: #ffffff; font-weight: 500;">Solana ➔ Stellar Anchor ➔ XLM</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-                <span>Converted XLM:</span>
-                <span id="bridgeXlmEst" style="color: #ffffff; font-weight: 600;">≈ 1,216.00 XLM</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-                <span>Auto-Staked hXLM Minted:</span>
-                <span id="bridgeHxlmEst" style="color: #10b981; font-weight: 700;">≈ 1,166.09 hXLM</span>
-              </div>
-              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
-                <span>Compounding Strategy Yield:</span>
-                <span style="color: #00a3ff; font-weight: 600;">14.2% APY*</span>
-              </div>
-            </div>
-
-            <button id="btnActionBridgeStake" class="hikari-btn-primary hakiru-btn-primary" style="margin-bottom: 0;">
-              <span id="btnActionBridgeStakeText">Bridge &amp; Auto-Stake to hXLM</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Upgrading Vaults Accordion & Disclaimer (Matching Video 00:18) -->
-        <section class="hikari-faq-section hakiru-faq-section" id="earn-faq">
-          <h2 class="hikari-faq-heading hakiru-faq-heading">Upgrading Vaults</h2>
-          <div class="hikari-faq-list hakiru-faq-list">
-            <div class="hikari-faq-item hakiru-faq-item">
-              <button class="hikari-faq-question hakiru-faq-question">
-                <span>How are Hikari Earn strategies audited and safeguarded?</span>
-                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
-              </button>
-              <div class="hikari-faq-answer hakiru-faq-answer">
-                Hikari Earn vaults execute deterministic allocation algorithms with automated circuit breakers, a 15% liquid reserve floor, and formal invariant validation. Strategy adapters can be paused instantly by the Safety Sentinel if oracle divergence or unexpected volatility is detected.
-              </div>
-            </div>
-          </div>
-
-          <!-- Video 00:18 Disclaimers -->
-          <div style="margin-top: 2rem; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.75rem; color: var(--text-dim); line-height: 1.6;">
-            <p style="margin: 0 0 0.75rem;">
-              * APR/APY figures are estimates, not guaranteed, and are subject to change based on network conditions.
-            </p>
-            <p style="margin: 0 0 0.75rem;">
-              Rewards may fluctuate and are influenced by factors outside the platform's control, including changes to blockchain protocols and validator performance. Past performance does not guarantee future results. Rewards are not assured and depend on the specific rules and mechanisms established by each underlying blockchain network. Users should conduct their own research, seek professional advice, and ensure they understand the risks before participating.
-            </p>
-            <p style="margin: 0;">
-              Your privacy matters. We use cookieless analytics and collect only anonymized data for improvements. Cookies are used for functionality only. For more info read <a href="#privacy" style="color: #00a3ff; text-decoration: none;">Privacy Notice</a>.
-            </p>
-          </div>
-        </section>
-      </section>
-
-    </div>
-
-    <!-- Toggle for Advanced Pro Analytics & Risk Telemetry (Preserves Test Compatibility) -->
+        <!-- Slot for Advanced Pro Analytics, Trading Bots & Risk Telemetry (Before FAQs) -->
+        <div id="proDeckSlotStake" class="pro-deck-slot">
+          <div id="proDeckWrapper" class="pro-deck-wrapper">
+<!-- Toggle for Advanced Pro Analytics & Risk Telemetry (Preserves Test Compatibility) -->
     <div style="max-width: 600px; margin: 1.5rem auto 2.5rem; text-align: center;">
       <button id="btnToggleProDeck" class="hakiru-btn-max" style="background: rgba(255,255,255,0.05); color: var(--text-muted); padding: 0.6rem 1.4rem; border-radius: 9999px; font-size: 0.82rem;">
         <span>⚡ Advanced Pro Analytics, Trading Bots & Risk Telemetry ▾</span>
@@ -1532,6 +914,633 @@
       </aside>
     </div>
     </div> <!-- /proDeckContainer -->
+          </div>
+        </div>
+        <!-- FAQ Accordion (Matching Video 00:00 - 00:05) -->
+        <section class="hikari-faq-section hakiru-faq-section">
+          <h2 class="hikari-faq-heading hakiru-faq-heading">FAQ</h2>
+          <div class="hikari-faq-list hakiru-faq-list">
+            <div class="hikari-faq-item hakiru-faq-item active">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>What is Hikari?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                Hikari is a native, autonomous asset management and multi-strategy yield routing protocol built natively for the Stellar network and Soroban smart contract runtime. Hikari provides tokenized liquid staking (hXLM), dynamic rebalancing keepers, AI-assisted telemetry, and cryptographic proofs of solvency.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>How does Hikari work?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                When you deposit native XLM into Hikari, the protocol mints liquid yield-bearing hXLM tokens aligned with ERC-4626 share-accounting standards. The underlying capital is routed into verified Soroban DeFi primitives (such as Blend money markets, Phoenix CLAMM yield pools, and atomic MEV backruns). Accrued yields are automatically harvested and compounded by autonomous keepers, raising the redeemable value of each hXLM over time.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>What security measures does the Hikari protocol have in place?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                Hikari employs formal invariant checks, ERC-4626 dead-share offsets to eliminate first-depositor inflation attacks, autonomous Safety Sentinel circuit breakers that detect rapid pool depegs or oracle divergences, a mandatory 15% liquid reserve floor, and a daily Zero-Knowledge Merkle Proof of Solvency verifying that 100% of user liabilities are backed by on-chain reserves.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>What are the risks of engaging with the Hikari protocol?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                Engaging with decentralized finance involves smart contract risks across integrated lending protocols (Blend) and AMMs (Phoenix), market volatility, and potential epoch queue delays during extreme market unbonding conditions. Hikari mitigates these through Bunker Mode and autonomous circuit breakers.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>What is Hikari staking APY for Stellar?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                Because Stellar uses the Stellar Consensus Protocol (SCP) without native inflationary Proof-of-Stake rewards, Hikari's dynamic APY (currently 12.4%) is generated exclusively through real, productive on-chain DeFi utility: collateral borrow interest on Blend and dynamic trading fees from Phoenix CLAMM liquidity pools.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>What fee is applied by Hikari? What is this used for?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                A 5% protocol fee is deducted strictly from earned yield (never from your principal). Half of this fee funds the automated 24/7 harvest keeper network for continuous gasless compounding, and the other half builds the protocol reserve treasury.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>What is hXLM?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                hXLM is a Stellar Asset Contract (SEP-41) token that represents your claim on the Hikari pool. It is fully transferable, composable, and increases in redemption value against XLM as yield accumulates.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>How can I get hXLM?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                You can mint hXLM directly on this page by connecting your Stellar wallet and depositing native XLM, or swap for it on Stellar DEXes (Soroswap, Phoenix).
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>How can I use hXLM in DeFi?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                hXLM can be supplied as collateral on Blend to borrow stablecoins (USDC), paired in AMM liquidity pools for additional LP trading fees, or wrapped into whXLM for cross-protocol composability.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>Where can I convert my hXLM?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                You can convert hXLM back to XLM through the Withdrawals tab via the native unbonding queue, or execute an instant swap on decentralized exchanges like Soroswap or Phoenix CLAMM in seconds.
+              </div>
+            </div>
+
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>How can I withdraw or unstake hXLM?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                Simply click the "Withdrawals" tab at the top of the app. Choose between "Use Hikari" (0% fee, 1-3 days unbonding queue) or "Use DEX" (instant swap in ~10 seconds with market liquidity).
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- TAB 2: WRAP & UNWRAP -->
+      <section id="viewTabWrap" class="hikari-tab-view hakiru-tab-view">
+        <div class="hikari-card hakiru-card">
+          <div class="hikari-card-header hakiru-card-header">
+            <h1 class="hikari-card-title hakiru-card-title">Wrap &amp; Unwrap</h1>
+            <p class="hikari-card-subtitle hakiru-card-subtitle">Stake-rate stable token (whXLM) for Soroban DeFi &amp; AMMs</p>
+          </div>
+
+          <div class="hikari-subtabs-row hakiru-subtabs-row">
+            <button class="hikari-subtab-btn hakiru-subtab-btn active" id="subtabWrap">Wrap</button>
+            <button class="hikari-subtab-btn hakiru-subtab-btn" id="subtabUnwrap">Unwrap</button>
+          </div>
+
+          <div class="hikari-input-container hakiru-input-container">
+            <div class="hikari-input-header hakiru-input-header">
+              <span class="hikari-input-label hakiru-input-label" id="wrapInputLabel">hXLM amount</span>
+              <span id="wrapBalDisplay" class="hikari-input-balance hakiru-input-balance">Available: 0.00 hXLM</span>
+            </div>
+            <div class="hikari-input-row hakiru-input-row">
+              <div class="hikari-token-icon-wrap" title="Stellar hXLM">
+                <svg class="hikari-token-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="11" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="1.5"/>
+                  <text x="12" y="16" font-size="12" font-family="'Outfit', sans-serif" font-weight="700" fill="#a78bfa" text-anchor="middle">h</text>
+                </svg>
+              </div>
+              <input type="number" id="inputWrapAmount" class="hikari-number-input hakiru-number-input" placeholder="0.0" min="0" step="any">
+              <button type="button" id="btnWrapMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
+            </div>
+          </div>
+
+          <button id="btnActionWrap" class="hikari-btn-primary hakiru-btn-primary">
+            <svg class="wallet-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><circle cx="18" cy="14" r="1" fill="currentColor"></circle></svg>
+            <span id="btnActionWrapText">Connect wallet</span>
+          </button>
+
+          <div class="hikari-details-table hakiru-details-table">
+            <div class="hikari-detail-row hakiru-detail-row">
+              <span class="hikari-detail-lbl hakiru-detail-lbl">You will receive</span>
+              <span id="wrapReceiveEst" class="hikari-detail-val hakiru-detail-val">0.0 whXLM</span>
+            </div>
+            <div class="hikari-detail-row hakiru-detail-row">
+              <span class="hikari-detail-lbl hakiru-detail-lbl">Max unlock cost</span>
+              <span class="hikari-detail-val hakiru-detail-val" style="color: #10b981;">FREE</span>
+            </div>
+            <div class="hikari-detail-row hakiru-detail-row">
+              <span class="hikari-detail-lbl hakiru-detail-lbl">Exchange rate</span>
+              <span class="hikari-detail-val hakiru-detail-val">1 hXLM = 1.0428 whXLM</span>
+            </div>
+            <div class="hikari-detail-row hakiru-detail-row">
+              <span class="hikari-detail-lbl hakiru-detail-lbl">Allowance</span>
+              <span class="hikari-detail-val hakiru-detail-val">Infinite</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Slot for Advanced Pro Analytics, Trading Bots & Risk Telemetry (Before FAQs) -->
+        <div id="proDeckSlotWrap" class="pro-deck-slot"></div>
+
+        <section class="hikari-faq-section hakiru-faq-section">
+          <h2 class="hikari-faq-heading hakiru-faq-heading">FAQ</h2>
+          <div class="hikari-faq-list hakiru-faq-list">
+            <div class="hikari-faq-item hakiru-faq-item active">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>What is the difference between hXLM and whXLM?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                hXLM is the core yield-bearing liquid staking receipt token whose NAV grows relative to XLM. whXLM (Wrapped hXLM) is a non-rebasing, fixed-supply wrapper optimized for Soroban AMMs and external smart contract integrations that require static token balances.
+              </div>
+            </div>
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>Does wrapping cost fees?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                No, wrapping and unwrapping have zero protocol fees—you only pay the standard Stellar network fee of ~0.00001 XLM.
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <!-- TAB 3: WITHDRAWALS (MATCHING VIDEO 00:07 + VOICE SPEC: DIRECT TO BANK) -->
+      <section id="viewTabWithdrawals" class="hikari-tab-view hakiru-tab-view">
+        <div class="hikari-card hakiru-card">
+          <div class="hikari-card-header hakiru-card-header">
+            <h1 class="hikari-card-title hakiru-card-title">Withdrawals</h1>
+            <p class="hikari-card-subtitle hakiru-card-subtitle">Request hXLM withdrawal, claim native XLM, or withdraw directly to bank</p>
+          </div>
+
+          <div class="hikari-subtabs-row hakiru-subtabs-row">
+            <button class="hikari-subtab-btn hakiru-subtab-btn active" id="subtabWithdrawRequest">Request</button>
+            <button class="hikari-subtab-btn hakiru-subtab-btn" id="subtabWithdrawClaim">Claim</button>
+            <button class="hikari-subtab-btn hakiru-subtab-btn" id="subtabWithdrawDirectBank">Direct to Bank</button>
+          </div>
+
+          <!-- Sub-view 1: Request Unbonding (Matching Video 00:07) -->
+          <div id="subviewWithdrawRequest">
+            <div class="hikari-choice-grid hakiru-choice-grid">
+              <div class="hikari-choice-card hakiru-choice-card active" id="choiceHakiru">
+                <div class="hikari-choice-title hakiru-choice-title">Use Hikari Protocol</div>
+                <div class="hikari-choice-meta hakiru-choice-meta">Waiting time: ~ 1-3 days • Fee: 0%</div>
+              </div>
+              <div class="hikari-choice-card hakiru-choice-card" id="choiceDex">
+                <div class="hikari-choice-title hakiru-choice-title">Use DEX Instant Swap</div>
+                <div class="hikari-choice-meta hakiru-choice-meta">Waiting time: ~ 10 seconds • Fee: DEX slippage</div>
+              </div>
+            </div>
+
+            <div class="hikari-input-container hakiru-input-container">
+              <div class="hikari-input-header hakiru-input-header">
+                <span class="hikari-input-label hakiru-input-label">hXLM amount</span>
+                <span id="withdrawBalDisplay" class="hikari-input-balance hakiru-input-balance">Available: 0.00 hXLM</span>
+              </div>
+              <div class="hikari-input-row hakiru-input-row">
+                <div class="hikari-token-icon-wrap" title="Stellar hXLM">
+                  <svg class="hikari-token-svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="11" fill="#8b5cf6" fill-opacity="0.15" stroke="#8b5cf6" stroke-width="1.5"/>
+                    <text x="12" y="16" font-size="12" font-family="'Outfit', sans-serif" font-weight="700" fill="#a78bfa" text-anchor="middle">h</text>
+                  </svg>
+                </div>
+                <input type="number" id="inputWithdrawAmount" class="hikari-number-input hakiru-number-input" placeholder="0.0" min="0" step="any">
+                <button type="button" id="btnWithdrawMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
+              </div>
+            </div>
+
+            <button id="btnActionWithdraw" class="hikari-btn-primary hakiru-btn-primary">
+              <svg class="wallet-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><circle cx="18" cy="14" r="1" fill="currentColor"></circle></svg>
+              <span id="btnActionWithdrawText">Connect wallet</span>
+            </button>
+
+            <div class="hikari-details-table hakiru-details-table">
+              <div class="hikari-detail-row hakiru-detail-row">
+                <span class="hikari-detail-lbl hakiru-detail-lbl">You will receive</span>
+                <span id="withdrawReceiveEst" class="hikari-detail-val hakiru-detail-val">0.0 XLM</span>
+              </div>
+              <div class="hikari-detail-row hakiru-detail-row">
+                <span class="hikari-detail-lbl hakiru-detail-lbl">Max unlock cost</span>
+                <span class="hikari-detail-val hakiru-detail-val" style="color: #10b981;">FREE</span>
+              </div>
+              <div class="hikari-detail-row hakiru-detail-row">
+                <span class="hikari-detail-lbl hakiru-detail-lbl">Waiting time</span>
+                <span class="hikari-detail-val hakiru-detail-val" id="withdrawWaitTimeText">~ 1-3 days</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-view 2: Claim Tickets -->
+          <div id="subviewWithdrawClaim" style="display: none;">
+            <div style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Your active withdrawal claim tickets in the FIFO queue:
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.25rem;">
+              <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">Ticket #101</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">250 shares • 260.70 XLM</div>
+                </div>
+                <button class="hikari-btn-max hakiru-btn-max" style="padding: 0.45rem 1rem; background: rgba(16, 185, 129, 0.2); color: #10b981; border-color: rgba(16, 185, 129, 0.4);">
+                  Claim XLM
+                </button>
+              </div>
+              <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">Ticket #102</div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted);">500 shares • 521.40 XLM</div>
+                </div>
+                <span style="font-size: 0.75rem; color: #f59e0b; background: rgba(245, 158, 11, 0.15); padding: 0.3rem 0.6rem; border-radius: 9999px;">
+                  Unbonding (~18h)
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-view 3: Direct to Bank Off-Ramp (Requested in Voice Note) -->
+          <div id="subviewWithdrawDirectBank" style="display: none;">
+            <div style="background: rgba(0, 163, 255, 0.06); border: 1px solid rgba(0, 163, 255, 0.2); border-radius: 14px; padding: 0.9rem 1rem; margin-bottom: 1.2rem; font-size: 0.8rem; color: #bae6fd; line-height: 1.4;">
+              <strong>Instant Fiat Off-Ramp:</strong> Convert hXLM / XLM directly into your local bank account via Stellar Anchor rails (SEP-24 / SEP-6) with automatic liquidation and fast local bank wire.
+            </div>
+
+            <div class="hikari-input-container hakiru-input-container">
+              <div class="hikari-input-header hakiru-input-header">
+                <span class="hikari-input-label hakiru-input-label">Withdrawal Asset</span>
+                <span id="bankBalDisplay" class="hikari-input-balance hakiru-input-balance">Available: 0.00 hXLM</span>
+              </div>
+              <div class="hikari-input-row hakiru-input-row">
+                <select id="bankAssetSelect" class="hikari-select-input" style="width: 140px; padding: 0.4rem 0.6rem;">
+                  <option value="hXLM">hXLM (Liquid)</option>
+                  <option value="XLM">Native XLM</option>
+                </select>
+                <input type="number" id="inputBankAmount" class="hikari-number-input hakiru-number-input" placeholder="0.0" min="0" step="any">
+                <button type="button" id="btnBankMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+              <div>
+                <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Destination Currency</label>
+                <select id="bankCurrencySelect" class="hikari-select-input">
+                  <option value="USD">USD — US Dollar ($)</option>
+                  <option value="EUR">EUR — Euro (€)</option>
+                  <option value="NGN">NGN — Nigerian Naira (₦)</option>
+                  <option value="GBP">GBP — British Pound (£)</option>
+                  <option value="BRL">BRL — Brazilian Real (R$)</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Bank / Institution Name</label>
+                <input type="text" id="inputBankName" class="hikari-select-input" placeholder="e.g. Chase / Revolut / Kuda">
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.25rem;">
+              <label style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Account Number / IBAN</label>
+              <input type="text" id="inputBankAccountNumber" class="hikari-select-input" placeholder="e.g. 0123456789 or GB82 WEST 123456">
+            </div>
+
+            <button id="btnActionDirectBank" class="hikari-btn-primary hakiru-btn-primary">
+              <svg class="wallet-btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><circle cx="18" cy="14" r="1" fill="currentColor"></circle></svg>
+              <span id="btnActionDirectBankText">Connect wallet</span>
+            </button>
+
+            <div class="hikari-details-table hakiru-details-table">
+              <div class="hikari-detail-row hakiru-detail-row">
+                <span class="hikari-detail-lbl hakiru-detail-lbl">Estimated Bank Payout</span>
+                <span id="bankPayoutEst" class="hikari-detail-val hakiru-detail-val" style="color: #10b981; font-size: 0.95rem;">$0.00 USD</span>
+              </div>
+              <div class="hikari-detail-row hakiru-detail-row">
+                <span class="hikari-detail-lbl hakiru-detail-lbl">Anchor FX Rate</span>
+                <span id="bankFxRateDisplay" class="hikari-detail-val hakiru-detail-val">1 XLM ≈ $0.125 USD</span>
+              </div>
+              <div class="hikari-detail-row hakiru-detail-row">
+                <span class="hikari-detail-lbl hakiru-detail-lbl">Network &amp; Wire Fee</span>
+                <span class="hikari-detail-val hakiru-detail-val">0.1% ($0.25 min)</span>
+              </div>
+              <div class="hikari-detail-row hakiru-detail-row">
+                <span class="hikari-detail-lbl hakiru-detail-lbl">Estimated Settlement</span>
+                <span class="hikari-detail-val hakiru-detail-val" style="color: #00a3ff;">~2-5 mins (Direct Wire)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: REWARDS -->
+      <section id="viewTabRewards" class="hikari-tab-view hakiru-tab-view">
+        <div class="hikari-card hakiru-card">
+          <div class="hikari-card-header hakiru-card-header">
+            <h1 class="hikari-card-title hakiru-card-title">Reward History</h1>
+            <p class="hikari-card-subtitle hakiru-card-subtitle">Track your Stellar staking and yield rewards with Hikari</p>
+          </div>
+
+          <div class="hikari-input-container hakiru-input-container" style="margin-bottom: 1.5rem;">
+            <div class="hikari-input-header hakiru-input-header">
+              <span class="hakiru-input-label">Stellar address</span>
+            </div>
+            <div class="hakiru-input-row">
+              <input type="text" id="inputRewardAddress" class="hakiru-number-input" placeholder="G..." style="font-size: 1rem;">
+              <button type="button" id="btnCheckRewards" class="hakiru-btn-max" style="padding: 0.45rem 0.9rem;">Check</button>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.5rem;">
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Balance</div>
+              <div id="rewardStatBal" style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0.2rem;">450.00</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Rewarded</div>
+              <div id="rewardStatEarned" style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #10b981; margin-top: 0.2rem;">+38.45 XLM</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Average APY</div>
+              <div style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #00a3ff; margin-top: 0.2rem;">12.4%</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 1rem;">
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">hXLM Price</div>
+              <div style="font-size: 1.3rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin-top: 0.2rem;">$0.125</div>
+            </div>
+          </div>
+
+          <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1.25rem;">
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.75rem;">Recent Distributions</div>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.78rem;">
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Today, 12:00 UTC (Blend & Phoenix)</span>
+                <span style="color: #10b981; font-weight: 600;">+0.98 hXLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Yesterday, 12:00 UTC (Auto-Compound)</span>
+                <span style="color: #10b981; font-weight: 600;">+0.96 hXLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Sep 10, 12:00 UTC (Auto-Compound)</span>
+                <span style="color: #10b981; font-weight: 600;">+0.95 hXLM</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 5: EARN (NEW) (MATCHING VIDEO 00:10 - 00:23 + VOICE SPEC: CROSS-CHAIN) -->
+      <section id="viewTabEarn" class="hikari-tab-view hakiru-tab-view">
+        <div style="margin-bottom: 1.5rem; text-align: center;">
+          <h1 style="font-size: 1.8rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-main); margin: 0 0 0.4rem;">
+            Hikari Earn
+          </h1>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin: 0 0 0.6rem;">
+            Deploy XLM, USD, and Multichain assets into Hikari vaults for on-chain yield across Stellar's leading protocols.
+          </p>
+          <a href="#earn-faq" style="font-size: 0.78rem; color: #00a3ff; text-decoration: none;">How Hikari Earn Works ↗</a>
+        </div>
+
+        <!-- Earn Card 1: EarnXLM (Matching Video 00:10) -->
+        <div class="hikari-earn-card hakiru-earn-card">
+          <div class="hikari-earn-card-left hakiru-earn-card-left">
+            <div class="hikari-earn-badge hakiru-earn-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>PROTECTED</span>
+            </div>
+            <h2 class="hikari-earn-title hakiru-earn-title">EarnXLM</h2>
+            <p class="hikari-earn-desc hakiru-earn-desc">
+              EarnXLM is an XLM growth vault allocating XLM and hXLM across leading blue-chip DeFi protocols meant to optimize for capital efficiency.
+            </p>
+            <div class="hikari-earn-metrics-row hakiru-earn-metrics-row">
+              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
+                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">APY* (14d avg)</span>
+                <span class="hikari-earn-metric-val apy-val hakiru-earn-metric-val">12.4%</span>
+              </div>
+              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
+                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">TVL</span>
+                <span class="hikari-earn-metric-val hakiru-earn-metric-val">485K XLM</span>
+              </div>
+            </div>
+            <button class="hikari-btn-primary hakiru-btn-primary btn-deposit-vault" data-vault="xlm" style="width: auto; padding: 0.6rem 1.6rem; font-size: 0.9rem; margin-bottom: 0;">
+              Deposit
+            </button>
+          </div>
+          <div class="hikari-earn-card-right hakiru-earn-card-right">
+            <div class="hikari-iso-cube-container">
+              <div class="hikari-iso-cube">
+                <div class="cube-face face-top">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#00a3ff" fill-opacity="0.3" stroke="#00a3ff" stroke-width="1.5"/>
+                    <path d="M12 4L13.8 9.2L19.2 10.5L15 14.2L16.2 19.5L12 16.5L7.8 19.5L9 14.2L4.8 10.5L10.2 9.2L12 4Z" fill="#00a3ff"/>
+                  </svg>
+                </div>
+                <div class="cube-face face-front"></div>
+                <div class="cube-face face-right"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Earn Card 2: EarnUSD (Matching Video 00:18) -->
+        <div class="hikari-earn-card hakiru-earn-card">
+          <div class="hikari-earn-card-left hakiru-earn-card-left">
+            <div class="hikari-earn-badge hakiru-earn-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span>PROTECTED</span>
+            </div>
+            <h2 class="hikari-earn-title hakiru-earn-title">EarnUSD</h2>
+            <p class="hikari-earn-desc hakiru-earn-desc">
+              EarnUSD delivers access to USD-denominated reward strategies built around transparent asset selection, risk controls, and reporting.
+            </p>
+            <div class="hikari-earn-metrics-row hakiru-earn-metrics-row">
+              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
+                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">APY* (14d avg)</span>
+                <span class="hikari-earn-metric-val apy-val hakiru-earn-metric-val">17.0%</span>
+              </div>
+              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
+                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">TVL</span>
+                <span class="hikari-earn-metric-val hakiru-earn-metric-val">$42.5K</span>
+              </div>
+            </div>
+            <button class="hikari-btn-primary hakiru-btn-primary btn-deposit-vault" data-vault="usd" style="width: auto; padding: 0.6rem 1.6rem; font-size: 0.9rem; margin-bottom: 0;">
+              Deposit
+            </button>
+          </div>
+          <div class="hikari-earn-card-right hakiru-earn-card-right">
+            <div class="hikari-iso-cube-container">
+              <div class="hikari-iso-cube" style="animation-delay: -2s;">
+                <div class="cube-face face-top" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.7) 0%, rgba(6, 182, 212, 0.7) 100%);">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#10b981" fill-opacity="0.3" stroke="#10b981" stroke-width="1.5"/>
+                    <text x="12" y="16" font-size="12" font-family="'Outfit', sans-serif" font-weight="700" fill="#10b981" text-anchor="middle">$</text>
+                  </svg>
+                </div>
+                <div class="cube-face face-front" style="background: linear-gradient(180deg, rgba(16, 185, 129, 0.8) 0%, rgba(6, 78, 59, 0.9) 100%);"></div>
+                <div class="cube-face face-right" style="background: linear-gradient(180deg, rgba(6, 182, 212, 0.7) 0%, rgba(21, 94, 117, 0.9) 100%);"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Earn Card 3: Earn Multichain with Interactive Cross-Chain Converter (Requested in Voice Note) -->
+        <div class="hikari-earn-card hakiru-earn-card" style="flex-direction: column; align-items: stretch;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem;">
+            <div>
+              <div class="hikari-earn-badge hakiru-earn-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>MULTI-CHAIN VAULT</span>
+              </div>
+              <h2 class="hikari-earn-title hakiru-earn-title">Earn Multichain</h2>
+              <p class="hikari-earn-desc hakiru-earn-desc">
+                Convert and stake assets from Solana, Ethereum, Arbitrum, or Polygon directly into yield-bearing hXLM in one seamless cross-chain step.
+              </p>
+            </div>
+            <div class="hikari-earn-metrics-row hakiru-earn-metrics-row" style="margin-bottom: 0;">
+              <div class="hikari-earn-metric-item hakiru-earn-metric-item">
+                <span class="hikari-earn-metric-lbl hakiru-earn-metric-lbl">APY*</span>
+                <span class="hikari-earn-metric-val apy-val hakiru-earn-metric-val">14.2%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Multichain Swap & Auto-Stake Panel -->
+          <div class="hikari-multichain-card">
+            <div style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 600;">Select Origin Network</div>
+            <div class="hikari-chain-selector" id="multichainSelector">
+              <button type="button" class="hikari-chain-pill active" data-chain="sol" data-token="SOL" data-rate="1216">
+                <span>🟣</span> <span>Solana (SOL)</span>
+              </button>
+              <button type="button" class="hikari-chain-pill" data-chain="eth" data-token="ETH" data-rate="21500">
+                <span>🔷</span> <span>Ethereum (ETH)</span>
+              </button>
+              <button type="button" class="hikari-chain-pill" data-chain="arb" data-token="USDC" data-rate="8.0">
+                <span>🔵</span> <span>Arbitrum (USDC)</span>
+              </button>
+              <button type="button" class="hikari-chain-pill" data-chain="pol" data-token="POL" data-rate="3.2">
+                <span>🟣</span> <span>Polygon (POL)</span>
+              </button>
+              <button type="button" class="hikari-chain-pill" data-chain="base" data-token="ETH" data-rate="21500">
+                <span>🔵</span> <span>Base (ETH)</span>
+              </button>
+            </div>
+
+            <div class="hikari-input-container hakiru-input-container">
+              <div class="hikari-input-header hakiru-input-header">
+                <span class="hikari-input-label hakiru-input-label" id="bridgeInputLabel">Deposit Solana (SOL)</span>
+                <span id="bridgeBalDisplay" class="hikari-input-balance hakiru-input-balance">Balance: 5.20 SOL</span>
+              </div>
+              <div class="hikari-input-row hakiru-input-row">
+                <input type="number" id="inputBridgeAmount" class="hikari-number-input hakiru-number-input" placeholder="1.0" min="0" step="any" value="1.0">
+                <button type="button" id="btnBridgeMax" class="hikari-btn-max hakiru-btn-max">MAX</button>
+              </div>
+            </div>
+
+            <!-- Conversion Route Info -->
+            <div style="background: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 0.8rem 1rem; margin-bottom: 1.25rem; font-size: 0.8rem; display: flex; flex-direction: column; gap: 0.4rem;">
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Bridge &amp; Swap Route:</span>
+                <span id="bridgeRouteDisplay" style="color: #ffffff; font-weight: 500;">Solana ➔ Stellar Anchor ➔ XLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Converted XLM:</span>
+                <span id="bridgeXlmEst" style="color: #ffffff; font-weight: 600;">≈ 1,216.00 XLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Auto-Staked hXLM Minted:</span>
+                <span id="bridgeHxlmEst" style="color: #10b981; font-weight: 700;">≈ 1,166.09 hXLM</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; color: var(--text-muted);">
+                <span>Compounding Strategy Yield:</span>
+                <span style="color: #00a3ff; font-weight: 600;">14.2% APY*</span>
+              </div>
+            </div>
+
+            <button id="btnActionBridgeStake" class="hikari-btn-primary hakiru-btn-primary" style="margin-bottom: 0;">
+              <span id="btnActionBridgeStakeText">Bridge &amp; Auto-Stake to hXLM</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Upgrading Vaults Accordion & Disclaimer (Matching Video 00:18) -->
+        <section class="hikari-faq-section hakiru-faq-section" id="earn-faq">
+          <h2 class="hikari-faq-heading hakiru-faq-heading">Upgrading Vaults</h2>
+          <div class="hikari-faq-list hakiru-faq-list">
+            <div class="hikari-faq-item hakiru-faq-item">
+              <button class="hikari-faq-question hakiru-faq-question">
+                <span>How are Hikari Earn strategies audited and safeguarded?</span>
+                <span class="hikari-faq-chevron hakiru-faq-chevron">▼</span>
+              </button>
+              <div class="hikari-faq-answer hakiru-faq-answer">
+                Hikari Earn vaults execute deterministic allocation algorithms with automated circuit breakers, a 15% liquid reserve floor, and formal invariant validation. Strategy adapters can be paused instantly by the Safety Sentinel if oracle divergence or unexpected volatility is detected.
+              </div>
+            </div>
+          </div>
+
+          <!-- Video 00:18 Disclaimers -->
+          <div style="margin-top: 2rem; padding: 1rem 0; border-top: 1px solid rgba(255,255,255,0.08); font-size: 0.75rem; color: var(--text-dim); line-height: 1.6;">
+            <p style="margin: 0 0 0.75rem;">
+              * APR/APY figures are estimates, not guaranteed, and are subject to change based on network conditions.
+            </p>
+            <p style="margin: 0 0 0.75rem;">
+              Rewards may fluctuate and are influenced by factors outside the platform's control, including changes to blockchain protocols and validator performance. Past performance does not guarantee future results. Rewards are not assured and depend on the specific rules and mechanisms established by each underlying blockchain network. Users should conduct their own research, seek professional advice, and ensure they understand the risks before participating.
+            </p>
+            <p style="margin: 0;">
+              Your privacy matters. We use cookieless analytics and collect only anonymized data for improvements. Cookies are used for functionality only. For more info read <a href="#privacy" style="color: #00a3ff; text-decoration: none;">Privacy Notice</a>.
+            </p>
+          </div>
+        </section>
+      </section>
+
+    </div>
+
+    
 
     <!-- DApp Workspace Minimalist Footer -->
     <footer class="app-workspace-footer">
@@ -1583,137 +1592,132 @@
       </div>
 
       <!-- Wallet Options Grid (Matching frame_015.png + MetaMask + Stellar Suite) -->
+      <!-- Wallet Options Grid: 3-Column Tabular Grid (Row 1: Lobstr, Freighter, MetaMask; Row 2: WalletConnect, Demo, More) -->
       <div class="hikari-wallet-grid hakiru-wallet-grid" id="walletListGrid">
-        <!-- OKX Wallet (frame_015.png item 1) -->
-        <button class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="okx" data-name="OKX Wallet">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #000; border: 1px solid rgba(255,255,255,0.2);">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff">
-                <rect x="2" y="2" width="8" height="8" rx="2"/>
-                <rect x="14" y="2" width="8" height="8" rx="2"/>
-                <rect x="8" y="8" width="8" height="8" rx="2"/>
-                <rect x="2" y="14" width="8" height="8" rx="2"/>
-                <rect x="14" y="14" width="8" height="8" rx="2"/>
-              </svg>
-            </div>
-            <span>OKX Wallet</span>
-          </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Multi-Chain</span>
+        <!-- 1. Lobstr (Row 1, Item 1) -->
+        <button id="optLobstr" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="lobstr" data-name="Lobstr Vault">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(192, 132, 252, 0.15); color: #c084fc;">📱</div>
+          <span class="wallet-btn-title">Lobstr</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge">Stellar Vault</span>
         </button>
 
-        <!-- Ledger (frame_015.png item 2) -->
-        <button class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="ledger" data-name="Ledger">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #1e293b; color: #ffffff;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
-                <path d="M4 7V4h3M17 4h3v3M4 17v3h3M17 20h3v-3M9 9h6v6H9z"/>
-              </svg>
-            </div>
-            <span>Ledger</span>
-          </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Hardware</span>
-        </button>
-
-        <!-- WalletConnect (frame_015.png item 3) -->
-        <button class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="walletconnect" data-name="WalletConnect">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #3b82f6;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
-                <path d="M5 13c3.5-3.5 10.5-3.5 14 0M8 16c2-2 6-2 8 0"/>
-              </svg>
-            </div>
-            <span>WalletConnect</span>
-          </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">QR / Mobile</span>
-        </button>
-
-        <!-- MetaMask (Explicitly requested by user: "Metamask under the wallet connect") -->
-        <button class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="metamask" data-name="MetaMask">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(246, 133, 27, 0.15); border: 1px solid rgba(246, 133, 27, 0.3);">
-              <!-- MetaMask Fox SVG -->
-              <svg width="20" height="20" viewBox="0 0 318.6 318.6" fill="none">
-                <path d="M274.1 35.5L174.6 109.4l19.3-46.3L274.1 35.5z" fill="#E2761B" stroke="#E2761B" stroke-width="1.5"/>
-                <path d="M44.5 35.5l98.5 74.4-18.7-46.8L44.5 35.5z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
-                <path d="M238.3 206.8l-26.4 40.8 56.7 15.6 16.3-55.3-46.6-1.1z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
-                <path d="M33.7 207.9l16.2 55.3 56.7-15.6-26.3-40.8-46.6 1.1z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
-                <path d="M103.6 138.2l-15.8 23.9 56.3 2.5-2-60.5-38.5 34.1z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
-                <path d="M215 138.2l-38.3-34.6-1.6 61 56.3-2.5-16.4-23.9z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
-                <path d="M106.4 247.6l33.8-16.5-29.3-22.8-4.5 39.3z" fill="#D7C1B3" stroke="#D7C1B3" stroke-width="1.5"/>
-                <path d="M178.4 231.1l33.8 16.5-4.5-39.3-29.3 22.8z" fill="#D7C1B3" stroke="#D7C1B3" stroke-width="1.5"/>
-                <path d="M159.3 189.6l-31.5-3.3 22.2 32.5 9.3-29.2z" fill="#233447" stroke="#233447" stroke-width="1.5"/>
-                <path d="M159.3 189.6l9.3 29.2 22.2-32.5-31.5 3.3z" fill="#233447" stroke="#233447" stroke-width="1.5"/>
-              </svg>
-            </div>
-            <span>MetaMask</span>
-          </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge" style="color: #f6851b;">EVM &amp; Snaps</span>
-        </button>
-
-        <!-- Bitget Wallet (frame_015.png item 4) -->
-        <button class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="bitget" data-name="Bitget Wallet">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
-                <path d="M9 18l6-6-6-6"/>
-              </svg>
-            </div>
-            <span>Bitget Wallet</span>
-          </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Web3 Multi</span>
-        </button>
-
-        <!-- Freighter Wallet (Core Stellar Browser Extension) -->
+        <!-- 2. Freighter (Row 1, Item 2) -->
         <button id="optFreighter" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="freighter" data-name="Freighter Wallet">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">✦</div>
-            <span>Freighter Wallet</span>
-          </div>
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8;">✦</div>
+          <span class="wallet-btn-title">Freighter</span>
           <span class="hikari-wallet-badge hakiru-wallet-badge">Stellar Native</span>
         </button>
 
-        <!-- Passkey Smart Account (WebAuthn 1-Click) -->
-        <button id="optPasskey" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="passkey" data-name="Passkey Smart Account">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🔑</div>
-            <span>Passkey Smart Account</span>
+        <!-- 3. MetaMask (Row 1, Item 3) -->
+        <button id="optMetaMask" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="metamask" data-name="MetaMask">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(246, 133, 27, 0.15); border: 1px solid rgba(246, 133, 27, 0.3);">
+            <svg width="20" height="20" viewBox="0 0 318.6 318.6" fill="none">
+              <path d="M274.1 35.5L174.6 109.4l19.3-46.3L274.1 35.5z" fill="#E2761B" stroke="#E2761B" stroke-width="1.5"/>
+              <path d="M44.5 35.5l98.5 74.4-18.7-46.8L44.5 35.5z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
+              <path d="M238.3 206.8l-26.4 40.8 56.7 15.6 16.3-55.3-46.6-1.1z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
+              <path d="M33.7 207.9l16.2 55.3 56.7-15.6-26.3-40.8-46.6 1.1z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
+              <path d="M103.6 138.2l-15.8 23.9 56.3 2.5-2-60.5-38.5 34.1z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
+              <path d="M215 138.2l-38.3-34.6-1.6 61 56.3-2.5-16.4-23.9z" fill="#E4761B" stroke="#E4761B" stroke-width="1.5"/>
+              <path d="M106.4 247.6l33.8-16.5-29.3-22.8-4.5 39.3z" fill="#D7C1B3" stroke="#D7C1B3" stroke-width="1.5"/>
+              <path d="M178.4 231.1l33.8 16.5-4.5-39.3-29.3 22.8z" fill="#D7C1B3" stroke="#D7C1B3" stroke-width="1.5"/>
+              <path d="M159.3 189.6l-31.5-3.3 22.2 32.5 9.3-29.2z" fill="#233447" stroke="#233447" stroke-width="1.5"/>
+              <path d="M159.3 189.6l9.3 29.2 22.2-32.5-31.5 3.3z" fill="#233447" stroke="#233447" stroke-width="1.5"/>
+            </svg>
           </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">WebAuthn 1-Click</span>
+          <span class="wallet-btn-title">MetaMask</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge" style="color: #f6851b;">EVM &amp; Snaps</span>
         </button>
 
-        <!-- Lobstr Vault -->
-        <button id="optLobstr" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="lobstr" data-name="Lobstr Vault">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(192, 132, 252, 0.15); color: #c084fc;">📱</div>
-            <span>Lobstr Vault</span>
+        <!-- 4. WalletConnect (Row 2, Item 1) -->
+        <button id="optWalletConnect" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="walletconnect" data-name="WalletConnect">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #3b82f6;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+              <path d="M5 13c3.5-3.5 10.5-3.5 14 0M8 16c2-2 6-2 8 0"/>
+            </svg>
           </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Mobile / Web</span>
+          <span class="wallet-btn-title">WalletConnect</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge">QR / Mobile</span>
+        </button>
+
+        <!-- 5. Instant Testnet Demo Sandbox (Row 2, Item 2) -->
+        <button id="optDemoAccount" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="demo" data-name="Instant Testnet Demo" style="border-color: rgba(0, 163, 255, 0.35); background: rgba(0, 163, 255, 0.08);">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #00a3ff; color: #fff;">⚡</div>
+          <span class="wallet-btn-title">Demo Sandbox</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge" style="color: #00a3ff;">1,250 XLM</span>
+        </button>
+
+        <!-- 6. 'and More' Tile (Row 2, Item 3) -->
+        <button id="btnTileMoreWallets" class="hikari-wallet-btn hakiru-wallet-btn tile-more-wallets" type="button">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" id="moreTileIconBox" style="background: rgba(255, 255, 255, 0.08); color: #00a3ff;">
+            <svg id="moreTileSvg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </div>
+          <span class="wallet-btn-title" id="moreTileTitle">More</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge" id="moreTileBadge" style="color: #00a3ff;">5 Wallets</span>
+        </button>
+      </div>
+
+      <!-- Expandable Secondary Wallets Grid (Initially hidden) -->
+      <div id="moreWalletsContainer" class="hikari-wallet-grid hakiru-wallet-grid more-wallets-grid" style="display: none; margin-top: 0.65rem;">
+        <!-- OKX Wallet -->
+        <button id="optOkx" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="okx" data-name="OKX Wallet">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #000; border: 1px solid rgba(255,255,255,0.2);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#ffffff">
+              <rect x="2" y="2" width="8" height="8" rx="2"/>
+              <rect x="14" y="2" width="8" height="8" rx="2"/>
+              <rect x="8" y="8" width="8" height="8" rx="2"/>
+              <rect x="2" y="14" width="8" height="8" rx="2"/>
+              <rect x="14" y="14" width="8" height="8" rx="2"/>
+            </svg>
+          </div>
+          <span class="wallet-btn-title">OKX</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge">Multi-Chain</span>
+        </button>
+
+        <!-- Ledger -->
+        <button id="optLedger" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="ledger" data-name="Ledger">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #1e293b; color: #ffffff;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2">
+              <path d="M4 7V4h3M17 4h3v3M4 17v3h3M17 20h3v-3M9 9h6v6H9z"/>
+            </svg>
+          </div>
+          <span class="wallet-btn-title">Ledger</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge">Hardware</span>
         </button>
 
         <!-- xBull Wallet -->
         <button id="optXbull" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="xbull" data-name="xBull Wallet">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(236, 76, 255, 0.15); color: #ec4cff;">🐂</div>
-            <span>xBull Wallet</span>
-          </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge">Multi-Platform</span>
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(236, 76, 255, 0.15); color: #ec4cff;">🐂</div>
+          <span class="wallet-btn-title">xBull</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge">Stellar Suite</span>
         </button>
 
-        <!-- Instant Testnet Demo Sandbox -->
-        <button id="optDemoAccount" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="demo" data-name="Instant Testnet Demo" style="border-color: rgba(0, 163, 255, 0.3); background: rgba(0, 163, 255, 0.06);">
-          <div class="hikari-wallet-btn-left hakiru-wallet-btn-left">
-            <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: #00a3ff; color: #fff;">⚡</div>
-            <span>Instant Testnet Demo</span>
+        <!-- Passkey Smart Account -->
+        <button id="optPasskey" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="passkey" data-name="Passkey Smart Account">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🔑</div>
+          <span class="wallet-btn-title">Passkey</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge">WebAuthn</span>
+        </button>
+
+        <!-- Bitget Wallet -->
+        <button id="optBitget" class="hikari-wallet-btn hakiru-wallet-btn" data-wallet="bitget" data-name="Bitget Wallet">
+          <div class="hikari-wallet-icon-box hakiru-wallet-icon-box" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
           </div>
-          <span class="hikari-wallet-badge hakiru-wallet-badge" style="color: #00a3ff;">1,250 XLM Sandbox</span>
+          <span class="wallet-btn-title">Bitget</span>
+          <span class="hikari-wallet-badge hakiru-wallet-badge">Web3 Multi</span>
         </button>
       </div>
 
-      <!-- Bottom Toggle Button (Matching frame_015.png "Less wallets" / "More wallets") -->
-      <div style="margin-top: 1.25rem; text-align: center;">
-        <button id="btnToggleMoreWallets" style="background: transparent; border: none; color: #00a3ff; font-size: 0.85rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem;">
+      <!-- Bottom Toggle Button (Synchronized with More tile) -->
+      <div style="margin-top: 1rem; text-align: center;">
+        <button id="btnToggleMoreWallets" style="background: transparent; border: none; color: #00a3ff; font-size: 0.82rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.6rem;">
           <span id="toggleMoreWalletsIcon">📁</span>
-          <span id="toggleMoreWalletsText">Less wallets</span>
+          <span id="toggleMoreWalletsText">More wallets</span>
         </button>
       </div>
     </div>
